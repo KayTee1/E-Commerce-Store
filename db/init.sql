@@ -22,7 +22,7 @@ VALUES
     );
 
 CREATE TABLE
-    IF NOT EXISTS `listings` (
+    IF NOT EXISTS `products` (
         `id` int (11) NOT NULL AUTO_INCREMENT,
         `title` varchar(50) NOT NULL,
         `description` varchar(100) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 INSERT INTO
-    listings (title, description, price, image, owner)
+    products (title, description, price, image, owner)
 VALUES
     (
         'Bike',
