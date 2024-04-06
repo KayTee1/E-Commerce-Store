@@ -7,7 +7,7 @@ const NavBar = () => {
   return (
     <nav className="bg-gray-900 h-16 flex items-center">
       <div className="flex items-center justify-between mx-5 w-full">
-        <NavLink to="/" className="text-white text-xl">
+        <NavLink to="/" className="text-white text-2xl">
           LOGO
         </NavLink>
 
@@ -15,14 +15,15 @@ const NavBar = () => {
           <NavLink to="/" className="text-white mx-3 hover:text-gray-300">
             Home
           </NavLink>
-          <NavLink to="/about" className="text-white mx-3 hover:text-gray-300">
-            Category
-          </NavLink>
+
           <NavLink
-            to="/contact"
+            to="/collections"
             className="text-white mx-3 hover:text-gray-300"
           >
             Collections
+          </NavLink>
+          <NavLink to="/about" className="text-white mx-3 hover:text-gray-300">
+            Categories
           </NavLink>
         </div>
 
