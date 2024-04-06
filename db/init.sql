@@ -1,24 +1,22 @@
 CREATE TABLE
     IF NOT EXISTS `users` (
         `id` varchar(36) NOT NULL,
-        `name` varchar(100) NOT NULL,
+        `username` varchar(50) NOT NULL,
         `email` varchar(50) NOT NULL,
         `hashed_password` varchar(60) NOT NULL,
-        `admin` boolean NOT NULL DEFAULT 0,
         `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
 INSERT INTO
-    users (id, name, email, hashed_password, admin)
+    users (id, username, email, hashed_password)
 VALUES
     (
         '7c2d548b-c2f9-48fe-842c-c03a70c8f3fc',
-        'John Smith',
+        'JohnSmith',
         'Smith@example.com',
-        '$2a$12$nklH38sEOS2SRUYDWGVsl.SlaelTEy/l2aznsXsMdY5SmpGM.zDaS',
-        '1'
+        '$2a$12$nklH38sEOS2SRUYDWGVsl.SlaelTEy/l2aznsXsMdY5SmpGM.zDaS'
     );
 
 CREATE TABLE
