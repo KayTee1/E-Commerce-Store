@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+
+import Loader from "../../shared/Loader";
 import ProductListingCard from "../components/ProductListingCard";
 
 type Product = {
@@ -10,17 +12,20 @@ type Product = {
 };
 
 const Collections = () => {
-  const [productsData, setProductsData] = useState([]);
+  const [productsData, setProductsData] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const fetchData = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
+      setIsLoading(true);
       const response = await fetch(apiUrl + "/api/products");
       const data = await response.json();
       setProductsData(data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -33,11 +38,17 @@ const Collections = () => {
       <p className="text-lg text-gray-600 mb-8">
         Browse our wide range of products.
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
-        {productsData.map((product: Product) => (
-          <ProductListingCard key={product.id} product={product} />
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <Loader isLoading={isLoading} />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
+          {productsData.map((product: Product) => (
+            <ProductListingCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
