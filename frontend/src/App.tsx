@@ -1,11 +1,14 @@
 import { Route, Routes } from "react-router-dom";
-import NavBar from "./shared/NavBar";
+import { CartProvider } from "./context/CartContext";
+
 import Home from "./Home/pages/Home";
 import Collections from "./Collections/pages/Collections";
 
+import NavBar from "./NavBar/NavBar";
+
 export default function App() {
   return (
-    <div className="">
+    <CartProvider>
       <NavBar />
       <main className="flex justify-center mx-5 my-5">
         <Routes>
@@ -13,6 +16,6 @@ export default function App() {
           <Route path="/collections" element={<Collections />} />
         </Routes>
       </main>
-    </div>
+    </CartProvider>
   );
 }
