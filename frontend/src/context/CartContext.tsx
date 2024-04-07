@@ -14,7 +14,8 @@ type CartAction =
   | { type: "ADD_TO_CART"; payload: Item }
   | { type: "REMOVE_FROM_CART"; payload: Item }
   | { type: "INCREMENT_QUANTITY"; payload: Item }
-  | { type: "DECREMENT_QUANTITY"; payload: Item };
+  | { type: "DECREMENT_QUANTITY"; payload: Item }
+  | { type: "EMPTY_CART" };
 
 type CartContextType = {
   cartState: CartState;
@@ -23,6 +24,7 @@ type CartContextType = {
   incrementQuantity: (item: Item) => void;
   decrementQuantity: (item: Item) => void;
   getTotalQuantity: () => number;
+  handleEmptyCart: () => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -75,6 +77,9 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
 
       return { ...state, items: decrementedItems };
 
+    case "EMPTY_CART":
+      return { ...state, items: [] };
+
     default:
       return state;
   }
@@ -109,6 +114,10 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     }, 0);
   };
 
+  const handleEmptyCart = () => {
+    dispatch({ type: "EMPTY_CART" });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -118,6 +127,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         incrementQuantity,
         decrementQuantity,
         getTotalQuantity,
+        handleEmptyCart
       }}
     >
       {children}
