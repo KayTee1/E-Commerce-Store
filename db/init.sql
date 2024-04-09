@@ -9,16 +9,6 @@ CREATE TABLE
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
-INSERT INTO
-    users (id, username, email, hashed_password)
-VALUES
-    (
-        '7c2d548b-c2f9-48fe-842c-c03a70c8f3fc',
-        'JohnSmith',
-        'Smith@example.com',
-        '$2a$12$nklH38sEOS2SRUYDWGVsl.SlaelTEy/l2aznsXsMdY5SmpGM.zDaS'
-    );
-
 CREATE TABLE
     IF NOT EXISTS `products` (
         `id` int (11) NOT NULL AUTO_INCREMENT,
@@ -32,8 +22,29 @@ CREATE TABLE
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
+CREATE TABLE
+    IF NOT EXISTS `favorites` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `user_id` VARCHAR(36) CHARACTER
+        SET
+            latin1 COLLATE latin1_swedish_ci NOT NULL,
+            `product_id` INT (11) NOT NULL,
+            `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+            FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
+    );
+
+INSERT INTO `users` (`id`, `username`, `email`, `hashed_password`)
+VALUES
+    (
+        '7c2d548b-c2f9-48fe-842c-c03a70c8f3fc',
+        'JohnSmith',
+        'Smith@example.com',
+        '$2a$12$nklH38sEOS2SRUYDWGVsl.SlaelTEy/l2aznsXsMdY5SmpGM.zDaS'
+    );
+
 INSERT INTO
-    products (title, description, price, image, owner)
+    `products` (`title`, `description`, `price`, `image`, `owner`)
 VALUES
     (
         'Bike',
@@ -105,3 +116,9 @@ VALUES
         'https://via.placeholder.com/250',
         '16b71c4d-c5ea-4b65-92dc-bc8f3b1c2e99'
     );
+
+INSERT INTO
+    `favorites` (`user_id`, `product_id`)
+VALUES
+    ('7c2d548b-c2f9-48fe-842c-c03a70c8f3fc', 1),
+    ('7c2d548b-c2f9-48fe-842c-c03a70c8f3fc', 2);
