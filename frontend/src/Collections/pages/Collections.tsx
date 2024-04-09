@@ -4,11 +4,12 @@ import Loader from "../../shared/Loader";
 import ProductListingCard from "../components/ProductListingCard";
 
 type Product = {
-  id: string;
+  id: number;
   title: string;
   description: string;
   price: string;
   owner: string;
+  quantity?: number;
 };
 
 const Collections = () => {
@@ -33,7 +34,7 @@ const Collections = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center py-10">
+    <div className="flex flex-col items-center justify-center">
       <h2 className="text-3xl font-bold mb-4">Collections</h2>
       <p className="text-lg text-gray-600 mb-8">
         Browse our wide range of products.

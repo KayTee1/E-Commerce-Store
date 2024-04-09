@@ -9,7 +9,7 @@ type ProductListingProps = {
     description: string;
     price: string;
     owner: string;
-    quantity: number;
+    quantity?: number;
   };
 };
 
@@ -21,6 +21,11 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
     product.quantity = 1;
     addToCart(product);
   };
+
+  const handleFavorite = () => {
+    alert("Added to favorites")
+  }
+
 
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
@@ -35,7 +40,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           <p className="text-gray-600">{price} €</p>
         </div>
         <div className="flex flex-row w-9 justify-between">
-          <button>
+          <button onClick={handleFavorite}>
             <CgHeart />
           </button>
           <button onClick={handleAddCart}>

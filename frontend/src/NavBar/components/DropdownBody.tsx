@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import DropdownItem from "./DropdownItem";
 
@@ -6,36 +7,49 @@ const FavoritesModal = () => {
     <div>
       <p className="text-2xl underline">Favorites</p>
       <div className="flex flex-col p-2 mt-5 max-h-72 overflow-scroll">
-        <DropdownItem title="Item 1" />
-        <DropdownItem title="Item 2" />
-        <DropdownItem title="Item 3" />
-        <DropdownItem title="Item 4" />
-        <DropdownItem title="Item 5" />
-        <DropdownItem title="Item 6" />
+        <p className="text-xl">Log in to see your favorites</p>
       </div>
     </div>
   );
 };
 
 const CartModal = () => {
-  const { cartState } = useCart();
+  const { cartState, handleEmptyCart: empty } = useCart();
+  const navigate = useNavigate();
+
+  const handleEmptyCart = () => {
+    empty();
+  };
+
+  const handleNavToCheckout = () => {
+    if (cartState.items.length === 0) return;
+    navigate("/checkout");
+  };
   return (
-    <div>
-      <p className="text-2xl underline">Cart</p>
-      <div className="flex flex-col p-2 mt-5 max-h-60 overflow-scroll">
-        {cartState.items.length === 0 ? (
-          <p className="text-xl">Cart is empty</p>
-        ) : (
-          cartState.items.map((item, index: number) => (
-            <DropdownItem key={index} title={item.title} />
-          ))
-        )}
+    <div className="flex flex-col justify-between h-full">
+      <div>
+        <p className="text-2xl underline">Cart</p>
+        <div className="flex flex-col p-2 mt-5 max-h-60 overflow-scroll">
+          {cartState.items.length === 0 ? (
+            <p className="text-xl">Cart is empty</p>
+          ) : (
+            cartState.items.map((item, index: number) => (
+              <DropdownItem key={index} item={item} />
+            ))
+          )}
+        </div>
       </div>
-      <div className="flex flex-row mt-4 justify-center ">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded">
+      <div className="flex flex-row mt-4 justify-center">
+        <button
+          onClick={handleNavToCheckout}
+          className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+        >
           Checkout
         </button>
-        <button className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded ml-2">
+        <button
+          onClick={handleEmptyCart}
+          className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded ml-2"
+        >
           Empty Cart
         </button>
       </div>
@@ -45,8 +59,13 @@ const CartModal = () => {
 
 const ProfileModal = () => {
   return (
-    <div>
-      <p>Profile</p>
+    <div className="flex flex-col">
+      <p className="text-2xl underline">Account</p>
+
+      <p className="text-xl">Log in to see your account</p>
+      <a className="text-blue-500 hover:underline" href="/register">
+        register
+      </a>
     </div>
   );
 };
