@@ -69,6 +69,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       {
         id: user.id,
+        username: user.username,
         email: user.email,
       },
       process.env.JWT_KEY,
@@ -77,6 +78,7 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({
       id: user.id,
+      username: user.username,
       email: user.email,
       token,
     });
@@ -86,7 +88,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = {
-  signUpUser,
-  loginUser,
-};
+module.exports = { signUpUser, loginUser };
