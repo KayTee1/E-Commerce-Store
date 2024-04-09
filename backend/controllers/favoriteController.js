@@ -3,7 +3,6 @@ const favorites = require("../models/favorites");
 const getFavorites = async (req, res) => {
   const { id } = req.params;
 
-  console.log(id);
   try {
     const response = await favorites.findFavorites(id);
     if (response) {
