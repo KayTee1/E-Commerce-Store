@@ -10,7 +10,7 @@ const Home = () => {
 
       <Link
         to="/collections"
-        className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
       >
         Browse Products
       </Link>
