@@ -16,13 +16,15 @@ let logoutTimer: number | undefined;
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [username, setUsername] = useState<string | null>(null);
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null>(
     null
   );
   const login = useCallback(
-    (uid: string, token: string, expirationDate: Date) => {
+    (uid: string, username: string, token: string, expirationDate: Date) => {
       setToken(token);
       setUserId(uid);
+      setUsername(username);
 
       const tokenExpirationDate =
         expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
@@ -31,6 +33,7 @@ export default function App() {
         "userData",
         JSON.stringify({
           userId: uid,
+          username: username,
           token,
           expiration: tokenExpirationDate.toISOString(),
         })
@@ -41,6 +44,7 @@ export default function App() {
   const logout = useCallback(() => {
     setToken(null);
     setUserId(null);
+    setUsername(null);
     setTokenExpirationDate(null);
     localStorage.removeItem("userData");
   }, []);
@@ -54,6 +58,7 @@ export default function App() {
     ) {
       login(
         storedData.userId,
+        storedData.username,
         storedData.token,
         new Date(storedData.expiration)
       );
@@ -76,6 +81,7 @@ export default function App() {
         isLoggedIn: !!token,
         token: token,
         userId: userId,
+        username: username,
         login: login,
         logout: logout,
       }}

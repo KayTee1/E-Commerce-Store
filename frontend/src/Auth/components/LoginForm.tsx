@@ -45,7 +45,7 @@ const LoginForm = () => {
   const handleSubmit = useCallback(async () => {
     try {
       const baseUrl = import.meta.env.VITE_API_URL;
-      const apiUrl = "api/users/login";
+      const apiUrl = "/api/users/login";
       const res = await fetch(baseUrl + apiUrl, {
         method: "POST",
         headers: {
@@ -63,10 +63,11 @@ const LoginForm = () => {
 
       auth.login(
         data.id,
+        data.username,
         data.token,
         new Date(new Date().getTime() + 1000 * 60 * 60)
       );
-      navigate("/admin");
+      navigate("/");
     } catch (error) {
       setMessage({ message: "Something went wrong!", color: "red" });
     }

@@ -1,0 +1,60 @@
+
+GET {{server}}/health
+
+###
+GET {{server}}/api/favorites/0cec3b1b-4407-4555-93f3-ef198df4f386
+Content-Type: application/json
+Authorization: BEARER {{authToken}}
+
+
+###
+POST {{server}}/api/favorites/debd085f-643c-43b5-8449-1fc4bb0397ae
+Content-Type: application/json
+Authorization: BEARER {{authToken}}
+
+{
+    "user_id": "debd085f-643c-43b5-8449-1fc4bb0397ae",
+    "product_id": "1"
+}
+
+
+###
+DELETE {{server}}/api/products/
+Authorization: BEARER {{authToken}}
+
+
+###
+POST {{server}}/api/users/signup 
+Content-Type: application/json
+
+{
+  "username": "XiaoLing",
+  "email": "Xiao@Ling.com",
+  "password": "Xiao"
+}
+
+### 
+# @name login
+POST {{server}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "Xiao@Ling.com",
+  "password": "Xiao"
+}
+
+### 
+# @name login
+POST {{server}}/api/users/login
+Content-Type: application/json
+
+{
+  "email": "su@gmail.com",
+  "password": "qwe"
+}
+###
+@authToken = {{login.response.body.token}}
+
+@server = http://localhost:5000
+
+//@server = http://172.16.6.158:5000

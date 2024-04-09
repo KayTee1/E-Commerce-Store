@@ -34,7 +34,7 @@ const Collections = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-3xl font-bold mb-4">Collections</h2>
       <p className="text-lg text-gray-600 mb-8">
         Browse our wide range of products.
