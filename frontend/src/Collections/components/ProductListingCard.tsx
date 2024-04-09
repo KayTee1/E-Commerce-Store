@@ -1,6 +1,8 @@
 import { CgHeart } from "react-icons/cg";
 import { PiShoppingCartBold } from "react-icons/pi";
 import { useCart } from "../../context/CartContext";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 type ProductListingProps = {
   product: {
@@ -14,18 +16,33 @@ type ProductListingProps = {
 };
 
 const ProductListingCard = ({ product }: ProductListingProps) => {
-  const { title, description, price } = product;
+  const auth = useContext(AuthContext);
   const { addToCart } = useCart();
+  const { title, description, price } = product;
 
   const handleAddCart = () => {
     product.quantity = 1;
     addToCart(product);
   };
 
-  const handleFavorite = () => {
-    alert("Added to favorites")
-  }
+  const handleFavorite = async () => {
+    if (!auth.isLoggedIn)
+      return console.log("Please log in to add to favorites");
 
+    try {
+      const res = await fetch(`/api/favorites/${auth.userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
