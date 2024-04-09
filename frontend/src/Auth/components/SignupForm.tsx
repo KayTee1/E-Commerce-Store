@@ -60,7 +60,12 @@ const SignupForm = () => {
       });
       if (res.status === 422) {
         setMessage({ message: "User already exists!", color: "red" });
-        setFormData({ username: "", email: "", password: "", confirmPassword: "" });
+        setFormData({
+          username: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
         return;
       }
       setMessage({ message: "Sign up successful!", color: "green" });

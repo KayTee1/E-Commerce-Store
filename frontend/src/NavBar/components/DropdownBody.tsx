@@ -16,7 +16,7 @@ const FavoritesModal = () => {
 const CartModal = () => {
   const { cartState, handleEmptyCart: empty } = useCart();
   const navigate = useNavigate();
-  
+
   const handleEmptyCart = () => {
     empty();
   };
@@ -59,8 +59,13 @@ const CartModal = () => {
 
 const ProfileModal = () => {
   return (
-    <div>
-      <p>Profile</p>
+    <div className="flex flex-col">
+      <p className="text-2xl underline">Account</p>
+
+      <p className="text-xl">Log in to see your account</p>
+      <a className="text-blue-500 hover:underline" href="/register">
+        register
+      </a>
     </div>
   );
 };
