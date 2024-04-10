@@ -12,6 +12,7 @@ const NavBar = () => {
   const handleIconClick = (type: "favorites" | "cart" | "profile") => {
     setOpenDropdown(openDropdown === type ? null : type);
   };
+  
   const dropdownRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,6 +30,7 @@ const NavBar = () => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
   return (
     <nav className="bg-gray-900 h-16 flex items-center">
       <div className="flex items-center justify-between mx-5 w-full">

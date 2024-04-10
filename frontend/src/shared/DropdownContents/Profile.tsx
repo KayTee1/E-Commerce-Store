@@ -11,6 +11,10 @@ const Profile = () => {
             <div className="flex flex-col p-2 mt-5 max-h-60 overflow-scroll">
               <p className="text-xl">Welcome, {auth.username}</p>
             </div>
+            <div>
+              <p>Create a new Listing</p>
+              <p>View your Listings</p>
+            </div>
           </div>
           <button
             onClick={() => auth.logout()}
