@@ -1,8 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-import DropdownItem from "../../NavBar/components/DropdownItem";
-import Loader from "../Loader";
+import DropdownItem from "../components/DropdownItem";
+import Loader from "../../shared/Loader";
 
 type Product = {
   id: number;

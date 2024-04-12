@@ -38,7 +38,7 @@ const CreateListings = () => {
 
     const { title, price, description, image } = formData;
 
-    if (!title || !price || !description || !image ) {
+    if (!title || !price || !description || !image) {
       setMessage({ message: "Please fill in all fields", color: "red" });
       return;
     }
@@ -47,8 +47,9 @@ const CreateListings = () => {
       setMessage({ message: "Price must be a number", color: "red" });
       return;
     }
-    if (!isValidImageUrl(image)) {
-      setMessage({ message: "Image must be a valid URL", color: "red" });
+    const isValidImg = isValidImageUrl(image);
+    if (!isValidImg) {
+      setMessage({ message: "Image URL is invalid", color: "red" });
       return;
     }
     if (description.length < 10) {
@@ -135,7 +136,7 @@ const CreateListings = () => {
 
 export default CreateListings;
 
-const isValidImageUrl = (url: string): boolean => {
+const isValidImageUrl = async (url: string): Promise<boolean> => {
   const img = new Image();
   img.src = url;
   return img.complete;

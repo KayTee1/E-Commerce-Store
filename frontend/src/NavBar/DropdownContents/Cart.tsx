@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import DropdownItem from "../../NavBar/components/DropdownItem";
+import DropdownItem from "../components/DropdownItem";
 
 const Cart = () => {
   const { cartState, handleEmptyCart: empty } = useCart();

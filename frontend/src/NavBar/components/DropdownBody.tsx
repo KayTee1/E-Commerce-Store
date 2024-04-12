@@ -1,6 +1,6 @@
-import Cart from "../../shared/DropdownContents/Cart";
-import Favorites from "../../shared/DropdownContents/Favorites";
-import Profile from "../../shared/DropdownContents/Profile";
+import Cart from "../DropdownContents/Cart";
+import Favorites from "../DropdownContents/Favorites";
+import Profile from "../DropdownContents/Profile";
 
 type DropdownBodyProps = {
   type: "favorites" | "cart" | "profile";
