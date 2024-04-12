@@ -27,16 +27,16 @@ const getProductById = async (req, res) => {
 
 const postNewProduct = async (req, res) => {
   try {
-    const { item_id, name, price, description, image } = req.body;
-    if (!item_id || !name || !price || !description || !image) {
+    const { title, price, description, image, owner } = req.body;
+    if ( !title || !price || !description || !image || !owner) {
       return res.status(400).json({ error: "Missing required fields" });
     }
     const product = {
-      item_id,
-      name,
+      title,
       price,
       description,
       image,
+      owner,
     };
 
     const response = await products.postProduct(product);
