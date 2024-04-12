@@ -11,6 +11,7 @@ type ProductListingProps = {
     description: string;
     price: string;
     owner: string;
+    image: string;
     quantity?: number;
   };
 };
@@ -18,7 +19,7 @@ type ProductListingProps = {
 const ProductListingCard = ({ product }: ProductListingProps) => {
   const auth = useContext(AuthContext);
   const { addToCart } = useCart();
-  const { title, description, price } = product;
+  const { title, description, price, image } = product;
 
   const handleAddCart = () => {
     product.quantity = 1;
@@ -47,7 +48,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
       <img
-        src="https://via.placeholder.com/250"
+        src={image}
         alt="Product 1"
         className="w-full h-48 object-cover"
       />

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-//const verifyToken = require("../middlewares/verifyToken");
+const verifyToken = require("../middlewares/verifyToken");
 const {
   getProducts,
   getProductById,
@@ -12,7 +12,7 @@ const {
 router.get("/", getProducts);
 router.get("/:id", getProductById);
 
-//router.use(verifyToken);
+router.use(verifyToken);
 
 router.post("/", postNewProduct);
 router.put("/:id", updateProduct);

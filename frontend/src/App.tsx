@@ -10,6 +10,8 @@ import Login from "./Auth/pages/Login";
 import Signup from "./Auth/pages/Signup";
 
 import NavBar from "./NavBar/NavBar";
+import ViewListings from "./Profile/pages/ViewListings";
+import CreateListings from "./Profile/pages/CreateListings";
 
 let logoutTimer: number | undefined;
 
@@ -75,6 +77,50 @@ export default function App() {
     }
   }, [token, logout, tokenExpirationDate]);
 
+  let routes;
+  if (token) {
+    routes = (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/collections" element={<Collections />} />
+        <Route path="/checkout" element={<Checkout />} />
+
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/create-listing" element={<CreateListings />} />
+        <Route path="/view-listings" element={<ViewListings />} />
+
+        <Route
+          path="*"
+          element={
+            <div className="text-center">
+              <h3>404 - Page not found!</h3>
+            </div>
+          }
+        />
+      </Routes>
+    );
+  } else {
+    routes = (
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/collections" element={<Collections />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="*"
+          element={
+            <div className="text-center">
+              <h3>404 - Page not found!</h3>
+            </div>
+          }
+        />
+      </Routes>
+    );
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -88,25 +134,7 @@ export default function App() {
     >
       <CartProvider>
         <NavBar />
-        <main className="flex justify-center">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/collections" element={<Collections />} />
-            <Route path="/checkout" element={<Checkout />} />
-
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-
-            <Route
-              path="*"
-              element={
-                <div className="text-center">
-                  <h3>404 - Page not found!</h3>
-                </div>
-              }
-            />
-          </Routes>
-        </main>
+        <main className="flex justify-center">{routes}</main>
       </CartProvider>
     </AuthContext.Provider>
   );
