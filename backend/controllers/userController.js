@@ -32,6 +32,7 @@ const signUpUser = async (req, res) => {
       {
         id: newUser.id,
         email: newUser.email,
+        username: newUser.username,
       },
       process.env.JWT_KEY,
       { expiresIn: "1h" }
@@ -39,7 +40,7 @@ const signUpUser = async (req, res) => {
 
     res.status(201).json({
       id: newUser.id,
-      username: newUser.user_name,
+      username: newUser.username,
       email: newUser.email,
       token,
     });
@@ -75,7 +76,6 @@ const loginUser = async (req, res) => {
       process.env.JWT_KEY,
       { expiresIn: "1h" }
     );
-
     res.status(200).json({
       id: user.id,
       username: user.username,
