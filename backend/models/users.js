@@ -24,6 +24,21 @@ const users = {
       throw new Error(error);
     }
   },
+  findListingsById: async (id) => {
+    try {
+      const selectQuery = "SELECT * FROM `products` WHERE `owner` = ?";
+      const connection = await pool.getConnection();
+      try {
+        const [results] = await connection.query(selectQuery, [id]);
+        return results;
+      } finally {
+        connection.release();
+      }
+    } catch (error) {
+      console.error("Error fetching listings by owner ID:", error);
+      throw error;
+    }
+  },
 };
 
 module.exports = users;

@@ -88,4 +88,19 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { signUpUser, loginUser };
+const getUserListings = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const products = await users.findListingsById(id);
+    if (!products) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json(products);
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: "Failed to get user listings" });
+  }
+};
+
+module.exports = { signUpUser, loginUser, getUserListings };
