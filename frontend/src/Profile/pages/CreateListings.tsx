@@ -66,15 +66,11 @@ const CreateListings = () => {
       });
       return;
     }
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      Owner: auth.username || "",
-    }));
 
     postListing();
   };
   const postListing = async () => {
-    formData.owner = auth.username ?? "";
+    formData.owner = auth.userId ?? "";
     try {
       const baseApiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(`${baseApiUrl}/api/products`, {

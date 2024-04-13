@@ -9,12 +9,14 @@ type Product = {
   description: string;
   price: string;
   owner: string;
+  image: string;
   quantity?: number;
 };
 
 const Collections = () => {
   const [productsData, setProductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState(false);
 
   const fetchData = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -24,6 +26,7 @@ const Collections = () => {
       const data = await response.json();
       setProductsData(data);
     } catch (error) {
+      setIsError(true);
       console.error("Error fetching data: ", error);
     }
     setIsLoading(false);
@@ -32,6 +35,34 @@ const Collections = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  let content;
+
+  if (isError) {
+    content = (
+      <div className="text-center">
+        <p>There was an error fetching the data</p>
+      </div>
+    );
+  }
+  
+  if (productsData.length === 0) {
+    content = (
+      <div className="text-center">
+        <p>No products found</p>
+      </div>
+    );
+  }
+
+  if(!isError && productsData.length > 0) {
+    content = (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
+        {productsData.map((product: Product) => (
+          <ProductListingCard key={product.id} product={product} />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col mt-4 items-center justify-center">
@@ -44,11 +75,7 @@ const Collections = () => {
           <Loader isLoading={isLoading} />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
-          {productsData.map((product: Product) => (
-            <ProductListingCard key={product.id} product={product} />
-          ))}
-        </div>
+        content
       )}
     </div>
   );

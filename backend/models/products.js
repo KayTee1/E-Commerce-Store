@@ -7,9 +7,7 @@ const products = {
       const connection = await pool.getConnection();
       const [results] = await connection.query(selectQuery);
       connection.release();
-      if (results.length === 0) {
-        return { Error: "No products found" };
-      }
+     
       return results;
     } catch (error) {
       throw new Error(error);
