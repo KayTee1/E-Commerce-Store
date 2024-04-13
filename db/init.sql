@@ -12,6 +12,7 @@ CREATE TABLE
 CREATE TABLE
     IF NOT EXISTS `products` (
         `id` int (11) NOT NULL AUTO_INCREMENT,
+        `product_id` varchar(3) NOT NULL,
         `title` varchar(50) NOT NULL,
         `description` varchar(100) NOT NULL,
         `price` decimal(10, 2) NOT NULL,
@@ -44,37 +45,39 @@ VALUES
         '$2a$12$nklH38sEOS2SRUYDWGVsl.SlaelTEy/l2aznsXsMdY5SmpGM.zDaS'
     );
 
+/*
 INSERT INTO
-    `products` (`title`, `description`, `price`, `image`, `owner`)
+`products` (`title`, `description`, `price`, `image`, `owner`)
 VALUES
-    (
-        'Bike',
-        'A nice bike',
-        '100.00',
-        'https://via.placeholder.com/250',
-        '7c2d548b-c2f9-48fe-842c-c03a70c8f3fc'
-    ),
-    (
-        'Laptop',
-        'A powerful laptop',
-        '800.00',
-        'https://via.placeholder.com/250',
-        'd279c990-74cc-45fd-8f8b-212d3f588ddb'
-    ),
-    (
-        'Smartphone',
-        'A sleek smartphone',
-        '500.00',
-        'https://via.placeholder.com/250',
-        'e2e8e9c7-f7de-4e11-b8ef-1f56e6e5a7a7'
-    ),
-    (
-        'Camera',
-        'A professional camera',
-        '1200.00',
-        'https://via.placeholder.com/250',
-        'a42b4d2d-1b22-4b5b-8eb9-d69be0aae3f2'
-    )
+(
+'Bike',
+'A nice bike',
+'100.00',
+'https://via.placeholder.com/250',
+'7c2d548b-c2f9-48fe-842c-c03a70c8f3fc'
+),
+(
+'Laptop',
+'A powerful laptop',
+'800.00',
+'https://via.placeholder.com/250',
+'d279c990-74cc-45fd-8f8b-212d3f588ddb'
+),
+(
+'Smartphone',
+'A sleek smartphone',
+'500.00',
+'https://via.placeholder.com/250',
+'e2e8e9c7-f7de-4e11-b8ef-1f56e6e5a7a7'
+),
+(
+'Camera',
+'A professional camera',
+'1200.00',
+'https://via.placeholder.com/250',
+'a42b4d2d-1b22-4b5b-8eb9-d69be0aae3f2'
+)
+ */
 INSERT INTO
     `favorites` (`user_id`, `product_id`)
 VALUES
