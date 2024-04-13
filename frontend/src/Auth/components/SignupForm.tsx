@@ -72,6 +72,7 @@ const SignupForm = () => {
       const data = await res.json();
       auth.login(
         data.id,
+        data.username,
         data.token,
         new Date(new Date().getTime() + 1000 * 60 * 60)
       );

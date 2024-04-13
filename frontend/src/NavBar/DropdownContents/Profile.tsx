@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const auth = useContext(AuthContext);
   const navigate = useNavigate();
-
   if (auth.isLoggedIn) {
     return (
       <div className="flex flex-col justify-between h-full">

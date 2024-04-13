@@ -7,9 +7,7 @@ const products = {
       const connection = await pool.getConnection();
       const [results] = await connection.query(selectQuery);
       connection.release();
-      if (results.length === 0) {
-        return { Error: "No products found" };
-      }
+     
       return results;
     } catch (error) {
       throw new Error(error);
@@ -53,7 +51,7 @@ const products = {
     }
   },  
   deleteProductById: async (item_id) => {
-    const deleteQuery = "DELETE FROM `products` WHERE `item_id` = ?";
+    const deleteQuery = "DELETE FROM `products` WHERE `product_id` = ?";
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(deleteQuery, [item_id]);
