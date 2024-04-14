@@ -7,7 +7,7 @@ const products = {
       const connection = await pool.getConnection();
       const [results] = await connection.query(selectQuery);
       connection.release();
-     
+
       return results;
     } catch (error) {
       throw new Error(error);
@@ -39,17 +39,20 @@ const products = {
       throw new Error(error);
     }
   },
-  updateProduct: async (item_id, product) => {
-    const updateQuery = "UPDATE `products` SET ? WHERE `item_id` = ?";
+  updateProduct: async (product_id, product) => {
+    const updateQuery = "UPDATE `products` SET ? WHERE `product_id` = ?";
     try {
       const connection = await pool.getConnection();
-      const [result] = await connection.query(updateQuery, [product, item_id]);
+      const [result] = await connection.query(updateQuery, [
+        product,
+        product_id,
+      ]);
       connection.release();
       return result;
     } catch (error) {
       throw new Error(error);
     }
-  },  
+  },
   deleteProductById: async (item_id) => {
     const deleteQuery = "DELETE FROM `products` WHERE `product_id` = ?";
     try {

@@ -53,12 +53,11 @@ const postNewProduct = async (req, res) => {
   }
 };
 const updateProduct = async (req, res) => {
-  const id = req.params.id;
-  const { item_id, name, price, description, image } = req.body;
+  const { id } = req.params;
+  const { title, price, description, image } = req.body;
 
   const product = {
-    item_id,
-    name,
+    title,
     price,
     description,
     image,
