@@ -62,7 +62,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           <p className="text-gray-600 mr-3">{price} €</p>
         </div>
         <div className="flex flex-row w-9 justify-between">
-          <button onClick={handleFavorite}>
+          <button  onClick={handleFavorite}>
             <CgHeart />
           </button>
           <button onClick={handleAddCart}>

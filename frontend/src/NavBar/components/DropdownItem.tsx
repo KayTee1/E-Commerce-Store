@@ -1,5 +1,6 @@
 import { CgHeart } from "react-icons/cg";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import { useCart } from "../../context/CartContext";
 
 type DropdownItemProps = {
   item: {
@@ -9,6 +10,7 @@ type DropdownItemProps = {
   };
 };
 const DropdownItem = ({ item }: DropdownItemProps) => {
+  const { removeFromCart } = useCart();
   return (
     <div className="w-full p-3 my-1 bg-red-100">
       <div className="flex flex-row items-baseline justify-between">
@@ -22,7 +24,11 @@ const DropdownItem = ({ item }: DropdownItemProps) => {
           <button>
             <CgHeart />
           </button>
-          <button>
+          <button
+            onClick={() => {
+              removeFromCart(item);
+            }}
+          >
             <MdOutlineRemoveShoppingCart />
           </button>
         </div>

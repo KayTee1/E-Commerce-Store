@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "../../shared/Loader";
 type Product = {
   id: number;
   productId: string;
@@ -21,24 +22,29 @@ const ProductDetails = () => {
     owner: "",
     image: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchProductData = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
+      setIsLoading(true);
       const response = await fetch(apiUrl + `/api/products/${product_id}`);
       const data = await response.json();
       setProduct(data);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
     fetchProductData();
   }, [product_id]);
   return (
-    <div className="container mx-auto mt-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="flex flex-col justify-center mx-10 mt-8">
+      {isLoading ? (
+        <Loader isLoading={isLoading} />
+      ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div>
             <img
@@ -54,10 +60,9 @@ const ProductDetails = () => {
               ${product.price}
             </p>
             <p className="text-gray-600">Owner: {product.owner}</p>
-            {/* You can add more details here if needed */}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
