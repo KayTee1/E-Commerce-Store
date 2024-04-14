@@ -12,7 +12,7 @@ type Listing = {
   image: string;
 };
 
-type ConfirmLayoutProps = {
+type DeleteLayoutProps = {
   onHide: () => void;
   item: Listing;
   show: boolean;
@@ -22,7 +22,7 @@ type MessageType = {
   color: string;
 };
 
-export const ConfirmLayout = ({ item, onHide, show }: ConfirmLayoutProps) => {
+export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
   if (!show) {
     return null;
   }
@@ -33,14 +33,14 @@ export const ConfirmLayout = ({ item, onHide, show }: ConfirmLayoutProps) => {
     message: "",
     color: "",
   });
-  const { title } = item;
+  const { title, product_id } = item;
 
   const handleConfirm = async () => {
     const baseApiUrl = import.meta.env.VITE_API_URL;
     try {
       setIsLoading(true);
       const response = await fetch(
-        `${baseApiUrl}/api/products/${item.product_id}`,
+        `${baseApiUrl}/api/products/${product_id}`,
         {
           method: "DELETE",
           headers: {
@@ -63,6 +63,7 @@ export const ConfirmLayout = ({ item, onHide, show }: ConfirmLayoutProps) => {
     }
     setTimeout(function () {
       setMessage({ message: "", color: "" });
+      window.location.reload();
       onHide();
     }, 2000);
   };

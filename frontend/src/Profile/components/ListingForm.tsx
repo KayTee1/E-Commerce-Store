@@ -18,7 +18,7 @@ type ListingFormProps = {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   postListing?: () => Promise<{ message: string; success: boolean }>;
-  editListing?: () => { message: string; success: boolean };
+  editListing?: () => Promise<{ message: string; success: boolean }>;
 };
 
 const ListingForm = ({
@@ -42,7 +42,6 @@ const ListingForm = ({
 
   const validateForm = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const { title, price, description, image } = formData;
 
     if (!title || !price || !description || !image) {
@@ -95,7 +94,25 @@ const ListingForm = ({
           });
         });
     } else if (method === "PUT" && props.editListing) {
-      props.editListing();
+      props
+        .editListing()
+        .then(({ success, message }) => {
+          if (success) {
+            setMessage({ message: message, color: "green" });
+          } else {
+            setMessage({
+              message: message,
+              color: "red",
+            });
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          setMessage({
+            message: "An unexpected error has occurred",
+            color: "red",
+          });
+        });
     }
   };
   return (

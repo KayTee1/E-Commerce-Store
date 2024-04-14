@@ -1,7 +1,7 @@
-import { ConfirmLayout } from "./Modals/ConfirmLayout";
-//import { DeleteLayout } from "./Modals/DeleteLayout";
+import { DeleteLayout } from "./Modals/DeleteLayout";
+import { EditLayout } from "./Modals/EditLayout";
 
-type ModalTypes = "Delete" | "Confirm" | "";
+type ModalTypes = "Delete" | "Edit" | "";
 
 type Listing = {
   id: number;
@@ -10,6 +10,7 @@ type Listing = {
   price: string;
   description: string;
   image: string;
+  owner: string;
 };
 
 type ModalProps = {
@@ -17,6 +18,7 @@ type ModalProps = {
   show: boolean;
   modalType: ModalTypes;
   item?: Listing;
+  setProductData?: React.Dispatch<React.SetStateAction<Listing>>;
 };
 const Modal = ({ onHide, show, modalType, ...props }: ModalProps) => {
   let layout = {
@@ -31,11 +33,18 @@ const Modal = ({ onHide, show, modalType, ...props }: ModalProps) => {
 
   let modalContent;
   switch (modalType) {
-    case "Confirm":
-      modalContent = ConfirmLayout({
+    case "Delete":
+      modalContent = DeleteLayout({
         onHide,
         item: props.item!,
         show: true,
+      });
+      break;
+    case "Edit":
+      modalContent = EditLayout({
+        item: props.item!,
+        show: true,
+        setProductData: props.setProductData!,
       });
       break;
 
