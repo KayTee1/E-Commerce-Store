@@ -27,7 +27,7 @@ const ViewListings = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `${baseApiUrl}/api/users/listings/${auth.userId}`,
+        `${baseApiUrl}/api/users/listings/${auth.username}`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,

@@ -26,7 +26,7 @@ const CreateListings = () => {
       const baseApiUrl = import.meta.env.VITE_API_URL;
       const formDataWithOwner = {
         ...formData,
-        owner: auth.userId ?? "",
+        owner: auth.username ?? "",
         product_id: generateID(),
       };
       const response = await fetch(`${baseApiUrl}/api/products`, {
