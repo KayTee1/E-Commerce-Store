@@ -28,14 +28,18 @@ const SignupForm = () => {
     password: "",
     confirmPassword: "",
   });
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
     setMessage({ message: "", color: "" });
   };
+
   const validateForm = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const { username, email, password, confirmPassword } = formData;
     if (!username || !email || !password || !confirmPassword) {
       setMessage({ message: "Missing details!", color: "red" });
@@ -60,12 +64,6 @@ const SignupForm = () => {
       });
       if (res.status === 422) {
         setMessage({ message: "User already exists!", color: "red" });
-        setFormData({
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        });
         return;
       }
       setMessage({ message: "Sign up successful!", color: "green" });
