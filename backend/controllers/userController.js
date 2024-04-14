@@ -9,7 +9,7 @@ const signUpUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    const existingUser = await users.findByEmail(email);
+    const existingUser = await users.findExistingUser(email, username);
     if (existingUser.length > 0) {
       return res.status(422).json({ error: "User already exists" });
     }

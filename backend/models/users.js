@@ -14,16 +14,18 @@ const users = {
     }
   },
 
-  findByEmail: async (email) => {
+  findExistingUser: async (email, username) => {
     try {
-      const selectQuery = "SELECT * FROM `users` WHERE email=?";
+      const selectQuery =
+        "SELECT * FROM `users` WHERE email = ? OR username = ?";
       const connection = await pool.getConnection();
-      const [results] = await connection.query(selectQuery, [email]);
+      const [results] = await connection.query(selectQuery, [email, username]);
       return results;
     } catch (error) {
       throw new Error(error);
     }
   },
+
   findListingsById: async (id) => {
     try {
       const selectQuery = "SELECT * FROM `products` WHERE `owner` = ?";
