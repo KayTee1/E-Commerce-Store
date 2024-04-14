@@ -5,6 +5,7 @@ import ProductListingCard from "../components/ProductListingCard";
 
 type Product = {
   id: number;
+  product_id: string;
   title: string;
   description: string;
   price: string;

@@ -15,7 +15,7 @@ const getProducts = async (req, res) => {
 };
 
 const getProductById = async (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  const { id } = req.params;
   const response = await products.findProductById(id);
 
   if (!response.Error) {

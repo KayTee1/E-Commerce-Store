@@ -13,11 +13,11 @@ const products = {
       throw new Error(error);
     }
   },
-  findProductById: async (id) => {
-    const selectQuery = "SELECT * FROM `products` WHERE id=?;";
+  findProductById: async (product_id) => {
+    const selectQuery = "SELECT * FROM `products` WHERE product_id=?;";
     try {
       const connection = await pool.getConnection();
-      const [results] = await connection.query(selectQuery, [id]);
+      const [results] = await connection.query(selectQuery, [product_id]);
       connection.release();
       if (results.length === 0) {
         return { Error: "Product not found" };

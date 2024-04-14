@@ -3,10 +3,12 @@ import { PiShoppingCartBold } from "react-icons/pi";
 import { useCart } from "../../context/CartContext";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 type ProductListingProps = {
   product: {
     id: number;
+    product_id: string;
     title: string;
     description: string;
     price: string;
@@ -18,8 +20,9 @@ type ProductListingProps = {
 
 const ProductListingCard = ({ product }: ProductListingProps) => {
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
   const { addToCart } = useCart();
-  const { title, description, price, image } = product;
+  const { product_id, title, description, price, image } = product;
 
   const handleAddCart = () => {
     product.quantity = 1;
@@ -46,12 +49,13 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
   };
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg">
-      <img
-        src={image}
-        alt="Product 1"
-        className="w-full h-48 object-cover"
-      />
+    <div
+      onClick={() => {
+        navigate(`/products/${product.product_id}`);
+      }}
+      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg"
+    >
+      <img src={image} alt="Product 1" className="w-full h-48 object-cover" />
       <div className="p-4 flex flex-col w-64">
         <div className="flex flex-row items-baseline justify-between ">
           <h3 className="text-lg font-semibold mb-2 ">{title}</h3>
