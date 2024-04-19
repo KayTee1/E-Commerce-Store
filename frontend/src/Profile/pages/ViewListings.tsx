@@ -75,7 +75,7 @@ const ViewListings = () => {
 
   if (!isError && userListings.length > 0) {
     content = (
-      <div className="flex flex-wrap gap-4 mx-32 justify-center">
+      <div className="flex flex-wrap gap-4 mx-16 justify-center">
         {userListings.map((listing: any) => (
           <ListingCard key={listing.id} listing={listing} />
         ))}

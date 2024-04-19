@@ -6,6 +6,7 @@ import Loader from "../../shared/Loader";
 
 type Product = {
   id: number;
+  product_id: string;
   title: string;
   price: number;
   description: string;
@@ -30,7 +31,7 @@ const Favorites = () => {
       setIsLoading(true);
       const baseApiUrl = import.meta.env.VITE_API_URL;
       try {
-        const res = await fetch(baseApiUrl + "/api/favorites/" + auth.username, {
+        const res = await fetch(baseApiUrl + "/api/favorites/" + auth.userId, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +39,6 @@ const Favorites = () => {
           },
         });
         const data = await res.json();
-        console.log(data);
         const productPromises = data.map((favorite: Favorite) =>
           populateFavoriteProducts(favorite.product_id)
         );
@@ -90,7 +90,7 @@ const Favorites = () => {
   }
   if (!isLoading && favoriteProducts.length > 0) {
     content = favoriteProducts.map((item, index) => (
-      <DropdownItem key={index} item={item} />
+      <DropdownItem key={index} item={item} type="favorites"/>
     ));
   }
 

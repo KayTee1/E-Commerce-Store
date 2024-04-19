@@ -28,11 +28,11 @@ const products = {
       throw new Error(error);
     }
   },
-  deleteFavorite: async (id) => {
-    const deleteQuery = "DELETE FROM `favorites` WHERE `id` = ?";
+  deleteFavorite: async (user_id, product_id) => {
+    const deleteQuery = "DELETE FROM `favorites` WHERE `user_id` = ? AND `product_id` = ?";
     try {
       const connection = await pool.getConnection();
-      const [results] = await connection.query(deleteQuery, [id]);
+      const [results] = await connection.query(deleteQuery, [user_id, product_id]);
       connection.release();
       return results;
     } catch (error) {

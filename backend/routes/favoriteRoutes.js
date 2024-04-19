@@ -7,11 +7,12 @@ const {
   postNewFavorite,
 } = require("../controllers/favoriteController");
 
-//router.use(verifyToken);
+router.use(verifyToken);
+
 router.get("/:id", getFavorites);
 
 router.post("/", postNewFavorite);
 
-router.delete("/:id", deleteFavoriteById);
+router.delete("/", deleteFavoriteById);
 
 module.exports = router;
