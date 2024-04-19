@@ -20,6 +20,7 @@ const products = {
     try {
       const connection = await pool.getConnection();
       const [result] = await connection.query(insertQuery, [favorite]);
+      console.log(result);
       connection.release();
       const id = result.insertId;
       return id;

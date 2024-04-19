@@ -30,7 +30,7 @@ const Favorites = () => {
       setIsLoading(true);
       const baseApiUrl = import.meta.env.VITE_API_URL;
       try {
-        const res = await fetch(baseApiUrl + "/api/favorites/" + auth.userId, {
+        const res = await fetch(baseApiUrl + "/api/favorites/" + auth.username, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ const Favorites = () => {
           },
         });
         const data = await res.json();
-
+        console.log(data);
         const productPromises = data.map((favorite: Favorite) =>
           populateFavoriteProducts(favorite.product_id)
         );

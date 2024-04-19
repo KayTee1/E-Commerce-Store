@@ -32,14 +32,15 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
   const handleFavorite = async () => {
     if (!auth.isLoggedIn)
       return console.log("Please log in to add to favorites");
-
+    const baseApiUrl = import.meta.env.VITE_API_URL;
     try {
-      const res = await fetch(`/api/favorites/${auth.userId}`, {
+      const res = await fetch(baseApiUrl + `/api/favorites/${auth.userId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth.token}`,
         },
+        body: JSON.stringify({ product_id: product.product_id }),
       });
       const data = await res.json();
       console.log(data);
@@ -62,7 +63,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           <p className="text-gray-600 mr-3">{price} €</p>
         </div>
         <div className="flex flex-row w-9 justify-between">
-          <button  onClick={handleFavorite}>
+          <button onClick={handleFavorite}>
             <CgHeart />
           </button>
           <button onClick={handleAddCart}>
