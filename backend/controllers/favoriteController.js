@@ -17,17 +17,17 @@ const getFavorites = async (req, res) => {
 };
 
 const postNewFavorite = async (req, res) => {
-  const { product_id } = req.body;
-  const { userId } = req.params;
+  const { product_id, user_id } = req.body;
+  console.log(product_id, user_id)
   try {
-    if (!userId || !product_id) {
+    if (!user_id || !product_id) {
       return res.status(400).json({ error: "Missing required fields" });
     }
     const favorite = {
-      user_id: userId,
+      user_id,
       product_id,
     };
-    console.log(favorite)
+    console.log(favorite);
     const response = await favorites.postFavorite(favorite);
 
     if (response) {

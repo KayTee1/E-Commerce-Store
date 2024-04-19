@@ -8,13 +8,13 @@ Authorization: BEARER {{authToken}}
 
 
 ###
-POST {{server}}/api/favorites/debd085f-643c-43b5-8449-1fc4bb0397ae
+POST {{server}}/api/favorites
 Content-Type: application/json
 Authorization: BEARER {{authToken}}
 
 {
-    "user_id": "debd085f-643c-43b5-8449-1fc4bb0397ae",
-    "product_id": "1"
+    "user_id": "0fcddf38-fd9d-410f-aa70-bf910864055a",
+    "product_id": "Oe2"
 }
 
 

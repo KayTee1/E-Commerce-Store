@@ -30,7 +30,7 @@ const signUpUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        user_id: newUser.id,
+        userId: newUser.user_id,
         email: newUser.email,
         username: newUser.username,
       },
@@ -39,7 +39,7 @@ const signUpUser = async (req, res) => {
     );
 
     res.status(201).json({
-      user_id: newUser.id,
+      userId: newUser.user_id,
       username: newUser.username,
       email: newUser.email,
       token,
@@ -66,10 +66,10 @@ const loginUser = async (req, res) => {
     if (!isValidPassword) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-
+console.log(user)
     const token = jwt.sign(
       {
-        id: user.id,
+        userId: user.user_id,
         username: user.username,
         email: user.email,
       },
@@ -77,7 +77,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
     res.status(200).json({
-      id: user.id,
+      userId: user.user_id,
       username: user.username,
       email: user.email,
       token,

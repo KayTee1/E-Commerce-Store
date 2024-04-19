@@ -59,9 +59,9 @@ const LoginForm = () => {
         return;
       }
       setMessage({ message: "Login successful!", color: "green" });
-
+      console.log(data)
       auth.login(
-        data.id,
+        data.userId,
         data.username,
         data.token,
         new Date(new Date().getTime() + 1000 * 60 * 60)

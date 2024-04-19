@@ -10,7 +10,7 @@ const {
 //router.use(verifyToken);
 router.get("/:id", getFavorites);
 
-router.post("/:userId", postNewFavorite);
+router.post("/", postNewFavorite);
 
 router.delete("/:id", deleteFavoriteById);
 
