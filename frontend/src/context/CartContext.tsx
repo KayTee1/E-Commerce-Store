@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useContext, ReactNode } from "react";
 
 type Item = {
   id: number;
+  product_id: string;
   title: string;
   quantity?: number;
 };
