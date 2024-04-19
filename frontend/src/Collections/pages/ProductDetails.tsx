@@ -57,7 +57,7 @@ const ProductDetails = () => {
             <h2 className="text-2xl font-bold mb-4">{product.title}</h2>
             <p className="text-gray-600 mb-4">{product.description}</p>
             <p className="text-gray-800 font-bold text-xl mb-4">
-              ${product.price}
+              {product.price}€
             </p>
             <p className="text-gray-600">Owner: {product.owner}</p>
           </div>

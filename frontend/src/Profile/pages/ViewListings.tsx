@@ -85,7 +85,7 @@ const ViewListings = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
-      <h2 className="text-3xl font-bold mb-4">Your listings</h2>
+      <h2 className="text-3xl font-bold mb-8">Your listings</h2>
       {isLoading ? (
         <div className="flex justify-center">
           <Loader isLoading={isLoading} />
