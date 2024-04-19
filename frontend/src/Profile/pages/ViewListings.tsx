@@ -75,11 +75,7 @@ const ViewListings = () => {
 
   if (!isError && userListings.length > 0) {
     content = (
-      <div
-        className={`mt-8 grid lg:grid-cols-3 md:grid-cols-2 gap-3 ${
-          userListings.length === 1 ? "grid-cols-1 justify-center" : ""
-        }`}
-      >
+      <div className="flex flex-wrap gap-4 mx-32 justify-center">
         {userListings.map((listing: any) => (
           <ListingCard key={listing.id} listing={listing} />
         ))}
