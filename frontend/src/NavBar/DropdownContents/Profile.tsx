@@ -45,12 +45,16 @@ const Profile = () => {
     );
   }
   return (
-    <div className="flex flex-col">
-      <p className="text-2xl underline">Account</p>
-      <p className="text-xl">Log in to see your account</p>
-      <a className="text-blue-500 hover:underline" href="/login">
+    <div className="flex flex-col justify-between h-screen">
+      <div>
+        <p className="text-2xl underline">Account</p>
+        <p className="text-xl mt-4">Log in to see your account</p>
+      </div>
+      <button onClick={() => {
+        navigate("/login")
+      }} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
         Log in
-      </a>
+      </button>
     </div>
   );
 };

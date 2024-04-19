@@ -26,8 +26,8 @@ const CreateListings = () => {
       const baseApiUrl = import.meta.env.VITE_API_URL;
       const formDataWithOwner = {
         ...formData,
-        owner: auth.userId ?? "",
-        product_id: generateID(),
+        owner: auth.username ?? "",
+        product_id: await generateID(),
       };
       const response = await fetch(`${baseApiUrl}/api/products`, {
         method: "POST",
@@ -65,7 +65,7 @@ const CreateListings = () => {
 
 export default CreateListings;
 
-const generateID = (): string => {
+const generateID = async (): Promise<string> => {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let id = "";
@@ -73,5 +73,16 @@ const generateID = (): string => {
     const randomIndex = Math.floor(Math.random() * characters.length);
     id += characters[randomIndex];
   }
+  const isExisting = await findExistingProduct(id);
+  if (isExisting) generateID();
   return id;
+};
+const findExistingProduct = async (product_id: string) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+  const response = await fetch(apiUrl + `/api/products/${product_id}`);
+  if (response.status === 404) {
+    return false;
+  }
+  return true;
 };

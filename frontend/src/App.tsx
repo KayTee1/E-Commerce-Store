@@ -12,6 +12,7 @@ import Signup from "./Auth/pages/Signup";
 import NavBar from "./NavBar/NavBar";
 import ViewListings from "./Profile/pages/ViewListings";
 import CreateListings from "./Profile/pages/CreateListings";
+import ProductDetails from "./Collections/pages/ProductDetails";
 
 let logoutTimer: number | undefined;
 
@@ -83,7 +84,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
-        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/products/:product_id" element={<ProductDetails />} />
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -106,6 +107,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collections" element={<Collections />} />
+        <Route path="/products/:product_id" element={<ProductDetails />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />

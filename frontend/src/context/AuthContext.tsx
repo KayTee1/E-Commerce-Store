@@ -5,7 +5,12 @@ type AuthContextType = {
   token: string | null;
   userId: string | null;
   username: string | null;
-  login: (userId: string, username:string, token: string, expirationDate: Date) => void;
+  login: (
+    userId: string,
+    username: string,
+    token: string,
+    expirationDate: Date
+  ) => void;
   logout: () => void;
 };
 

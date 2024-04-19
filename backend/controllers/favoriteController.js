@@ -17,8 +17,9 @@ const getFavorites = async (req, res) => {
 };
 
 const postNewFavorite = async (req, res) => {
+  const { product_id, user_id } = req.body;
+  console.log(product_id, user_id);
   try {
-    const { user_id, product_id } = req.body;
     if (!user_id || !product_id) {
       return res.status(400).json({ error: "Missing required fields" });
     }
@@ -26,7 +27,7 @@ const postNewFavorite = async (req, res) => {
       user_id,
       product_id,
     };
-
+    console.log(favorite);
     const response = await favorites.postFavorite(favorite);
 
     if (response) {
@@ -41,8 +42,9 @@ const postNewFavorite = async (req, res) => {
 };
 
 const deleteFavoriteById = async (req, res) => {
-  const id = req.params.id;
-  const response = await favorites.deleteFavorite(id);
+  const { product_id, user_id } = req.body;
+  console.log(product_id, user_id);
+  const response = await favorites.deleteFavorite(user_id, product_id);
 
   if (response) {
     res.status(200).json({ message: "Favorite deleted successfully" });

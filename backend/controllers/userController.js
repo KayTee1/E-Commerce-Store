@@ -9,7 +9,7 @@ const signUpUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
-    const existingUser = await users.findByEmail(email);
+    const existingUser = await users.findExistingUser(email, username);
     if (existingUser.length > 0) {
       return res.status(422).json({ error: "User already exists" });
     }
@@ -17,7 +17,7 @@ const signUpUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = {
-      id: v4(),
+      user_id: v4(),
       username,
       email,
       hashed_password: hashedPassword,
@@ -30,7 +30,7 @@ const signUpUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: newUser.id,
+        userId: newUser.user_id,
         email: newUser.email,
         username: newUser.username,
       },
@@ -39,7 +39,7 @@ const signUpUser = async (req, res) => {
     );
 
     res.status(201).json({
-      id: newUser.id,
+      userId: newUser.user_id,
       username: newUser.username,
       email: newUser.email,
       token,
@@ -52,11 +52,11 @@ const signUpUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
-
+  const username = "";
   try {
-    const [user] = await users.findByEmail(email);
+    const [user] = await users.findExistingUser(email, username);
     if (!user) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(404).json({ error: "User not found" });
     }
 
     const isValidPassword = await bcrypt.compare(
@@ -66,10 +66,9 @@ const loginUser = async (req, res) => {
     if (!isValidPassword) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-
     const token = jwt.sign(
       {
-        id: user.id,
+        userId: user.user_id,
         username: user.username,
         email: user.email,
       },
@@ -77,7 +76,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
     res.status(200).json({
-      id: user.id,
+      userId: user.user_id,
       username: user.username,
       email: user.email,
       token,

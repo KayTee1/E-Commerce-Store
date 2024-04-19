@@ -5,6 +5,7 @@ import ProductListingCard from "../components/ProductListingCard";
 
 type Product = {
   id: number;
+  product_id: string;
   title: string;
   description: string;
   price: string;
@@ -45,7 +46,7 @@ const Collections = () => {
       </div>
     );
   }
-  
+
   if (productsData.length === 0) {
     content = (
       <div className="text-center">
@@ -54,9 +55,9 @@ const Collections = () => {
     );
   }
 
-  if(!isError && productsData.length > 0) {
+  if (!isError && productsData.length > 0) {
     content = (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
+      <div className="flex flex-wrap gap-4 mx-32 justify-center">
         {productsData.map((product: Product) => (
           <ProductListingCard key={product.id} product={product} />
         ))}

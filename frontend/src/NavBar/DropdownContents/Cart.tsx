@@ -2,6 +2,13 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import DropdownItem from "../components/DropdownItem";
 
+type ItemTypes = {
+  id: number;
+  product_id: string;
+  title: string;
+  quantity?: number;
+};
+
 const Cart = () => {
   const { cartState, handleEmptyCart: empty } = useCart();
   const navigate = useNavigate();
@@ -22,8 +29,8 @@ const Cart = () => {
           {cartState.items.length === 0 ? (
             <p className="text-xl">Cart is empty</p>
           ) : (
-            cartState.items.map((item, index: number) => (
-              <DropdownItem key={index} item={item} />
+            cartState.items.map((item: ItemTypes) => (
+              <DropdownItem key={item.id} item={item} />
             ))
           )}
         </div>

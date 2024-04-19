@@ -27,7 +27,7 @@ const ViewListings = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `${baseApiUrl}/api/users/listings/${auth.userId}`,
+        `${baseApiUrl}/api/users/listings/${auth.username}`,
         {
           headers: {
             Authorization: `Bearer ${auth.token}`,
@@ -75,11 +75,7 @@ const ViewListings = () => {
 
   if (!isError && userListings.length > 0) {
     content = (
-      <div
-        className={`mt-8 grid lg:grid-cols-3 md:grid-cols-2 gap-3 ${
-          userListings.length === 1 ? "grid-cols-1 justify-center" : ""
-        }`}
-      >
+      <div className="flex flex-wrap gap-4 mx-16 justify-center">
         {userListings.map((listing: any) => (
           <ListingCard key={listing.id} listing={listing} />
         ))}
@@ -89,7 +85,7 @@ const ViewListings = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
-      <h2 className="text-3xl font-bold mb-4">Your listings</h2>
+      <h2 className="text-3xl font-bold mb-8">Your listings</h2>
       {isLoading ? (
         <div className="flex justify-center">
           <Loader isLoading={isLoading} />

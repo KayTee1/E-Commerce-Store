@@ -6,6 +6,7 @@ import Loader from "../../shared/Loader";
 
 type Product = {
   id: number;
+  product_id: string;
   title: string;
   price: number;
   description: string;
@@ -38,7 +39,6 @@ const Favorites = () => {
           },
         });
         const data = await res.json();
-
         const productPromises = data.map((favorite: Favorite) =>
           populateFavoriteProducts(favorite.product_id)
         );
@@ -90,7 +90,7 @@ const Favorites = () => {
   }
   if (!isLoading && favoriteProducts.length > 0) {
     content = favoriteProducts.map((item, index) => (
-      <DropdownItem key={index} item={item} />
+      <DropdownItem key={index} item={item} type="favorites"/>
     ));
   }
 
