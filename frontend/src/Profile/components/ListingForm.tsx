@@ -19,6 +19,12 @@ type ListingFormProps = {
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   postListing?: () => Promise<{ message: string; success: boolean }>;
   editListing?: () => Promise<{ message: string; success: boolean }>;
+  placeholders?: {
+    title: string;
+    price: string;
+    description: string;
+    image: string;
+  };
 };
 
 const ListingForm = ({
@@ -118,23 +124,33 @@ const ListingForm = ({
   return (
     <form onSubmit={validateForm} className="grid">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <FormItem name="title" placeholder="Bike" handleChange={handleChange} />
+        <FormItem
+          name="title"
+          placeholder={props.placeholders ? props.placeholders.title : "Bike"}
+          handleChange={handleChange}
+        />
         <FormItem
           name="price"
           displayName="Price (€)"
-          placeholder="80"
+          placeholder={props.placeholders ? props.placeholders.price : "100"}
           handleChange={handleChange}
         />
       </div>
       <div className="flex flex-col gap-1">
         <FormItem
           name="description"
-          placeholder="A nice bike"
+          placeholder={
+            props.placeholders ? props.placeholders.description : "A nice bike"
+          }
           handleChange={handleChange}
         />
         <FormItem
           name="image"
-          placeholder="https://www.example.com/image.jpg"
+          placeholder={
+            props.placeholders
+              ? props.placeholders.image
+              : "https://example.com/image.jpg"
+          }
           handleChange={handleChange}
         />
       </div>

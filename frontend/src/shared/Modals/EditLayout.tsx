@@ -34,7 +34,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
   const auth = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { title, product_id } = item;
+  const { title, product_id, price, description, image } = item;
 
   const [formData, setFormData] = useState<FormData>({
     title: "",
@@ -89,6 +89,12 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
           formData={formData}
           setFormData={setFormData}
           editListing={editListing}
+          placeholders={{
+            title,
+            price,
+            description,
+            image,
+          }}
         />
       </div>
     </div>
