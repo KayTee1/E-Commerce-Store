@@ -17,7 +17,7 @@ const signUpUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = {
-      id: v4(),
+      user_id: v4(),
       username,
       email,
       hashed_password: hashedPassword,
@@ -30,7 +30,7 @@ const signUpUser = async (req, res) => {
 
     const token = jwt.sign(
       {
-        id: newUser.id,
+        user_id: newUser.id,
         email: newUser.email,
         username: newUser.username,
       },
@@ -39,7 +39,7 @@ const signUpUser = async (req, res) => {
     );
 
     res.status(201).json({
-      id: newUser.id,
+      user_id: newUser.id,
       username: newUser.username,
       email: newUser.email,
       token,
