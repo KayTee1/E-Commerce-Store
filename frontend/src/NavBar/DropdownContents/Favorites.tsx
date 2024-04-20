@@ -90,7 +90,12 @@ const Favorites = () => {
   }
   if (!isLoading && favoriteProducts.length > 0) {
     content = favoriteProducts.map((item, index) => (
-      <DropdownItem key={index} item={item} type="favorites"/>
+      <DropdownItem
+        key={index}
+        item={item}
+        type="favorites"
+        setFavoriteProducts={setFavoriteProducts}
+      />
     ));
   }
 

@@ -57,10 +57,15 @@ const Collections = () => {
 
   if (!isError && productsData.length > 0) {
     content = (
-      <div className="flex flex-wrap gap-4 mx-32 justify-center">
-        {productsData.map((product: Product) => (
-          <ProductListingCard key={product.id} product={product} />
-        ))}
+      <div className="flex flex-col">
+        <p className="text-lg text-gray-600 mb-8 text-center">
+          Click on product image for additional information!
+        </p>
+        <div className="flex flex-wrap gap-4 mx-32 justify-center">
+          {productsData.map((product: Product) => (
+            <ProductListingCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -71,6 +76,7 @@ const Collections = () => {
       <p className="text-lg text-gray-600 mb-8">
         Browse our wide range of products.
       </p>
+
       {isLoading ? (
         <div className="flex justify-center">
           <Loader isLoading={isLoading} />

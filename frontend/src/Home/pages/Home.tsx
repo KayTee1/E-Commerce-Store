@@ -7,7 +7,7 @@ const Home = () => {
       <p className="text-lg text-gray-600 mb-8">
         Your one-stop shop for all your needs.
       </p>
-
+      
       <Link
         to="/collections"
         className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
