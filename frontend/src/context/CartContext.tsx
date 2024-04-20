@@ -1,6 +1,15 @@
 import React, { createContext, useReducer, useContext, ReactNode } from "react";
-
-type Item = {
+type Product = {
+  id: number;
+  product_id: string;
+  title: string;
+  description: string;
+  price: string;
+  owner: string;
+  image: string;
+  quantity?: number;
+};
+type Item = Product & {
   id: number;
   product_id: string;
   title: string;
@@ -128,7 +137,7 @@ const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         incrementQuantity,
         decrementQuantity,
         getTotalQuantity,
-        handleEmptyCart
+        handleEmptyCart,
       }}
     >
       {children}

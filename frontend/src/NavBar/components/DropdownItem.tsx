@@ -1,23 +1,41 @@
-import { useContext } from "react";
-import { CgHeart } from "react-icons/cg";
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
+import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { BsHeartbreak } from "react-icons/bs";
+import ProductIcons from "../../shared/ProductIcons";
+import { useCart } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
-type DropdownItemProps = {
-  item: {
-    id: number;
-    product_id: string;
-    title: string;
-    quantity?: number;
-  };
-  type: "cart" | "favorites";
+type Product = {
+  id: number;
+  product_id: string;
+  title: string;
+  description: string;
+  price: string;
+  owner: string;
+  image: string;
+  quantity?: number;
 };
 
-const DropdownItem = ({ item, type }: DropdownItemProps) => {
-  const auth = useContext(AuthContext);
+type Item = Product & {
+  id: number;
+  product_id: string;
+  title: string;
+  owner: string;
+  quantity?: number;
+};
 
-  const handleAddFavorite = async () => {
+type DropdownItemProps = {
+  item: Item;
+  type: "cart" | "favorites";
+  setFavoriteProducts?: React.Dispatch<React.SetStateAction<Product[]>>;
+};
+
+const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
+  const auth = useContext(AuthContext);
+  const { removeFromCart } = useCart();
+  const navigate = useNavigate();
+
+  const handleFavorite = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
       const response = await fetch(`${apiUrl}/api/favorites`, {
@@ -54,7 +72,11 @@ const DropdownItem = ({ item, type }: DropdownItemProps) => {
           product_id: item.product_id,
         }),
       });
-
+      if (props.setFavoriteProducts) {
+        props.setFavoriteProducts((prev) =>
+          prev.filter((product) => product.id !== item.id)
+        );
+      }
       if (!response.ok) {
         throw new Error("Failed to remove from favorites");
       }
@@ -62,10 +84,20 @@ const DropdownItem = ({ item, type }: DropdownItemProps) => {
       console.error(e);
     }
   };
+  const handleRemoveCart = () => {
+    removeFromCart(item);
+  };
   return (
     <div className="flex items-center justify-between p-4 my-2 bg-gray-100 rounded-lg shadow-md">
       <div className="flex items-center">
-        <p className="font-semibold">{item.title}</p>
+        <p
+          onClick={() => {
+            navigate(`/products/${item.product_id}`);
+          }}
+          className="font-semibold underline cursor-pointer"
+        >
+          {item.title}
+        </p>
         {item.quantity && item.quantity > 1 && (
           <p className="ml-2 text-xs text-gray-500">{`Qty: ${item.quantity}`}</p>
         )}
@@ -78,17 +110,10 @@ const DropdownItem = ({ item, type }: DropdownItemProps) => {
           <BsHeartbreak />
         </button>
       ) : (
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={handleAddFavorite}
-            className="text-red-500 hover:text-red-700"
-          >
-            <CgHeart />
-          </button>
-          <button className="text-gray-500 hover:text-gray-700">
-            <MdOutlineRemoveShoppingCart />
-          </button>
-        </div>
+        <ProductIcons
+          handleFavorite={handleFavorite}
+          handleCart={handleRemoveCart}
+        />
       )}
     </div>
   );

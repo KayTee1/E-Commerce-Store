@@ -30,7 +30,7 @@ const Cart = () => {
             <p className="text-xl">Cart is empty</p>
           ) : (
             cartState.items.map((item: ItemTypes) => (
-              <DropdownItem key={item.id} item={item} />
+              <DropdownItem key={item.id} item={item} type="cart" />
             ))
           )}
         </div>

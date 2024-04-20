@@ -8,9 +8,11 @@ type Product = {
   id: number;
   product_id: string;
   title: string;
-  price: number;
   description: string;
+  price: string;
+  owner: string;
   image: string;
+  quantity?: number;
 };
 
 type Favorite = {
@@ -90,7 +92,12 @@ const Favorites = () => {
   }
   if (!isLoading && favoriteProducts.length > 0) {
     content = favoriteProducts.map((item, index) => (
-      <DropdownItem key={index} item={item} type="favorites"/>
+      <DropdownItem
+        key={index}
+        item={item}
+        type="favorites"
+        setFavoriteProducts={setFavoriteProducts}
+      />
     ));
   }
 
