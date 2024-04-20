@@ -8,9 +8,11 @@ type Product = {
   id: number;
   product_id: string;
   title: string;
-  price: number;
   description: string;
+  price: string;
+  owner: string;
   image: string;
+  quantity?: number;
 };
 
 type Favorite = {

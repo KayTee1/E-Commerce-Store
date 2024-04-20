@@ -3,23 +3,29 @@ import { AuthContext } from "../../context/AuthContext";
 import { BsHeartbreak } from "react-icons/bs";
 import ProductIcons from "../../shared/ProductIcons";
 import { useCart } from "../../context/CartContext";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
   id: number;
   product_id: string;
   title: string;
-  price: number;
   description: string;
+  price: string;
+  owner: string;
   image: string;
+  quantity?: number;
+};
+
+type Item = Product & {
+  id: number;
+  product_id: string;
+  title: string;
+  owner: string;
+  quantity?: number;
 };
 
 type DropdownItemProps = {
-  item: {
-    id: number;
-    product_id: string;
-    title: string;
-    quantity?: number;
-  };
+  item: Item;
   type: "cart" | "favorites";
   setFavoriteProducts?: React.Dispatch<React.SetStateAction<Product[]>>;
 };
@@ -27,6 +33,7 @@ type DropdownItemProps = {
 const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
   const auth = useContext(AuthContext);
   const { removeFromCart } = useCart();
+  const navigate = useNavigate();
 
   const handleFavorite = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -83,7 +90,14 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
   return (
     <div className="flex items-center justify-between p-4 my-2 bg-gray-100 rounded-lg shadow-md">
       <div className="flex items-center">
-        <p className="font-semibold">{item.title}</p>
+        <p
+          onClick={() => {
+            navigate(`/products/${item.product_id}`);
+          }}
+          className="font-semibold underline cursor-pointer"
+        >
+          {item.title}
+        </p>
         {item.quantity && item.quantity > 1 && (
           <p className="ml-2 text-xs text-gray-500">{`Qty: ${item.quantity}`}</p>
         )}
