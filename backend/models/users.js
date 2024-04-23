@@ -20,6 +20,7 @@ const users = {
         "SELECT * FROM `users` WHERE email = ? OR username = ?";
       const connection = await pool.getConnection();
       const [results] = await connection.query(selectQuery, [email, username]);
+      connection.release();
       return results;
     } catch (error) {
       throw new Error(error);
@@ -30,12 +31,9 @@ const users = {
     try {
       const selectQuery = "SELECT * FROM `products` WHERE `owner` = ?";
       const connection = await pool.getConnection();
-      try {
-        const [results] = await connection.query(selectQuery, [id]);
-        return results;
-      } finally {
-        connection.release();
-      }
+      const [results] = await connection.query(selectQuery, [id]);
+      connection.release();
+      return results;
     } catch (error) {
       console.error("Error fetching listings by owner ID:", error);
       throw error;
