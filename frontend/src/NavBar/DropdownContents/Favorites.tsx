@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 import DropdownItem from "../components/DropdownItem";
 import Loader from "../../shared/Loader";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
   id: number;
@@ -25,6 +26,7 @@ const Favorites = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setFavoriteProducts([]);
@@ -85,7 +87,19 @@ const Favorites = () => {
     );
   }
   if (!auth.isLoggedIn) {
-    content = <p className="text-xl">Log in to see your favorites</p>;
+    content = (
+      <div className="flex flex-col justify-between h-screen">
+        <p className="text-xl">Log in to see your favorites</p>
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        >
+          Log in
+        </button>
+      </div>
+    );
   }
   if (!isLoading && favoriteProducts.length === 0) {
     content = <p className="text-xl">No favorites found</p>;

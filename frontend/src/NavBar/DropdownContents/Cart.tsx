@@ -6,6 +6,10 @@ type ItemTypes = {
   id: number;
   product_id: string;
   title: string;
+  description: string;
+  price: string;
+  owner: string;
+  image: string;
   quantity?: number;
 };
 

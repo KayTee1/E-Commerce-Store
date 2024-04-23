@@ -5,7 +5,7 @@ const Signup = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-md mx-auto mt-3 bg-white rounded-lg overflow-hidden shadow-lg">
+    <div className="max-w-md mx-auto mt-5 bg-white rounded-lg overflow-hidden shadow-lg">
       <div className="bg-gray-100 p-2">
         <h1 className="text-center text-2xl font-bold">Sign Up</h1>
       </div>

@@ -122,7 +122,10 @@ const ListingForm = ({
     }
   };
   return (
-    <form onSubmit={validateForm} className="grid">
+    <form
+      onSubmit={validateForm}
+      className="grid bg-slate-100 p-9 rounded-lg border-solid border-4"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         <FormItem
           name="title"

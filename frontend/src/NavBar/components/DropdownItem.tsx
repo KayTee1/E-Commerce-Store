@@ -113,6 +113,7 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
         <ProductIcons
           handleFavorite={handleFavorite}
           handleCart={handleRemoveCart}
+          type="removeCart"
         />
       )}
     </div>
