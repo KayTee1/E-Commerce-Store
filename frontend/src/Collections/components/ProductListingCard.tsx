@@ -69,6 +69,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
         <ProductIcons
           handleFavorite={handleFavorite}
           handleCart={handleAddCart}
+          type="addCart"
         />
         <p className="w-48">{description}</p>
       </div>

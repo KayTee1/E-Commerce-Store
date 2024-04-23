@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import Loader from "../../shared/Loader";
 import ProductListingCard from "../components/ProductListingCard";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 type Product = {
   id: number;
@@ -18,6 +20,9 @@ const Collections = () => {
   const [productsData, setProductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState(false);
+
+  const auth = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -50,7 +55,15 @@ const Collections = () => {
   if (productsData.length === 0) {
     content = (
       <div className="text-center">
-        <p>No products found</p>
+        <p>No products yet</p>
+        <button
+          onClick={() => {
+            !auth.isLoggedIn ? navigate("/login") : navigate("/create-listing");
+          }}
+          className="mt-5 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        >
+          Post the first listing!
+        </button>
       </div>
     );
   }
@@ -58,9 +71,10 @@ const Collections = () => {
   if (!isError && productsData.length > 0) {
     content = (
       <div className="flex flex-col">
-        <p className="text-lg text-gray-600 mb-8 text-center">
-          Click on product image for additional information!
-        </p>
+        <div className="text-lg text-gray-600 mb-8 text-center">
+          <p>Browse our wide range of products.</p>
+          <p>Click on product image for additional information!</p>
+        </div>
         <div className="flex flex-wrap gap-4 mx-32 justify-center">
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
@@ -73,10 +87,6 @@ const Collections = () => {
   return (
     <div className="flex flex-col mt-4 items-center justify-center">
       <h2 className="text-3xl font-bold mb-4">Collections</h2>
-      <p className="text-lg text-gray-600 mb-8">
-        Browse our wide range of products.
-      </p>
-
       {isLoading ? (
         <div className="flex justify-center">
           <Loader isLoading={isLoading} />
