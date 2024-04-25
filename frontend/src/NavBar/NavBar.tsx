@@ -12,7 +12,7 @@ const NavBar = () => {
   const handleIconClick = (type: "favorites" | "cart" | "profile") => {
     setOpenDropdown(openDropdown === type ? null : type);
   };
-  
+
   const dropdownRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
