@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from "react";
 import FormItem from "../../shared/FormItem";
 import Message from "../../shared/Message";
+import { CategoriesSelector } from "./CategoriesSelector";
 type FormData = {
   title: string;
   price: string;
@@ -27,12 +28,17 @@ type ListingFormProps = {
   };
 };
 
+type Category = {
+  category_id: string;
+  name: string;
+};
 const ListingForm = ({
   method,
   formData,
   setFormData,
   ...props
 }: ListingFormProps) => {
+  const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
   const [message, setMessage] = useState<MessageType>({
     message: "",
     color: "",
@@ -155,6 +161,16 @@ const ListingForm = ({
               : "https://example.com/image.jpg"
           }
           handleChange={handleChange}
+        />
+      </div>
+
+      <div className="mx-2 my-2">
+        <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+          Categories
+        </label>
+        <CategoriesSelector
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
         />
       </div>
 

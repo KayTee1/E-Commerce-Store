@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 
 import { AuthContext } from "../../context/AuthContext";
 import ListingForm from "../components/ListingForm";
+import { generateID } from "../../utils/IDs";
 
 type FormData = {
   title: string;
@@ -27,7 +28,7 @@ const CreateListings = () => {
       const formDataWithOwner = {
         ...formData,
         owner: auth.username ?? "",
-        product_id: await generateID(),
+        product_id: await generateID("products"),
       };
       const response = await fetch(`${baseApiUrl}/api/products`, {
         method: "POST",
@@ -65,24 +66,4 @@ const CreateListings = () => {
 
 export default CreateListings;
 
-const generateID = async (): Promise<string> => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let id = "";
-  for (let i = 0; i < 3; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    id += characters[randomIndex];
-  }
-  const isExisting = await findExistingProduct(id);
-  if (isExisting) generateID();
-  return id;
-};
-const findExistingProduct = async (product_id: string) => {
-  const apiUrl = import.meta.env.VITE_API_URL;
 
-  const response = await fetch(apiUrl + `/api/products/${product_id}`);
-  if (response.status === 404) {
-    return false;
-  }
-  return true;
-};
