@@ -29,7 +29,7 @@ type ListingFormProps = {
 };
 
 type Category = {
-  id: number;
+  category_id: string;
   name: string;
 };
 const ListingForm = ({
