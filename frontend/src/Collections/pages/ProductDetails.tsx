@@ -19,7 +19,7 @@ const ProductDetails = () => {
   const { product_id } = useParams();
   const { addToCart } = useCart();
   const auth = useContext(AuthContext);
-  
+
   const [product, setProduct] = useState<Product>({
     id: 0,
     product_id: "",
@@ -48,10 +48,9 @@ const ProductDetails = () => {
     fetchProductData();
   }, [product_id]);
 
-
   const handleAddCart = () => {
     addToCart(product);
-  }
+  };
 
   const handleAddFavorite = async () => {
     if (!auth.isLoggedIn)
@@ -74,7 +73,7 @@ const ProductDetails = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center mx-10 mt-8">
@@ -95,7 +94,11 @@ const ProductDetails = () => {
             <p className="text-gray-800 font-bold text-xl mb-4">
               {product.price}€
             </p>
-            <ProductIcons handleCart={handleAddCart} handleFavorite={handleAddFavorite} />
+            <ProductIcons
+              handleCart={handleAddCart}
+              handleFavorite={handleAddFavorite}
+              type="addCart"
+            />
             <p className="text-gray-600">Owner: {product.owner}</p>
           </div>
         </div>
