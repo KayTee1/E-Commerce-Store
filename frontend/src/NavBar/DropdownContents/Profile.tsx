@@ -61,7 +61,7 @@ const Profile = () => {
         </button>
         <button
           onClick={() => {
-            navigate("/signin");
+            navigate("/signup");
           }}
           className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
         >

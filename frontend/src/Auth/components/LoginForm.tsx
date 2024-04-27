@@ -54,12 +54,12 @@ const LoginForm = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (res.status === 401) {
+      if (res.status === 401 || res.status === 404) {
         setMessage({ message: "Invalid credentials!", color: "red" });
         return;
       }
       setMessage({ message: "Login successful!", color: "green" });
-      console.log(data)
+      console.log(data);
       auth.login(
         data.userId,
         data.username,
