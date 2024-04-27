@@ -41,8 +41,6 @@ export const CategoriesSelector = ({
     };
   }, []);
 
-  useEffect(() => {}, []);
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
@@ -112,7 +110,7 @@ export const CategoriesSelector = ({
           title="Add category"
           onClick={() => {
             handleAddCategory({
-              category_id: "",
+              category_id: selectedCategories.length + 1 + "",
               name: inputValue,
             });
           }}
@@ -136,22 +134,18 @@ export const CategoriesSelector = ({
             <ul className="max-h-36 overflow-scroll absolute left-0 w-full mt-1 bg-white border border-gray-300 rounded-md">
               {filteredCategories.length === 0
                 ? categories.map((category: Category) => (
-                    <li
+                    <CategoryListItem
                       key={category.category_id}
-                      className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleAddCategory(category)}
-                    >
-                      {category.name}
-                    </li>
+                      category={category}
+                      handleAddCategory={handleAddCategory}
+                    />
                   ))
                 : filteredCategories.map((category: Category) => (
-                    <li
+                    <CategoryListItem
                       key={category.category_id}
-                      className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleAddCategory(category)}
-                    >
-                      {category.name}
-                    </li>
+                      category={category}
+                      handleAddCategory={handleAddCategory}
+                    />
                   ))}
             </ul>
           </div>
@@ -160,3 +154,18 @@ export const CategoriesSelector = ({
     </div>
   );
 };
+
+const CategoryListItem = ({
+  category,
+  handleAddCategory,
+}: {
+  category: Category;
+  handleAddCategory: (category: Category) => void;
+}) => (
+  <li
+    className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+    onClick={() => handleAddCategory(category)}
+  >
+    {category.name}
+  </li>
+);
