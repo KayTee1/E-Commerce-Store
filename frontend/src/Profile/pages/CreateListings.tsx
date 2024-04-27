@@ -4,12 +4,17 @@ import { AuthContext } from "../../context/AuthContext";
 import ListingForm from "../components/ListingForm";
 import { generateID } from "../../utils/IDs";
 
+type Category = {
+  category_id: string;
+  name: string;
+};
 type FormData = {
   title: string;
   price: string;
   description: string;
   image: string;
   owner: string;
+  categories: Category[];
 };
 const CreateListings = () => {
   const auth = useContext(AuthContext);
@@ -20,23 +25,27 @@ const CreateListings = () => {
     description: "",
     image: "",
     owner: "",
+    categories: [],
   });
+  
 
   const postListing = async () => {
     try {
       const baseApiUrl = import.meta.env.VITE_API_URL;
-      const formDataWithOwner = {
+      // Add owner and product_id to formData
+      const completedFormData = {
         ...formData,
         owner: auth.username ?? "",
         product_id: await generateID("products"),
       };
+      console.log(completedFormData);
       const response = await fetch(`${baseApiUrl}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify(formDataWithOwner),
+        body: JSON.stringify(completedFormData),
       });
 
       if (!response.ok) {
