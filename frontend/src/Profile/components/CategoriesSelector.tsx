@@ -41,7 +41,8 @@ export const CategoriesSelector = ({
     };
   }, []);
 
-  useEffect(() => {}, [categories]);
+  useEffect(() => {}, []);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
@@ -108,6 +109,7 @@ export const CategoriesSelector = ({
         />
         <button
           type="button"
+          title="Add category"
           onClick={() => {
             handleAddCategory({
               category_id: "",
@@ -120,6 +122,7 @@ export const CategoriesSelector = ({
         </button>
         <button
           type="button"
+          title="Show categories"
           onClick={() => {
             setShowDropdown(!showDropdown);
           }}
@@ -131,15 +134,25 @@ export const CategoriesSelector = ({
         {showDropdown && (
           <div className="">
             <ul className="max-h-36 overflow-scroll absolute left-0 w-full mt-1 bg-white border border-gray-300 rounded-md">
-              {filteredCategories.map((category: Category) => (
-                <li
-                  key={category.category_id}
-                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleAddCategory(category)}
-                >
-                  {category.name}
-                </li>
-              ))}
+              {filteredCategories.length === 0
+                ? categories.map((category: Category) => (
+                    <li
+                      key={category.category_id}
+                      className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleAddCategory(category)}
+                    >
+                      {category.name}
+                    </li>
+                  ))
+                : filteredCategories.map((category: Category) => (
+                    <li
+                      key={category.category_id}
+                      className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+                      onClick={() => handleAddCategory(category)}
+                    >
+                      {category.name}
+                    </li>
+                  ))}
             </ul>
           </div>
         )}
