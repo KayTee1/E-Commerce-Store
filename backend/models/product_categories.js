@@ -1,13 +1,25 @@
 const pool = require("../db/pool");
 
 const productCategories = {
+  findProductCategories: async (product_id) => {
+    const query = `SELECT * FROM product_categories WHERE product_id = ?`;
+    try {
+      const connection = await pool.getConnection();
+      const [results] = await connection.query(query, [product_id]);
+
+      connection.release();
+      return results;
+    } catch (error) {
+      throw new Error(`Failed to get product categories: ${error.message}`);
+    }
+  },
   addProductCategory: async (productId, categoryId) => {
     const query =
       "INSERT INTO product_categories (product_id, category_id) VALUES (?, ?)";
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(query, [productId, categoryId]);
- 
+
       connection.release();
       return results.insertId;
     } catch (error) {

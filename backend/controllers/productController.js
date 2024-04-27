@@ -1,9 +1,11 @@
 const products = require("../models/products");
 const productCategories = require("../models/product_categories");
+const categories = require("../models/categories");
 
 const getProducts = async (req, res) => {
   try {
     const response = await products.findProducts();
+
     if (response) {
       res.status(200).json(response);
     } else {
@@ -19,7 +21,18 @@ const getProductById = async (req, res) => {
   const { id } = req.params;
   const response = await products.findProductById(id);
 
+  // PC = Products Categories
+  const PC = await productCategories.findProductCategories(id);
+
+  // cat = Categories
+  const cat = await Promise.all(
+    PC.map(async (category) => {
+      return await categories.findCategoryById(category.category_id);
+    })
+  );
+
   if (!response.Error) {
+    response.categories = cat;
     res.status(200).json(response);
   } else {
     res.status(404).json({ message: response.Error });
@@ -53,10 +66,12 @@ const postNewProduct = async (req, res) => {
 
     const productId = await products.postProduct(product);
 
-
     await Promise.all(
       categories.map(async (category) => {
-        await productCategories.addProductCategory(product_id, category.category_id);
+        await productCategories.addProductCategory(
+          product_id,
+          category.category_id
+        );
       })
     );
 
