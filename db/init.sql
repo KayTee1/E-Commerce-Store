@@ -31,18 +31,19 @@ CREATE TABLE IF NOT EXISTS `favorites` (
 );
 CREATE TABLE IF NOT EXISTS `categories` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `category_id` VARCHAR(3) NOT NULL,
     `name` VARCHAR(50) NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX (`category_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
-
 CREATE TABLE IF NOT EXISTS `product_categories` (
-    `product_id` VARCHAR(3) NOT NULL,
-    `category_id` INT NOT NULL,
-    PRIMARY KEY (`product_id`, `category_id`),
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `product_id` VARCHAR(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+    `category_id` VARCHAR(3) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
-    FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
+    FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`),
+    FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 INSERT INTO `users` (
         `user_id`,

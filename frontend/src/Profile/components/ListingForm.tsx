@@ -1,13 +1,22 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import FormItem from "../../shared/FormItem";
 import Message from "../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
+import { AuthContext } from "../../context/AuthContext";
+import { generateID } from "../../utils/IDs";
+
+type Category = {
+  category_id: string;
+  name: string;
+};
+
 type FormData = {
   title: string;
   price: string;
   description: string;
   image: string;
   owner: string;
+  categories: Category[];
 };
 type MessageType = {
   message: string;
@@ -28,10 +37,6 @@ type ListingFormProps = {
   };
 };
 
-type Category = {
-  category_id: string;
-  name: string;
-};
 const ListingForm = ({
   method,
   formData,
@@ -39,10 +44,74 @@ const ListingForm = ({
   ...props
 }: ListingFormProps) => {
   const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [message, setMessage] = useState<MessageType>({
     message: "",
     color: "",
   });
+
+  const auth = useContext(AuthContext);
+  const fetchCategories = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(apiUrl + "/api/categories", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      setCategories(data);
+      return data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const postCategory = async (category: Category) => {
+    category.category_id = await generateID("categories");
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(apiUrl + "/api/categories", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+        body: JSON.stringify(category),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to create category");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmitNewCategory = async () => {
+    let newCategories = selectedCategories.filter((category) => {
+      const capitalizedCategoryName =
+        category.name.charAt(0).toUpperCase() + category.name.slice(1);
+
+      return !categories.some((c) => c.name === capitalizedCategoryName);
+    });
+
+    if (newCategories.length === 0) {
+      return;
+    }
+
+    try {
+      await Promise.all(
+        newCategories.map((category) => postCategory(category))
+      );
+      console.log("All new categories have been successfully created.");
+    } catch (error) {
+      console.error("Failed to create one or more categories:", error);
+    }
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevFormData) => ({
@@ -58,6 +127,14 @@ const ListingForm = ({
 
     if (!title || !price || !description || !image) {
       setMessage({ message: "Please fill in all fields", color: "red" });
+      return;
+    }
+
+    if (selectedCategories.length === 0) {
+      setMessage({
+        message: "Please select at least one category",
+        color: "red",
+      });
       return;
     }
 
@@ -84,6 +161,8 @@ const ListingForm = ({
       });
       return;
     }
+    handleSubmitNewCategory();
+    formData.categories = selectedCategories;
 
     if (method === "POST" && props.postListing) {
       props
@@ -169,6 +248,7 @@ const ListingForm = ({
           Categories
         </label>
         <CategoriesSelector
+          categories={categories}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
         />

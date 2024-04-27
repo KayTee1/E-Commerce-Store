@@ -1,4 +1,5 @@
 const products = require("../models/products");
+const productCategories = require("../models/product_categories");
 
 const getProducts = async (req, res) => {
   try {
@@ -29,7 +30,7 @@ const postNewProduct = async (req, res) => {
   try {
     const { title, price, product_id, description, image, owner, categories } =
       req.body;
-    console.log(req.body);
+
     if (
       !title ||
       !price ||
@@ -50,14 +51,16 @@ const postNewProduct = async (req, res) => {
       owner,
     };
 
-    const response = await products.postProduct(product);
+    const productId = await products.postProduct(product);
 
-    if (response) {
-      product.id = response;
-      res.status(201).json(product);
-    } else {
-      res.status(400).json({ message: "Something went wrong!" });
-    }
+
+    await Promise.all(
+      categories.map(async (category) => {
+        await productCategories.addProductCategory(product_id, category.category_id);
+      })
+    );
+
+    res.status(201).json(product);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -27,11 +27,12 @@ const getCategoryById = async (req, res) => {
 
 const postNewCategory = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { category_id, name } = req.body;
     if (!name) {
       return res.status(400).json({ error: "Missing required fields" });
     }
     const category = {
+      category_id,
       name,
     };
 

@@ -50,14 +50,24 @@ const Profile = () => {
         <p className="text-2xl underline">Account</p>
         <p className="text-xl mt-4">Log in to see your account</p>
       </div>
-      <button
-        onClick={() => {
-          navigate("/login");
-        }}
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-      >
-        Log in
-      </button>
+      <div className="flex flex-col gap-3">
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        >
+          Log in
+        </button>
+        <button
+          onClick={() => {
+            navigate("/signup");
+          }}
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+        >
+          Sign up
+        </button>
+      </div>
     </div>
   );
 };

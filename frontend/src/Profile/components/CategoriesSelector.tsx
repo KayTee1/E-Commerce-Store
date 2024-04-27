@@ -1,8 +1,7 @@
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IoIosRemoveCircle } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
-import { AuthContext } from "../../context/AuthContext";
 
 type Category = {
   category_id: string;
@@ -10,19 +9,18 @@ type Category = {
 };
 
 type CategoriesSelectorProps = {
+  categories: Category[];
   selectedCategories: Category[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 };
 export const CategoriesSelector = ({
+  categories,
   selectedCategories,
   setSelectedCategories,
 }: CategoriesSelectorProps) => {
-  const [categories, setCategories] = useState<Category[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-
-  const auth = useContext(AuthContext);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -43,23 +41,7 @@ export const CategoriesSelector = ({
     };
   }, []);
 
-  const fetchCategories = async (): Promise<Category[]> => {
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(apiUrl + "/api/categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      return [];
-    }
-  };
-
+  useEffect(() => {}, [categories]);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
@@ -78,9 +60,11 @@ export const CategoriesSelector = ({
 
   const handleAddCategory = (category: Category) => {
     if (category.name === "") return;
-    category.name =
-      category.name.charAt(0).toUpperCase() + category.name.slice(1);
-    setSelectedCategories([...selectedCategories, category]);
+    const capitalizedCategory = {
+      ...category,
+      name: category.name.charAt(0).toUpperCase() + category.name.slice(1),
+    };
+    setSelectedCategories([...selectedCategories, capitalizedCategory]);
     setInputValue("");
     setShowDropdown(false);
   };
@@ -92,53 +76,6 @@ export const CategoriesSelector = ({
       )
     );
   };
-
-  const handleSubmitNewCategory = async () => {
-    if (!inputValue) return;
-
-    const capitalizedValue =
-      inputValue.charAt(0).toUpperCase() + inputValue.slice(1);
-
-    const apiUrl = import.meta.env.VITE_API_URL;
-    try {
-      const response = await fetch(apiUrl + "/api/categories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth.token}`,
-        },
-        body: JSON.stringify({ name: capitalizedValue }),
-      });
-
-      if (response.ok) {
-        const updatedCategoriesResponse = await fetch(
-          apiUrl + "/api/categories"
-        );
-        const updatedCategoriesData = await updatedCategoriesResponse.json();
-
-        const newCategory = updatedCategoriesData.find(
-          (category: Category) => category.name === capitalizedValue
-        );
-
-        setSelectedCategories([...selectedCategories, newCategory]);
-        setInputValue("");
-        setShowDropdown(false);
-      } else {
-        console.error("Failed to create category");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCategories()
-      .then((data) => {
-        setCategories(data);
-        setFilteredCategories(data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
 
   return (
     <div className="w-full h-24 ">
@@ -163,6 +100,7 @@ export const CategoriesSelector = ({
       <div ref={dropdownRef} className="relative">
         <input
           type="text"
+          onClick={() => setShowDropdown(!showDropdown)}
           value={inputValue}
           onChange={handleInputChange}
           placeholder="Enter category name"
