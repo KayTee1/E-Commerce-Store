@@ -5,6 +5,12 @@ import ProductIcons from "../../shared/ProductIcons";
 import { useCart } from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
 
+type Category = {
+  id: number;
+  category_id: string;
+  name: string;
+};
+
 type Product = {
   id: number;
   product_id: string;
@@ -14,6 +20,7 @@ type Product = {
   owner: string;
   image: string;
   quantity?: number;
+  categories: Category[];
 };
 const ProductDetails = () => {
   const { product_id } = useParams();
@@ -28,6 +35,7 @@ const ProductDetails = () => {
     price: "",
     owner: "",
     image: "",
+    categories: [],
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,6 +46,7 @@ const ProductDetails = () => {
       const response = await fetch(apiUrl + `/api/products/${product_id}`);
       const data = await response.json();
       setProduct(data);
+      console.log(product.categories);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -89,17 +98,28 @@ const ProductDetails = () => {
             />
           </div>
           <div>
-            <h2 className="text-2xl font-bold mb-4">{product.title}</h2>
+            <h2 className="text-2xl font-bold mb-4 underline">
+              {product.title}
+            </h2>
             <p className="text-gray-600 mb-4">{product.description}</p>
-            <p className="text-gray-800 font-bold text-xl mb-4">
-              {product.price}€
-            </p>
+            <p className="text-gray-800 text-xl mb-4">{product.price}€</p>
             <ProductIcons
               handleCart={handleAddCart}
               handleFavorite={handleAddFavorite}
               type="addCart"
             />
             <p className="text-gray-600">Owner: {product.owner}</p>
+            <p className="text-gray-600">Categories:</p>
+            <div className="flex flex-wrap gap-y-2 mt-2 max-w-64">
+              {product.categories.map((category) => (
+                <span
+                  key={category.id}
+                  className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-sm mr-2"
+                >
+                  {category.name}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       )}

@@ -3,6 +3,11 @@ import { EditLayout } from "./Modals/EditLayout";
 
 type ModalTypes = "Delete" | "Edit" | "";
 
+type Category = {
+  category_id: string;
+  name: string;
+};
+
 type Listing = {
   id: number;
   product_id: string;
@@ -11,6 +16,7 @@ type Listing = {
   description: string;
   image: string;
   owner: string;
+  categories: Category[];
 };
 
 type ModalProps = {

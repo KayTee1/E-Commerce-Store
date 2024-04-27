@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Modal from "../../shared/Modal";
 
+type Category = {
+  category_id: string;
+  name: string;
+};
+
 type ListingType = {
   id: number;
   title: string;
@@ -9,6 +14,7 @@ type ListingType = {
   description: string;
   image: string;
   owner: string;
+  categories: Category[];
 };
 type ListingCardProps = {
   listing: ListingType;
@@ -29,6 +35,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
     description: listing.description,
     image: listing.image,
     owner: listing.owner,
+    categories: listing.categories,
   });
 
   const showModal = (modalType: ModalTypes) => {
@@ -39,7 +46,10 @@ const ListingCard = ({ listing }: ListingCardProps) => {
   };
 
   return (
-    <div key={productData.id} className="border border-gray-300 rounded-lg p-4 mb-4 w-96">
+    <div
+      key={productData.id}
+      className="border border-gray-300 rounded-lg p-4 mb-4 w-96"
+    >
       <h3 className="text-xl font-bold">{productData.title}</h3>
       <p className="text-gray-500">${productData.price}</p>
       <p>{productData.description}</p>

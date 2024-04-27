@@ -3,6 +3,11 @@ import { AuthContext } from "../../context/AuthContext";
 import Loader from "../Loader";
 import ListingForm from "../../Profile/components/ListingForm";
 
+type Category = {
+  category_id: string;
+  name: string;
+};
+
 type Listing = {
   id: number;
   product_id: string;
@@ -11,6 +16,7 @@ type Listing = {
   description: string;
   image: string;
   owner: string;
+  categories: Category[];
 };
 
 type EditLayoutProps = {
@@ -25,6 +31,7 @@ type FormData = {
   description: string;
   image: string;
   owner: string;
+  categories: Category[];
 };
 
 export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
@@ -42,6 +49,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
     description: "",
     image: "",
     owner: "",
+    categories: [],
   });
 
   const editListing = async () => {
@@ -66,6 +74,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
         description: formData.description,
         image: formData.image,
         owner: formData.owner,
+        categories: formData.categories,
       });
       return { message: "Listing Updated Successfully", success: true };
     } catch (e) {

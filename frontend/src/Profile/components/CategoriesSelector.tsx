@@ -41,7 +41,6 @@ export const CategoriesSelector = ({
     };
   }, []);
 
-  useEffect(() => {}, [categories]);
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setInputValue(inputValue);
@@ -80,11 +79,11 @@ export const CategoriesSelector = ({
   return (
     <div className="w-full h-24 ">
       {selectedCategories.length === 0 ? null : (
-        <div className="p-2 flex flex-row w-full h-16 border-solid border-2 bg-gray-200 border-gray-400">
+        <div className="p-2 flex flex-wrap max-w-lg h-16 border-solid border-2 bg-gray-200 border-gray-400">
           {selectedCategories.map((category: Category) => (
             <div
               key={category.category_id}
-              className="p-1 mr-2 min-w-14 relative flex items-center justify-center h-10 text-center align-middle border-blue-500 rounded-md border-solid border-2"
+              className="p-1 mr-2 relative flex items-center justify-center h-10 text-center align-middle border-blue-500 rounded-md border-solid border-2"
             >
               <span
                 className="text-lg z-1 absolute top-0 right-0 mt-[-0.5rem] mr-[-0.5rem] text-red-500 cursor-pointer"
@@ -108,9 +107,10 @@ export const CategoriesSelector = ({
         />
         <button
           type="button"
+          title="Add category"
           onClick={() => {
             handleAddCategory({
-              category_id: "",
+              category_id: selectedCategories.length + 1 + "",
               name: inputValue,
             });
           }}
@@ -120,6 +120,7 @@ export const CategoriesSelector = ({
         </button>
         <button
           type="button"
+          title="Show categories"
           onClick={() => {
             setShowDropdown(!showDropdown);
           }}
@@ -131,15 +132,21 @@ export const CategoriesSelector = ({
         {showDropdown && (
           <div className="">
             <ul className="max-h-36 overflow-scroll absolute left-0 w-full mt-1 bg-white border border-gray-300 rounded-md">
-              {filteredCategories.map((category: Category) => (
-                <li
-                  key={category.category_id}
-                  className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-                  onClick={() => handleAddCategory(category)}
-                >
-                  {category.name}
-                </li>
-              ))}
+              {filteredCategories.length === 0
+                ? categories.map((category: Category) => (
+                    <CategoryListItem
+                      key={category.category_id}
+                      category={category}
+                      handleAddCategory={handleAddCategory}
+                    />
+                  ))
+                : filteredCategories.map((category: Category) => (
+                    <CategoryListItem
+                      key={category.category_id}
+                      category={category}
+                      handleAddCategory={handleAddCategory}
+                    />
+                  ))}
             </ul>
           </div>
         )}
@@ -147,3 +154,18 @@ export const CategoriesSelector = ({
     </div>
   );
 };
+
+const CategoryListItem = ({
+  category,
+  handleAddCategory,
+}: {
+  category: Category;
+  handleAddCategory: (category: Category) => void;
+}) => (
+  <li
+    className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+    onClick={() => handleAddCategory(category)}
+  >
+    {category.name}
+  </li>
+);
