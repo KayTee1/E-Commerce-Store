@@ -79,11 +79,11 @@ export const CategoriesSelector = ({
   return (
     <div className="w-full h-24 ">
       {selectedCategories.length === 0 ? null : (
-        <div className="p-2 flex flex-row w-full h-16 border-solid border-2 bg-gray-200 border-gray-400">
+        <div className="p-2 flex flex-wrap max-w-lg h-16 border-solid border-2 bg-gray-200 border-gray-400">
           {selectedCategories.map((category: Category) => (
             <div
               key={category.category_id}
-              className="p-1 mr-2 min-w-14 relative flex items-center justify-center h-10 text-center align-middle border-blue-500 rounded-md border-solid border-2"
+              className="p-1 mr-2 relative flex items-center justify-center h-10 text-center align-middle border-blue-500 rounded-md border-solid border-2"
             >
               <span
                 className="text-lg z-1 absolute top-0 right-0 mt-[-0.5rem] mr-[-0.5rem] text-red-500 cursor-pointer"
