@@ -9,30 +9,24 @@ type Product = {
   image: string;
   quantity?: number;
 };
-type Item = Product & {
-  id: number;
-  product_id: string;
-  title: string;
-  quantity?: number;
-};
 
 type CartState = {
-  items: Item[];
+  items: Product[];
 };
 
 type CartAction =
-  | { type: "ADD_TO_CART"; payload: Item }
-  | { type: "REMOVE_FROM_CART"; payload: Item }
-  | { type: "INCREMENT_QUANTITY"; payload: Item }
-  | { type: "DECREMENT_QUANTITY"; payload: Item }
+  | { type: "ADD_TO_CART"; payload: Product }
+  | { type: "REMOVE_FROM_CART"; payload: Product }
+  | { type: "INCREMENT_QUANTITY"; payload: Product }
+  | { type: "DECREMENT_QUANTITY"; payload: Product }
   | { type: "EMPTY_CART" };
 
 type CartContextType = {
   cartState: CartState;
-  addToCart: (item: Item) => void;
-  removeFromCart: (item: Item) => void;
-  incrementQuantity: (item: Item) => void;
-  decrementQuantity: (item: Item) => void;
+  addToCart: (item: Product) => void;
+  removeFromCart: (item: Product) => void;
+  incrementQuantity: (item: Product) => void;
+  decrementQuantity: (item: Product) => void;
   getTotalQuantity: () => number;
   handleEmptyCart: () => void;
 };
@@ -102,19 +96,19 @@ type CartProviderProps = {
 const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, { items: [] });
 
-  const addToCart = (item: Item) => {
+  const addToCart = (item: Product) => {
     dispatch({ type: "ADD_TO_CART", payload: item });
   };
 
-  const removeFromCart = (item: Item) => {
+  const removeFromCart = (item: Product) => {
     dispatch({ type: "REMOVE_FROM_CART", payload: item });
   };
 
-  const incrementQuantity = (item: Item) => {
+  const incrementQuantity = (item: Product) => {
     dispatch({ type: "INCREMENT_QUANTITY", payload: item });
   };
 
-  const decrementQuantity = (item: Item) => {
+  const decrementQuantity = (item: Product) => {
     dispatch({ type: "DECREMENT_QUANTITY", payload: item });
   };
 

@@ -1,6 +1,6 @@
 const products = require("../models/products");
 const productCategories = require("../models/product_categories");
-const categories = require("../models/categories");
+const categoriesModel = require("../models/categories");
 
 const getProducts = async (req, res) => {
   try {
@@ -27,7 +27,7 @@ const getProductById = async (req, res) => {
   // cat = Categories
   const cat = await Promise.all(
     PC.map(async (category) => {
-      return await categories.findCategoryById(category.category_id);
+      return await categoriesModel.findCategoryById(category.category_id);
     })
   );
 
@@ -40,6 +40,7 @@ const getProductById = async (req, res) => {
 };
 
 const postNewProduct = async (req, res) => {
+  console.log(req.body);
   try {
     const { title, price, product_id, description, image, owner, categories } =
       req.body;
@@ -66,16 +67,21 @@ const postNewProduct = async (req, res) => {
 
     const productId = await products.postProduct(product);
 
-    await Promise.all(
-      categories.map(async (category) => {
-        await productCategories.addProductCategory(
-          product_id,
-          category.category_id
-        );
-      })
-    );
+    try {
+      await Promise.all(
+        categories.map(async (category) => {
+          await categoriesModel.postCategory(category);
+          await productCategories.addProductCategory(
+            product_id,
+            category.category_id
+          );
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    }
 
-    res.status(201).json(product);
+    res.status(201).json(productId);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

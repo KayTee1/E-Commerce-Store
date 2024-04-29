@@ -19,7 +19,7 @@ const productCategories = {
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(query, [productId, categoryId]);
-
+      console.log("results", results)
       connection.release();
       return results.insertId;
     } catch (error) {

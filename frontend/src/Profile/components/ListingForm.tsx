@@ -72,7 +72,10 @@ const ListingForm = ({
   }, []);
 
   const postCategory = async (category: Category) => {
-    category.category_id = await generateID("categories");
+    const completedCategory = {
+      ...category,
+      category_id: await generateID("categories"),
+    };
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(apiUrl + "/api/categories", {
@@ -81,7 +84,7 @@ const ListingForm = ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify(category),
+        body: JSON.stringify(completedCategory),
       });
       if (!response.ok) {
         throw new Error("Failed to create category");
@@ -102,7 +105,7 @@ const ListingForm = ({
     if (newCategories.length === 0) {
       return;
     }
-
+    console.log("new", newCategories)
     try {
       await Promise.all(
         newCategories.map((category) => postCategory(category))
@@ -121,8 +124,9 @@ const ListingForm = ({
     setMessage({ message: "", color: "" });
   };
 
-  const validateForm = (e: ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const validateForm = async() => {
+    
+    await handleSubmitNewCategory();
     const { title, price, description, image } = formData;
 
     if (!title || !price || !description || !image) {
@@ -161,7 +165,6 @@ const ListingForm = ({
       });
       return;
     }
-    handleSubmitNewCategory();
     formData.categories = selectedCategories;
 
     if (method === "POST" && props.postListing) {
@@ -207,42 +210,42 @@ const ListingForm = ({
     }
   };
   return (
-    <form
-      onSubmit={validateForm}
-      className="grid bg-slate-100 p-9 rounded-lg border-solid border-4"
-    >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <FormItem
-          name="title"
-          placeholder={props.placeholders ? props.placeholders.title : "Bike"}
-          handleChange={handleChange}
-        />
-        <FormItem
-          name="price"
-          displayName="Price (€)"
-          placeholder={props.placeholders ? props.placeholders.price : "100"}
-          handleChange={handleChange}
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <FormItem
-          name="description"
-          placeholder={
-            props.placeholders ? props.placeholders.description : "A nice bike"
-          }
-          handleChange={handleChange}
-        />
-        <FormItem
-          name="image"
-          placeholder={
-            props.placeholders
-              ? props.placeholders.image
-              : "https://example.com/image.jpg"
-          }
-          handleChange={handleChange}
-        />
-      </div>
-
+    <div className="grid bg-slate-100 p-9 rounded-lg border-solid border-4">
+      <form onSubmit={validateForm}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <FormItem
+            name="title"
+            placeholder={props.placeholders ? props.placeholders.title : "Bike"}
+            handleChange={handleChange}
+          />
+          <FormItem
+            name="price"
+            displayName="Price (€)"
+            placeholder={props.placeholders ? props.placeholders.price : "100"}
+            handleChange={handleChange}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
+          <FormItem
+            name="description"
+            placeholder={
+              props.placeholders
+                ? props.placeholders.description
+                : "A nice bike"
+            }
+            handleChange={handleChange}
+          />
+          <FormItem
+            name="image"
+            placeholder={
+              props.placeholders
+                ? props.placeholders.image
+                : "https://example.com/image.jpg"
+            }
+            handleChange={handleChange}
+          />
+        </div>
+      </form>
       <div className="mx-2 my-2">
         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
           Categories
@@ -254,14 +257,14 @@ const ListingForm = ({
         />
       </div>
 
-      <Message message={message} />
       <button
-        type="submit"
+        onClick={validateForm}
         className="mt-3 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         Submit
       </button>
-    </form>
+      <Message message={message} />
+    </div>
   );
 };
 
