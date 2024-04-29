@@ -4,6 +4,7 @@ import Loader from "../../../shared/Loader";
 import ProductListingCard from "../../../shared/ProductListingCard";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
+import Button from "../../../shared/Button";
 
 type Product = {
   id: number;
@@ -56,14 +57,13 @@ const Collections = () => {
     content = (
       <div className="text-center">
         <p>No products yet</p>
-        <button
+        <Button
           onClick={() => {
             !auth.isLoggedIn ? navigate("/login") : navigate("/create-listing");
           }}
-          className="mt-5 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Post the first listing!
-        </button>
+          content="Post the first listing!"
+          variant="primary"
+        />
       </div>
     );
   }

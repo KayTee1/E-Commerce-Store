@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Button from "../../shared/Button";
 
 const Profile = () => {
   const auth = useContext(AuthContext);
@@ -12,35 +13,21 @@ const Profile = () => {
           <p className="text-2xl underline">Account</p>
           <div className="flex flex-col p-2 mt-5 max-h-60 overflow-scroll">
             <p className="text-xl">Welcome, {auth.username}</p>
-            <div className="mt-3 flex flex-col p-1 justify-between">
-              <button
-                onClick={() => {
-                  navigate("/create-listing");
-                }}
-                className=" w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-              >
-                Create a new Listing
-              </button>
-              <button
-                onClick={() => {
-                  navigate("/view-listings");
-                }}
-                className=" mt-2 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-              >
-                View your Listings
-              </button>
+            <div className="mt-3 flex flex-col gap-2 p-1 justify-between">
+              <Button
+                content="Create a new Listing"
+                variant="primary"
+                onClick={() => navigate("/create-listing")}
+              />
+              <Button
+                content="View your Listings"
+                variant="primary"
+                onClick={() => navigate("/view-listings")}
+              />
             </div>
           </div>
         </div>
-        <button
-          onClick={() => {
-            auth.logout();
-            navigate("/");
-          }}
-          className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded mt-4"
-        >
-          Logout
-        </button>
+        <Button variant="dangerous" content="Logout" onClick={auth.logout} />
       </div>
     );
   }
@@ -51,22 +38,16 @@ const Profile = () => {
         <p className="text-xl mt-4">Log in to see your account</p>
       </div>
       <div className="flex flex-col gap-3">
-        <button
-          onClick={() => {
-            navigate("/login");
-          }}
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Log in
-        </button>
-        <button
-          onClick={() => {
-            navigate("/signup");
-          }}
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Sign up
-        </button>
+        <Button
+          content="Log in"
+          variant="primary"
+          onClick={() => navigate("/login")}
+        />
+        <Button
+          content="Sign up"
+          variant="primary"
+          onClick={() => navigate("/signup")}
+        />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../../../shared/Modal";
+import Button from "../../../shared/Button";
 
 type Category = {
   category_id: string;
@@ -59,22 +60,21 @@ const ListingCard = ({ listing }: ListingCardProps) => {
         className="w-full h-48 object-cover mt-2 rounded-md"
       />
       <div className="flex flex-row justify-around">
-        <button
+        <Button
+          content="Edit"
+          variant="primary"
           onClick={() => {
             showModal("Edit");
           }}
-          className="w-40 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-2"
-        >
-          Edit
-        </button>
-        <button
+        />
+
+        <Button
+          content="Delete"
+          variant="dangerous"
           onClick={() => {
             showModal("Delete");
           }}
-          className="w-40 bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded mt-2 ml-2"
-        >
-          Delete
-        </button>
+        />
       </div>
       <Modal
         onHide={() => setModal({ show: false, modalType: "" })}

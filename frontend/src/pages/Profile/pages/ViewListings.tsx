@@ -3,6 +3,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import ListingCard from "../components/ListingCard";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../shared/Loader";
+import Button from "../../../shared/Button";
 
 type Listing = {
   id: number;
@@ -61,14 +62,11 @@ const ViewListings = () => {
     content = (
       <div className="text-center">
         <p>You have no listings yet</p>
-        <button
-          onClick={() => {
-            navigate("/create-listing");
-          }}
-          className="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Create your first listing
-        </button>
+        <Button
+          onClick={() => navigate("/create-listing")}
+          variant="primary"
+          content="Create your first listing"
+        />
       </div>
     );
   }
