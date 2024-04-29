@@ -3,16 +3,18 @@ import { Route, Routes } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { AuthContext } from "./context/AuthContext";
 
-import Home from "./Home/pages/Home";
-import Collections from "./Collections/pages/Collections";
-import Checkout from "./Checkout/pages/Checkout";
-import Login from "./Auth/pages/Login";
-import Signup from "./Auth/pages/Signup";
+import Home from "./pages/Home/pages/Home";
+import Collections from "./pages/Collections/pages/Collections";
+import Checkout from "./pages/Checkout/pages/Checkout";
+import Login from "./pages/Auth/pages/Login";
+import Signup from "./pages/Auth/pages/Signup";
 
 import NavBar from "./NavBar/NavBar";
-import ViewListings from "./Profile/pages/ViewListings";
-import CreateListings from "./Profile/pages/CreateListings";
-import ProductDetails from "./Collections/pages/ProductDetails";
+import ViewListings from "./pages/Profile/pages/ViewListings";
+import CreateListings from "./pages/Profile/pages/CreateListings";
+import ProductDetails from "./pages/Collections/pages/ProductDetails";
+import Categories from "./pages/Categories/pages/Categories";
+import CategoryProducts from "./pages/Categories/pages/CategoryProducts";
 
 let logoutTimer: number | undefined;
 
@@ -83,8 +85,14 @@ export default function App() {
     routes = (
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/collections" element={<Collections />} />
         <Route path="/products/:product_id" element={<ProductDetails />} />
+
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:category_id" element={<CategoryProducts />} />
+
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -106,9 +114,15 @@ export default function App() {
     routes = (
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/collections" element={<Collections />} />
         <Route path="/products/:product_id" element={<ProductDetails />} />
+
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:category_id" element={<CategoryProducts />} />
+
         <Route path="/checkout" element={<Checkout />} />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route

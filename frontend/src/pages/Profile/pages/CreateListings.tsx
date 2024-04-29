@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import ListingForm from "../components/ListingForm";
-import { generateID } from "../../utils/IDs";
+import { generateID } from "../../../utils/IDs";
 
 type Category = {
   category_id: string;

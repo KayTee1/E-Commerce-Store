@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Loader from "../Loader";
-import ListingForm from "../../Profile/components/ListingForm";
+import ListingForm from "../../pages/Profile/components/ListingForm";
 
 type Category = {
   category_id: string;

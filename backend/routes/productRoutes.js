@@ -4,13 +4,15 @@ const verifyToken = require("../middlewares/verifyToken");
 const {
   getProducts,
   getProductById,
+  getProductsByCategoryId,
   postNewProduct,
   updateProduct,
   deleteProductById,
 } = require("../controllers/productController");
 
 router.get("/", getProducts);
-router.get("/:id", getProductById);
+router.get("/product/:id", getProductById);
+router.get("/category/:id", getProductsByCategoryId);
 
 router.use(verifyToken);
 

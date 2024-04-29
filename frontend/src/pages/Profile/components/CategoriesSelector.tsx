@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IoIosRemoveCircle } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
+import { generateID } from "../../../utils/IDs";
 
 type Category = {
   category_id: string;
@@ -13,6 +14,7 @@ type CategoriesSelectorProps = {
   selectedCategories: Category[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<Category[]>>;
 };
+
 export const CategoriesSelector = ({
   categories,
   selectedCategories,
@@ -57,13 +59,39 @@ export const CategoriesSelector = ({
     }
   };
 
-  const handleAddCategory = (category: Category) => {
-    if (category.name === "") return;
-    const capitalizedCategory = {
-      ...category,
-      name: category.name.charAt(0).toUpperCase() + category.name.slice(1),
+  const handleAddCategory = async (
+    e:
+      | React.FormEvent<HTMLFormElement>
+      | React.MouseEvent<HTMLLIElement, MouseEvent>,
+    category?: Category
+  ) => {
+    e.preventDefault();
+    let capitalizedCategory: Category = {
+      category_id: "",
+      name: "",
     };
+    if (e.type === "click" && category) {
+      capitalizedCategory = {
+        category_id: category.category_id,
+        name: category.name,
+      };
+    } else if (e.type === "submit") {
+      capitalizedCategory = {
+        category_id: await generateID("categories"),
+        name: inputValue.charAt(0).toUpperCase() + inputValue.slice(1),
+      };
+    }
+
+    if (
+      selectedCategories.find(
+        (category) => category.name === capitalizedCategory.name
+      )
+    ) {
+      alert("Category already exists");
+      return;
+    }
     setSelectedCategories([...selectedCategories, capitalizedCategory]);
+    setFilteredCategories([]);
     setInputValue("");
     setShowDropdown(false);
   };
@@ -97,27 +125,23 @@ export const CategoriesSelector = ({
         </div>
       )}
       <div ref={dropdownRef} className="relative">
-        <input
-          type="text"
-          onClick={() => setShowDropdown(!showDropdown)}
-          value={inputValue}
-          onChange={handleInputChange}
-          placeholder="Enter category name"
-          className="w-full p-2 border border-gray-300 rounded-md"
-        />
-        <button
-          type="button"
-          title="Add category"
-          onClick={() => {
-            handleAddCategory({
-              category_id: selectedCategories.length + 1 + "",
-              name: inputValue,
-            });
-          }}
-          className="absolute top-0 right-8 h-full px-2 border-l border-gray-300 rounded-r-md hover:bg-gray-200"
-        >
-          <FaArrowRight />
-        </button>
+        <form onSubmit={(e) => handleAddCategory(e)}>
+          <input
+            type="text"
+            onClick={() => setShowDropdown(!showDropdown)}
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder="Enter category name"
+            className="w-full p-2 border border-gray-300 rounded-md"
+          />
+          <button
+            type="submit"
+            title="Add category"
+            className="absolute top-0 right-8 h-full px-2 border-l border-gray-300 rounded-r-md hover:bg-gray-200"
+          >
+            <FaArrowRight />
+          </button>
+        </form>
         <button
           type="button"
           title="Show categories"
@@ -137,14 +161,20 @@ export const CategoriesSelector = ({
                     <CategoryListItem
                       key={category.category_id}
                       category={category}
-                      handleAddCategory={handleAddCategory}
+                      handleAddCategory={(
+                        e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+                        category: Category
+                      ) => handleAddCategory(e, category)}
                     />
                   ))
                 : filteredCategories.map((category: Category) => (
                     <CategoryListItem
                       key={category.category_id}
                       category={category}
-                      handleAddCategory={handleAddCategory}
+                      handleAddCategory={(
+                        e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+                        category: Category
+                      ) => handleAddCategory(e, category)}
                     />
                   ))}
             </ul>
@@ -160,12 +190,24 @@ const CategoryListItem = ({
   handleAddCategory,
 }: {
   category: Category;
-  handleAddCategory: (category: Category) => void;
-}) => (
-  <li
-    className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-    onClick={() => handleAddCategory(category)}
-  >
-    {category.name}
-  </li>
-);
+  handleAddCategory: (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>,
+    category: Category
+  ) => void;
+}) => {
+  const handleSaveCategory = (
+    e: React.MouseEvent<HTMLLIElement, MouseEvent>
+  ) => {
+    console.log("Selected Category:", category);
+
+    handleAddCategory(e, category);
+  };
+  return (
+    <li
+      className="px-3 py-2 cursor-pointer hover:bg-gray-100"
+      onClick={(e) => handleSaveCategory(e)}
+    >
+      {category.name}
+    </li>
+  );
+};

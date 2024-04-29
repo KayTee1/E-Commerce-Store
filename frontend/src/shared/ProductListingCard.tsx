@@ -1,8 +1,8 @@
-import { useCart } from "../../context/CartContext";
+import { useCart } from "../context/CartContext";
 import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import ProductIcons from "../../shared/ProductIcons";
+import ProductIcons from "./ProductIcons";
 
 type ProductListingProps = {
   product: {
@@ -58,7 +58,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           navigate(`/products/${product.product_id}`);
         }}
         src={image}
-        alt="Product 1"
+        alt={title}
         className="w-full h-48 object-cover"
       />
       <div className="p-4 flex flex-col w-64">

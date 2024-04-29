@@ -1,6 +1,6 @@
 const products = require("../models/products");
 const productCategories = require("../models/product_categories");
-const categories = require("../models/categories");
+const categoriesModel = require("../models/categories");
 
 const getProducts = async (req, res) => {
   try {
@@ -17,17 +17,36 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getProductsByCategoryId = async (req, res) => {
+  //category's id
+  const { id } = req.params;
+  const productIds = await productCategories.findProductsByCategoryId(id);
+
+  const productsArray = await Promise.all(
+    productIds.map(async (product) => {
+      return await products.findProductById(product.product_id);
+    })
+  );
+
+  if (productsArray) {
+    res.status(200).json(productsArray);
+  } else {
+    res.status(404).json({ message: "Something went wrong!" });
+  }
+};
+
 const getProductById = async (req, res) => {
+  //product's id
   const { id } = req.params;
   const response = await products.findProductById(id);
 
   // PC = Products Categories
-  const PC = await productCategories.findProductCategories(id);
+  const PC = await productCategories.findProductsCategories(id);
 
   // cat = Categories
   const cat = await Promise.all(
     PC.map(async (category) => {
-      return await categories.findCategoryById(category.category_id);
+      return await categoriesModel.findCategoryById(category.category_id);
     })
   );
 
@@ -66,16 +85,20 @@ const postNewProduct = async (req, res) => {
 
     const productId = await products.postProduct(product);
 
-    await Promise.all(
-      categories.map(async (category) => {
-        await productCategories.addProductCategory(
-          product_id,
-          category.category_id
-        );
-      })
-    );
+    try {
+      await Promise.all(
+        categories.map(async (category) => {
+          await productCategories.addProductCategory(
+            product_id,
+            category.category_id
+          );
+        })
+      );
+    } catch (error) {
+      console.error(error);
+    }
 
-    res.status(201).json(product);
+    res.status(201).json(productId);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -100,6 +123,9 @@ const updateProduct = async (req, res) => {
 };
 const deleteProductById = async (req, res) => {
   const id = req.params.id;
+
+  await productCategories.deleteProductCategoryByProductId(id);
+
   const response = await products.deleteProductById(id);
 
   if (response) {
@@ -112,6 +138,7 @@ const deleteProductById = async (req, res) => {
 module.exports = {
   getProducts,
   getProductById,
+  getProductsByCategoryId,
   postNewProduct,
   updateProduct,
   deleteProductById,
