@@ -13,6 +13,8 @@ import NavBar from "./NavBar/NavBar";
 import ViewListings from "./pages/Profile/pages/ViewListings";
 import CreateListings from "./pages/Profile/pages/CreateListings";
 import ProductDetails from "./pages/Collections/pages/ProductDetails";
+import Categories from "./pages/Categories/pages/Categories";
+import CategoryProducts from "./pages/Categories/pages/CategoryProducts";
 
 let logoutTimer: number | undefined;
 
@@ -83,8 +85,14 @@ export default function App() {
     routes = (
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/collections" element={<Collections />} />
         <Route path="/products/:product_id" element={<ProductDetails />} />
+
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:category_id" element={<CategoryProducts />} />
+
+        <Route path="/checkout" element={<Checkout />} />
 
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
@@ -106,9 +114,15 @@ export default function App() {
     routes = (
       <Routes>
         <Route path="/" element={<Home />} />
+
         <Route path="/collections" element={<Collections />} />
         <Route path="/products/:product_id" element={<ProductDetails />} />
+
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:category_id" element={<CategoryProducts />} />
+
         <Route path="/checkout" element={<Checkout />} />
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route

@@ -75,7 +75,7 @@ const Collections = () => {
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
         </div>
-        <div className="flex flex-wrap gap-4 mx-32 justify-center">
+        <div className="grid grid-cols-3 gap-4 mx-32 justify-center">
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
           ))}
