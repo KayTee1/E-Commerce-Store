@@ -70,7 +70,6 @@ const postNewProduct = async (req, res) => {
     try {
       await Promise.all(
         categories.map(async (category) => {
-          await categoriesModel.postCategory(category);
           await productCategories.addProductCategory(
             product_id,
             category.category_id

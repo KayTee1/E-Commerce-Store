@@ -3,7 +3,6 @@ import FormItem from "../../shared/FormItem";
 import Message from "../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
 import { AuthContext } from "../../context/AuthContext";
-import { generateID } from "../../utils/IDs";
 
 type Category = {
   category_id: string;
@@ -72,10 +71,6 @@ const ListingForm = ({
   }, []);
 
   const postCategory = async (category: Category) => {
-    const completedCategory = {
-      ...category,
-      category_id: await generateID("categories"),
-    };
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
       const response = await fetch(apiUrl + "/api/categories", {
@@ -84,7 +79,7 @@ const ListingForm = ({
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify(completedCategory),
+        body: JSON.stringify(category),
       });
       if (!response.ok) {
         throw new Error("Failed to create category");
@@ -105,7 +100,7 @@ const ListingForm = ({
     if (newCategories.length === 0) {
       return;
     }
-    console.log("new", newCategories)
+    console.log("new", newCategories);
     try {
       await Promise.all(
         newCategories.map((category) => postCategory(category))
@@ -124,8 +119,7 @@ const ListingForm = ({
     setMessage({ message: "", color: "" });
   };
 
-  const validateForm = async() => {
-    
+  const validateForm = async () => {
     await handleSubmitNewCategory();
     const { title, price, description, image } = formData;
 
