@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import Loader from "../../../shared/Loader";
-import ProductListingCard from "../components/ProductListingCard";
+import ProductListingCard from "../../../shared/ProductListingCard";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthContext";
 

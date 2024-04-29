@@ -58,7 +58,6 @@ const products = {
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(deleteQuery, [item_id]);
-      console.log(results);
       connection.release();
       return results;
     } catch (error) {
