@@ -17,12 +17,31 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getProductsByCategoryId = async (req, res) => {
+  //category's id
+  const { id } = req.params;
+  const productIds = await productCategories.findProductsByCategoryId(id);
+
+  const productsArray = await Promise.all(
+    productIds.map(async (product) => {
+      return await products.findProductById(product.product_id);
+    })
+  );
+
+  if (productsArray) {
+    res.status(200).json(productsArray);
+  } else {
+    res.status(404).json({ message: "Something went wrong!" });
+  }
+};
+
 const getProductById = async (req, res) => {
+  //product's id
   const { id } = req.params;
   const response = await products.findProductById(id);
 
   // PC = Products Categories
-  const PC = await productCategories.findProductCategories(id);
+  const PC = await productCategories.findProductsCategories(id);
 
   // cat = Categories
   const cat = await Promise.all(
@@ -120,6 +139,7 @@ const deleteProductById = async (req, res) => {
 module.exports = {
   getProducts,
   getProductById,
+  getProductsByCategoryId,
   postNewProduct,
   updateProduct,
   deleteProductById,
