@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IoIosRemoveCircle } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { FaArrowDown } from "react-icons/fa";
-import { generateID } from "../../utils/IDs";
+import { generateID } from "../../../utils/IDs";
 
 type Category = {
   category_id: string;

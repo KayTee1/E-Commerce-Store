@@ -1,8 +1,8 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import FormItem from "../../shared/FormItem";
-import Message from "../../shared/Message";
+import FormItem from "../../../shared/FormItem";
+import Message from "../../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 type Category = {
   category_id: string;

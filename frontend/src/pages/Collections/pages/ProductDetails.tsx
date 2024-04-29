@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Loader from "../../shared/Loader";
-import ProductIcons from "../../shared/ProductIcons";
-import { useCart } from "../../context/CartContext";
-import { AuthContext } from "../../context/AuthContext";
+import Loader from "../../../shared/Loader";
+import ProductIcons from "../../../shared/ProductIcons";
+import { useCart } from "../../../context/CartContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 type Category = {
   id: number;
@@ -46,7 +46,6 @@ const ProductDetails = () => {
       const response = await fetch(apiUrl + `/api/products/${product_id}`);
       const data = await response.json();
       setProduct(data);
-      console.log(product.categories);
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -110,16 +109,18 @@ const ProductDetails = () => {
             />
             <p className="text-gray-600">Owner: {product.owner}</p>
             <p className="text-gray-600">Categories:</p>
-            <div className="flex flex-wrap gap-y-2 mt-2 max-w-64">
-              {product.categories.map((category) => (
-                <span
-                  key={category.id}
-                  className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-sm mr-2"
-                >
-                  {category.name}
-                </span>
-              ))}
-            </div>
+            {product.categories.length > 0 && (
+              <div className="flex flex-wrap gap-y-2 mt-2 max-w-64">
+                {product.categories.map((category) => (
+                  <span
+                    key={category.id}
+                    className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full text-sm mr-2"
+                  >
+                    {category.name}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}

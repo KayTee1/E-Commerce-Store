@@ -1,4 +1,5 @@
 const pool = require("../db/pool");
+const { deleteProductById } = require("./products");
 
 const productCategories = {
   findProductCategories: async (product_id) => {
@@ -26,6 +27,17 @@ const productCategories = {
       throw new Error(`Failed to add product category: ${error.message}`);
     }
   },
+  deleteProductCategoryByProductId: async (product_id) => {
+    const query = "DELETE FROM product_categories WHERE product_id = ?";
+    try {
+      const connection = await pool.getConnection();
+      const [results] = await connection.query(query, [product_id]);
+      connection.release();
+      return results;
+    } catch (error) {
+      throw new Error(`Failed to delete product category: ${error.message}`);
+    }
+  }
 };
 
 module.exports = productCategories;

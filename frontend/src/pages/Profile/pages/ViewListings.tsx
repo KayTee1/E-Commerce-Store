@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 import ListingCard from "../components/ListingCard";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../shared/Loader";
+import Loader from "../../../shared/Loader";
 
 type Listing = {
   id: number;
@@ -75,7 +75,7 @@ const ViewListings = () => {
 
   if (!isError && userListings.length > 0) {
     content = (
-      <div className="flex flex-wrap gap-4 mx-16 justify-center">
+      <div className="grid grid-cols-2 gap-4 mx-16 justify-center">
         {userListings.map((listing: any) => (
           <ListingCard key={listing.id} listing={listing} />
         ))}
