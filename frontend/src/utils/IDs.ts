@@ -24,7 +24,7 @@ export const isExistingID = async (
   const apiUrl = import.meta.env.VITE_API_URL;
 
   let path = "";
-  const productsPath = "/api/products";
+  const productsPath = "/api/products/product";
   const categoriesPath = "/api/categories";
   method === "products" ? (path = productsPath) : (path = categoriesPath);
 
