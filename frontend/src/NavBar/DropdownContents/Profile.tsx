@@ -27,7 +27,14 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <Button variant="dangerous" content="Logout" onClick={auth.logout} />
+        <Button
+          variant="dangerous"
+          content="Logout"
+          onClick={() => {
+            auth.logout();
+            navigate("/");
+          }}
+        />
       </div>
     );
   }

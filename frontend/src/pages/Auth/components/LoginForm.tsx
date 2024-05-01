@@ -60,7 +60,6 @@ const LoginForm = () => {
         return;
       }
       setMessage({ message: "Login successful!", color: "green" });
-      console.log(data);
       auth.login(
         data.userId,
         data.username,
