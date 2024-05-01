@@ -3,17 +3,22 @@ Custom Button component!
 
 Usage example:
 <Button variant="primary" content="Click me" onClick={() => console.log("Clicked")} />
-<Button variant="dangerous" content="Delete" />
+<Button variant="dangerous" content="Delete" onClick={() => console.log("Deleted")} 
+  className="bg-gray-200" />
 
-Note: The onClick prop is optional.
+Note: The className prop is optional.
+      The className prop is used to add additional classes to the button.
 */
+
+import { twMerge } from "tailwind-merge";
 
 type ButtonProps = {
   variant: "primary" | "dangerous";
   content: string;
-  onClick?: () => void;
+  onClick: () => void;
+  className?: string;
 };
-const Button = ({ variant, content, onClick }: ButtonProps) => {
+const Button = ({ variant, content, onClick, className }: ButtonProps) => {
   let style: string;
   switch (variant) {
     case "primary":
@@ -24,7 +29,7 @@ const Button = ({ variant, content, onClick }: ButtonProps) => {
       break;
   }
   return (
-    <button onClick={onClick} className={style}>
+    <button onClick={onClick} className={twMerge(style, className)}>
       {content}
     </button>
   );
