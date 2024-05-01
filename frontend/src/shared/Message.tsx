@@ -1,10 +1,12 @@
+import { twMerge } from "tailwind-merge";
+
 /*
 
 Example of usage: 
   INIT:
   type MessageType = {
     message: string;
-    color: string;
+    color: "red" | "green;
   };
 
   const [message, setMessage] = useState<MessageType>({
@@ -16,18 +18,31 @@ Example of usage:
   setMessage({ message: "Your cart is empty!", color: "red" });
 
   <Message message={message}/>
+
+  Note: The className prop is optional.
+        Use the className prop to add additional classes to the message.
 */
 type MessageProps = {
   message: {
     message: string;
-    color: string;
+    color: "red" | "green" | "";
   };
+  className?: string;
 };
 
-const Message: React.FC<MessageProps> = ({ message }) => {
+const Message: React.FC<MessageProps> = ({ message, className }) => {
+  let color;
+  switch (message.color) {
+    case "red":
+      color = "text-red-500";
+      break;
+    case "green":
+      color = "text-green-600";
+      break;
+  }
   return (
     <div>
-      <p style={{ color: message.color }}>{message.message}</p>
+      <p className={twMerge(color, className)}>{message.message}</p>
     </div>
   );
 };
