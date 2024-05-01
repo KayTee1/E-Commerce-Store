@@ -1,4 +1,8 @@
+import { useState } from "react";
 import { useCart } from "../../../context/CartContext";
+import DetailsForm from "../components/DetailsForm";
+import OrderSummary from "../components/OrderSummary";
+import Button from "../../../shared/Button";
 
 type Product = {
   id: number;
@@ -11,17 +15,44 @@ type Product = {
   quantity?: number;
 };
 
+type FormData = {
+  name: string;
+  email: string;
+  address: string;
+  postalCode: string;
+};
+
 const Checkout = () => {
   const { cartState } = useCart();
+
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    address: "",
+    postalCode: "",
+  });
+
+  const handleSubmit = async () => {
+    console.log(formData)
+  };
+
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-3xl font-bold mb-4">Checkout</h2>
+      <h2 className="text-3xl font-bold my-4">Checkout</h2>
 
-      <div className="flex flex-col items-center justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ">
-          {cartState.items.map((item: Product) => (
-            <div>{item.title}</div>
-          ))}
+      <div className="flex flex-row gap-56">
+        <div>
+          <h3 className="text-xl font-semibold">Personal Details</h3>
+          <DetailsForm formData={formData} setFormData={setFormData} />
+          <Button
+            content="Place Order"
+            variant="primary"
+            onClick={() => handleSubmit()}
+          />
+        </div>
+        <div className="">
+          <h3 className="text-xl font-semibold">Order Summary</h3>
+          <OrderSummary products={cartState.items as Product[]}/>
         </div>
       </div>
     </div>

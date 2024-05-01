@@ -11,7 +11,7 @@ type FormData = {
 };
 type MessageType = {
   message: string;
-  color: string;
+  color: "red" | "green" | "";
 };
 
 const LoginForm = () => {
