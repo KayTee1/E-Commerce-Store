@@ -93,7 +93,7 @@ const CategoryProducts = () => {
   !isError &&
     products.length > 0 &&
     (content = products.map((product) => (
-      <div key={product.id} className="flex gap-4 mx-32 justify-center">
+      <div key={product.id} className="flex flex-wrap flex-row gap-4 mx-32 justify-center">
         <ProductListingCard product={product} />
       </div>
     )));

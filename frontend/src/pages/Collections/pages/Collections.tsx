@@ -63,6 +63,7 @@ const Collections = () => {
           }}
           content="Post the first listing!"
           variant="primary"
+          className="mt-3"
         />
       </div>
     );
