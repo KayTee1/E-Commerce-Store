@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
+import { AuthContext } from "../../../context/AuthContext";
 import ProductListingCard from "../../../shared/ProductListingCard";
 import Loader from "../../../shared/Loader";
 import Button from "../../../shared/Button";
@@ -30,6 +31,8 @@ const CategoryProducts = () => {
   const [isError, setIsError] = useState<boolean>(false);
 
   const { category_id } = useParams();
+  const navigate = useNavigate();
+  const auth = useContext(AuthContext);
 
   const fetchProducts = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -73,19 +76,25 @@ const CategoryProducts = () => {
       <div className=" text-center">
         <p>No products found</p>
 
-        <Button
-          content="Post the first listing for this Category!"
-          variant="primary"
-          onClick={() => {}}
-        />
+        <div className="mt-3">
+          <Button
+            content="Post the first listing for this Category!"
+            variant="primary"
+            onClick={() => {
+              auth.isLoggedIn
+                ? navigate("/create-listing")
+                : navigate("/login");
+            }}
+          />
+        </div>
       </div>
     ));
 
   !isError &&
     products.length > 0 &&
     (content = products.map((product) => (
-      <div className="flex gap-4 mx-32 justify-center">
-        <ProductListingCard key={product.id} product={product} />
+      <div key={product.id} className="flex gap-4 mx-32 justify-center">
+        <ProductListingCard product={product} />
       </div>
     )));
 

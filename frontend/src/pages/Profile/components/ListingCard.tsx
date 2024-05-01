@@ -59,13 +59,14 @@ const ListingCard = ({ listing }: ListingCardProps) => {
         alt={productData.title}
         className="w-full h-48 object-cover mt-2 rounded-md"
       />
-      <div className="flex flex-row justify-around">
+      <div className="flex flex-row justify-around mt-3 gap-2">
         <Button
           content="Edit"
           variant="primary"
           onClick={() => {
             showModal("Edit");
           }}
+          className="w-1/2"
         />
 
         <Button
@@ -74,6 +75,7 @@ const ListingCard = ({ listing }: ListingCardProps) => {
           onClick={() => {
             showModal("Delete");
           }}
+          className="w-1/2"
         />
       </div>
       <Modal

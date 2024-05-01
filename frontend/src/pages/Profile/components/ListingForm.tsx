@@ -100,12 +100,10 @@ const ListingForm = ({
     if (newCategories.length === 0) {
       return;
     }
-    console.log("new", newCategories);
     try {
       await Promise.all(
         newCategories.map((category) => postCategory(category))
       );
-      console.log("All new categories have been successfully created.");
     } catch (error) {
       console.error("Failed to create one or more categories:", error);
     }
