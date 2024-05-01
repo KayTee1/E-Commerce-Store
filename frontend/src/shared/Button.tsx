@@ -3,7 +3,7 @@ Custom Button component!
 
 Usage example:
 <Button variant="primary" content="Click me" onClick={() => console.log("Clicked")} />
-<Button variant="dangerous" content="Delete" onClick={() => console.log("Deleted")} />
+<Button variant="dangerous" content="Delete" />
 
 Note: The onClick prop is optional.
 */

@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
-import { BsHeartbreak } from "react-icons/bs";
-import ProductIcons from "../../shared/ProductIcons";
-import { useCart } from "../../context/CartContext";
 import { useNavigate } from "react-router-dom";
+import { BsHeartbreak } from "react-icons/bs";
+
+import { AuthContext } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext";
+
+import ProductIcons from "../../shared/ProductIcons";
 
 type Product = {
   id: number;

@@ -1,12 +1,13 @@
-import LoginForm from "../components/LoginForm";
 import { useNavigate } from "react-router-dom";
+
+import LoginForm from "../components/LoginForm";
 
 const Login = () => {
   const navigate = useNavigate();
 
   return (
     <div className="max-w-md mx-auto mt-4 bg-white rounded-lg shadow-lg">
-      <div className="bg-gray-100 p-5">
+      <div className="bg-gray-100 p-3">
         <h1 className="text-center text-2xl font-bold">Login</h1>
       </div>
       <div className="p-6">

@@ -1,5 +1,6 @@
-import SignupForm from "../components/SignupForm";
 import { useNavigate } from "react-router-dom";
+
+import SignupForm from "../components/SignupForm";
 
 const Signup = () => {
   const navigate = useNavigate();

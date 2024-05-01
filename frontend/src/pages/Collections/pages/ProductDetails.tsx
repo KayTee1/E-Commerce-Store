@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Loader from "../../../shared/Loader";
 
 import ProductDetailsCard from "../components/ProductDetailsCard";
+import Loader from "../../../shared/Loader";
 
 type Category = {
   id: number;

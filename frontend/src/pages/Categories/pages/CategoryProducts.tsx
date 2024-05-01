@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import ProductListingCard from "../../../shared/ProductListingCard";
 import Loader from "../../../shared/Loader";
 import Button from "../../../shared/Button";
@@ -83,14 +84,16 @@ const CategoryProducts = () => {
   !isError &&
     products.length > 0 &&
     (content = products.map((product) => (
-      <div className="grid grid-cols-3 gap-4 mx-32 justify-center">
+      <div className="flex gap-4 mx-32 justify-center">
         <ProductListingCard key={product.id} product={product} />
       </div>
     )));
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
-      <h2 className="text-3xl font-bold mb-4">Products with {categoryName}</h2>
+      <h2 className="text-3xl font-bold mb-4">
+        Products with <span className="underline">{categoryName}</span> tag
+      </h2>
 
       {isLoading ? <Loader isLoading={isLoading} /> : content}
     </div>
