@@ -90,13 +90,29 @@ const CategoryProducts = () => {
       </div>
     ));
 
-  !isError &&
-    products.length > 0 &&
-    (content = products.map((product) => (
-      <div key={product.id} className="flex flex-wrap flex-row gap-4 mx-32 justify-center">
-        <ProductListingCard product={product} />
+  if (!isError && products.length > 0) {
+    let cols;
+    switch (products.length) {
+      case 1:
+        cols = "1";
+        break;
+      case 2:
+        cols = "2";
+        break;
+      default:
+        cols = "3";
+        break;
+    }
+    content = (
+      <div className={`grid grid-cols-${cols} gap-4 justify-center mt-3`}>
+        {products.map((product) => (
+          <div key={product.id}>
+            <ProductListingCard product={product} />
+          </div>
+        ))}
       </div>
-    )));
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
@@ -104,7 +120,7 @@ const CategoryProducts = () => {
         Products with <span className="underline">{categoryName}</span> tag
       </h2>
 
-      {isLoading ? <Loader isLoading={isLoading} /> : content}
+      <div>{isLoading ? <Loader isLoading={isLoading} /> : content}</div>
     </div>
   );
 };

@@ -20,7 +20,7 @@ type DeleteLayoutProps = {
 };
 type MessageType = {
   message: string;
-  color: string;
+  color: "red" | "green" | "";
 };
 
 export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
@@ -85,17 +85,17 @@ export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
   const body = <div className="flex justify-center">{content}</div>;
 
   const footer = (
-    <div>
+    <div className="flex flex-row gap-4">
       <Button
         onClick={() => {
-          handleConfirm;
+          handleConfirm();
         }}
         variant="dangerous"
         content="Confirm"
       />
       <Button
         onClick={() => {
-          onHide;
+          onHide();
         }}
         variant="primary"
         content="Cancel"

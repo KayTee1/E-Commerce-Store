@@ -73,8 +73,9 @@ const ViewListings = () => {
   }
 
   if (!isError && userListings.length > 0) {
+    let cols = userListings.length > 1 ? 2 : 1;
     content = (
-      <div className="grid grid-cols-2 gap-4 mx-16 justify-center">
+      <div className={`grid grid-cols-${cols} gap-4 mx-16 justify-center`}>
         {userListings.map((listing: any) => (
           <ListingCard key={listing.id} listing={listing} />
         ))}
