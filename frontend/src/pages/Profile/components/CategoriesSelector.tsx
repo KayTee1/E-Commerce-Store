@@ -107,7 +107,7 @@ export const CategoriesSelector = ({
   return (
     <div className="w-full h-24 ">
       {selectedCategories.length === 0 ? null : (
-        <div className="p-2 flex flex-wrap max-w-lg h-16 border-solid border-2 bg-gray-200 border-gray-400">
+        <div className="border-solid border-2 rounded-md mb-1 border-gray-500 flex flex-wrap max-w-md max-h-16 overflow-x-scroll p-2 gap-y-2">
           {selectedCategories.map((category: Category) => (
             <div
               key={category.category_id}
@@ -195,17 +195,10 @@ const CategoryListItem = ({
     category: Category
   ) => void;
 }) => {
-  const handleSaveCategory = (
-    e: React.MouseEvent<HTMLLIElement, MouseEvent>
-  ) => {
-    console.log("Selected Category:", category);
-
-    handleAddCategory(e, category);
-  };
   return (
     <li
       className="px-3 py-2 cursor-pointer hover:bg-gray-100"
-      onClick={(e) => handleSaveCategory(e)}
+      onClick={(e) => handleAddCategory(e, category)}
     >
       {category.name}
     </li>

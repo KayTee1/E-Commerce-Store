@@ -61,6 +61,7 @@ CREATE TABLE
             FOREIGN KEY (`category_id`) REFERENCES `categories` (`category_id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = latin1;
 
+/* Basic categories */
 INSERT INTO
     categories (category_id, name)
 VALUES

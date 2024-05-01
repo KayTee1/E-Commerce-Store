@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import DropdownItem from "../components/DropdownItem";
 import Loader from "../../shared/Loader";
 import { useNavigate } from "react-router-dom";
+import Button from "../../shared/Button";
 
 type Product = {
   id: number;
@@ -90,14 +91,14 @@ const Favorites = () => {
     content = (
       <div className="flex flex-col justify-between h-screen">
         <p className="text-xl">Log in to see your favorites</p>
-        <button
+
+        <Button
+          variant="primary"
+          content="Log in"
           onClick={() => {
             navigate("/login");
           }}
-          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Log in
-        </button>
+        />
       </div>
     );
   }

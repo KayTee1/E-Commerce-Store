@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import Loader from "../Loader";
 import Message from "../Message";
+import Button from "../Button";
 
 type Listing = {
   id: number;
@@ -19,7 +20,7 @@ type DeleteLayoutProps = {
 };
 type MessageType = {
   message: string;
-  color: string;
+  color: "red" | "green" | "";
 };
 
 export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
@@ -39,16 +40,13 @@ export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
     const baseApiUrl = import.meta.env.VITE_API_URL;
     try {
       setIsLoading(true);
-      const response = await fetch(
-        `${baseApiUrl}/api/products/${product_id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
+      const response = await fetch(`${baseApiUrl}/api/products/${product_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token}`,
+        },
+      });
       setIsLoading(false);
       console.log(response);
       setMessage({ message: "Listing Deleted Successfully", color: "green" });
@@ -87,19 +85,21 @@ export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
   const body = <div className="flex justify-center">{content}</div>;
 
   const footer = (
-    <div>
-      <button
-        onClick={handleConfirm}
-        className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded mt-2"
-      >
-        Confirm
-      </button>
-      <button
-        onClick={onHide}
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-2 ml-2"
-      >
-        Cancel
-      </button>
+    <div className="flex flex-row gap-4">
+      <Button
+        onClick={() => {
+          handleConfirm();
+        }}
+        variant="dangerous"
+        content="Confirm"
+      />
+      <Button
+        onClick={() => {
+          onHide();
+        }}
+        variant="primary"
+        content="Cancel"
+      />
     </div>
   );
   return { header, body, footer };

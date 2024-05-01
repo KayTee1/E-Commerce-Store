@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
 import DropdownItem from "../components/DropdownItem";
+import Button from "../../shared/Button";
 
 type ItemTypes = {
   id: number;
@@ -39,19 +40,17 @@ const Cart = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-row mt-4 justify-center">
-        <button
+      <div className="flex flex-row mt-4 gap-3 justify-center">
+        <Button
+          variant="primary"
+          content="Checkout"
           onClick={handleNavToCheckout}
-          className="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-        >
-          Checkout
-        </button>
-        <button
+        />
+        <Button
+          variant="dangerous"
+          content="Empty Cart"
           onClick={handleEmptyCart}
-          className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded ml-2"
-        >
-          Empty Cart
-        </button>
+        />
       </div>
     </div>
   );

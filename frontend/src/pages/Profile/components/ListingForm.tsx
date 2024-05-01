@@ -19,7 +19,7 @@ type FormData = {
 };
 type MessageType = {
   message: string;
-  color: string;
+  color: "red" | "green" | "";
 };
 
 type ListingFormProps = {
@@ -100,12 +100,10 @@ const ListingForm = ({
     if (newCategories.length === 0) {
       return;
     }
-    console.log("new", newCategories);
     try {
       await Promise.all(
         newCategories.map((category) => postCategory(category))
       );
-      console.log("All new categories have been successfully created.");
     } catch (error) {
       console.error("Failed to create one or more categories:", error);
     }
@@ -253,11 +251,11 @@ const ListingForm = ({
 
       <button
         onClick={validateForm}
-        className="mt-3 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="mt-4 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
         Submit
       </button>
-      <Message message={message} />
+      <Message message={message} className="mt-2" />
     </div>
   );
 };

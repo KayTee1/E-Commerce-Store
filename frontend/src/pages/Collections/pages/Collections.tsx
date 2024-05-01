@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthContext";
 
 import Loader from "../../../shared/Loader";
 import ProductListingCard from "../../../shared/ProductListingCard";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../context/AuthContext";
+import Button from "../../../shared/Button";
 
 type Product = {
   id: number;
@@ -56,26 +57,37 @@ const Collections = () => {
     content = (
       <div className="text-center">
         <p>No products yet</p>
-        <button
+        <Button
           onClick={() => {
             !auth.isLoggedIn ? navigate("/login") : navigate("/create-listing");
           }}
-          className="mt-5 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Post the first listing!
-        </button>
+          content="Post the first listing!"
+          variant="primary"
+          className="mt-3"
+        />
       </div>
     );
   }
 
   if (!isError && productsData.length > 0) {
+    let cols;
+    switch (productsData.length) {
+      case 1:
+        cols = "1";
+        break;
+      case 2:
+        cols = "2";
+        break;
+      default:
+        cols = "3";
+    }
     content = (
-      <div className="flex flex-col">
+      <div className="flex flex-col items-center">
         <div className="text-lg text-gray-600 mb-8 text-center">
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
         </div>
-        <div className="grid grid-cols-3 gap-4 mx-32 justify-center">
+        <div className={`grid grid-cols-${cols} gap-4 justify-center`}>
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
           ))}

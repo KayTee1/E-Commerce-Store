@@ -29,8 +29,8 @@ export const isExistingID = async (
   method === "products" ? (path = productsPath) : (path = categoriesPath);
 
   const response = await fetch(apiUrl + `${path}/${id}`);
-  if (response.status === 404) {
-    return false;
+  if (response.status === 200) {
+    return true;
   }
-  return true;
+  return false;
 };

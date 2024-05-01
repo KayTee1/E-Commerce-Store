@@ -1,7 +1,8 @@
 import { ChangeEvent, useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Message from "../../../shared/Message";
 import { AuthContext } from "../../../context/AuthContext";
+
+import Message from "../../../shared/Message";
 import FormItem from "../../../shared/FormItem";
 
 type FormData = {
@@ -59,7 +60,6 @@ const LoginForm = () => {
         return;
       }
       setMessage({ message: "Login successful!", color: "green" });
-      console.log(data);
       auth.login(
         data.userId,
         data.username,
@@ -90,6 +90,7 @@ const LoginForm = () => {
       </div>
 
       <Message message={message} />
+
       <button
         type="submit"
         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-500 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"

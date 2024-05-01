@@ -3,6 +3,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import ListingCard from "../components/ListingCard";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../../shared/Loader";
+import Button from "../../../shared/Button";
 
 type Listing = {
   id: number;
@@ -61,21 +62,20 @@ const ViewListings = () => {
     content = (
       <div className="text-center">
         <p>You have no listings yet</p>
-        <button
-          onClick={() => {
-            navigate("/create-listing");
-          }}
-          className="mt-3 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-        >
-          Create your first listing
-        </button>
+        <Button
+          onClick={() => navigate("/create-listing")}
+          variant="primary"
+          content="Create your first listing"
+          className="mt-3"
+        />
       </div>
     );
   }
 
   if (!isError && userListings.length > 0) {
+    let cols = userListings.length > 1 ? 2 : 1;
     content = (
-      <div className="grid grid-cols-2 gap-4 mx-16 justify-center">
+      <div className={`grid grid-cols-${cols} gap-4 mx-16 justify-center`}>
         {userListings.map((listing: any) => (
           <ListingCard key={listing.id} listing={listing} />
         ))}
@@ -85,7 +85,7 @@ const ViewListings = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-10">
-      <h2 className="text-3xl font-bold mb-8">Your listings</h2>
+      <h2 className="text-3xl font-bold mb-3">Your listings</h2>
       {isLoading ? (
         <div className="flex justify-center">
           <Loader isLoading={isLoading} />
