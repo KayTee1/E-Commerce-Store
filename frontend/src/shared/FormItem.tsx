@@ -32,7 +32,6 @@ const FormItem = ({
   } else {
     type = "text";
   }
-
   return (
     <div className="mx-2 my-2">
       <label

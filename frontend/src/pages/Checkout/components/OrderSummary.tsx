@@ -35,11 +35,12 @@ const OrderSummary = ({ products, setProducts }: OrderSummaryProps) => {
 
   return (
     <div>
-      <div className="flex flex-col">
+      <div className="flex flex-col max-h-96 overflow-scroll">
         {products.map((product: Product) => (
           <div
             key={product.id}
-            className="flex flex-row justify-between items-center my-4"
+            className="flex flex-row justify-between items-center my-4 min-h-24  border
+             border-gray-300 rounded-lg p-4 w-68"
           >
             <div className="flex flex-row items-center gap-4">
               <img
@@ -51,7 +52,12 @@ const OrderSummary = ({ products, setProducts }: OrderSummaryProps) => {
                 className="cursor-pointer w-16 h-16 object-cover rounded-lg"
               />
               <div>
-                <h4 className="text-lg font-semibold max-w-32">
+                <h4
+                  onClick={() => {
+                    navigate(`/products/${product.product_id}`);
+                  }}
+                  className="text-lg mb-2 font-semibold max-w-32 underline cursor-pointer"
+                >
                   {product.title}
                 </h4>
                 <div className="text-sm text-gray-500">

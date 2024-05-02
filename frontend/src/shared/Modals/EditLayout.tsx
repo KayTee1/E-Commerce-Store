@@ -65,7 +65,6 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
         body: JSON.stringify(formData),
       });
       setIsLoading(false);
-      console.log(response);
       setProductData({
         id: item.id,
         product_id: item.product_id,

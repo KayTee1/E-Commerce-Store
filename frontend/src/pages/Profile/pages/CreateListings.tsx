@@ -38,7 +38,6 @@ const CreateListings = () => {
         owner: auth.username ?? "",
         product_id: await generateID("products"),
       };
-      console.log(completedFormData);
       const response = await fetch(`${baseApiUrl}/api/products`, {
         method: "POST",
         headers: {

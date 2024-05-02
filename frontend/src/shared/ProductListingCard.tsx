@@ -44,8 +44,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           user_id: auth.userId,
         }),
       });
-      const data = await res.json();
-      console.log(data);
+      await res.json();
     } catch (error) {
       console.error(error);
     }

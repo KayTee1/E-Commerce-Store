@@ -15,10 +15,17 @@ import { twMerge } from "tailwind-merge";
 type ButtonProps = {
   variant: "primary" | "dangerous";
   content: string;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
+  type?: "button" | "submit";
 };
-const Button = ({ variant, content, onClick, className }: ButtonProps) => {
+const Button = ({
+  variant,
+  content,
+  onClick,
+  className,
+  type = "button",
+}: ButtonProps) => {
   let style: string;
   switch (variant) {
     case "primary":
@@ -29,7 +36,7 @@ const Button = ({ variant, content, onClick, className }: ButtonProps) => {
       break;
   }
   return (
-    <button onClick={onClick} className={twMerge(style, className)}>
+    <button onClick={onClick} className={twMerge(style, className)} type={type}>
       {content}
     </button>
   );
