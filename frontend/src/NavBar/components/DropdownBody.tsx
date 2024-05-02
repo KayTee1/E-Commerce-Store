@@ -18,7 +18,6 @@ const DropdownBody = ({ type }: DropdownBodyProps) => {
       content = <Profile />;
       break;
   }
-
   return <div className="flex flex-col p-4 w-72 h-96 ">{content}</div>;
 };
 
