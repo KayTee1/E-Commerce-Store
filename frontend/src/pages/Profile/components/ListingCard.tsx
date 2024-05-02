@@ -20,7 +20,7 @@ type ListingType = {
 type ListingCardProps = {
   listing: ListingType;
 };
-type ModalTypes = "Delete" | "Edit" | "";
+type ModalTypes = "Delete" | "Edit" | "Info";
 
 const ListingCard = ({ listing }: ListingCardProps) => {
   const [modal, setModal] = useState({

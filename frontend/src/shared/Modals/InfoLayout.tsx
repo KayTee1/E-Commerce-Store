@@ -1,8 +1,11 @@
+import Button from "../Button";
+
 type InfoLayoutProps = {
   onHide: () => void;
   show: boolean;
+  info: string;
 };
-export const InfoLayout = ({ onHide, show }: InfoLayoutProps) => {
+export const InfoLayout = ({ onHide, show, info }: InfoLayoutProps) => {
   if (!show) {
     return null;
   }
@@ -15,7 +18,16 @@ export const InfoLayout = ({ onHide, show }: InfoLayoutProps) => {
       <h2>Info </h2>
     </div>
   );
+  const body = (
+    <div>
+      <p>{info}</p>
+    </div>
+  );
 
-  const footer = <div></div>;
-  return { header, body: <div></div>, footer };
+  const footer = (
+    <div>
+      <Button className="w-48" onClick={handleConfirm} content="Close" variant="primary" />
+    </div>
+  );
+  return { header, body, footer };
 };

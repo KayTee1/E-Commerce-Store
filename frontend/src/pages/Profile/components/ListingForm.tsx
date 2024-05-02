@@ -3,6 +3,7 @@ import FormItem from "../../../shared/FormItem";
 import Message from "../../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
 import { AuthContext } from "../../../context/AuthContext";
+import Modal from "../../../shared/Modal";
 
 type Category = {
   category_id: string;
@@ -35,6 +36,7 @@ type ListingFormProps = {
     image: string;
   };
 };
+type ModalTypes = "Delete" | "Edit" | "Info";
 
 const ListingForm = ({
   method,
@@ -48,8 +50,18 @@ const ListingForm = ({
     message: "",
     color: "",
   });
-
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+  });
   const auth = useContext(AuthContext);
+
+  const showModal = (modalType: ModalTypes) => {
+    setModal({
+      show: true,
+      modalType,
+    });
+  };
   const fetchCategories = async () => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
@@ -246,6 +258,7 @@ const ListingForm = ({
           categories={categories}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
+          showModal={showModal}
         />
       </div>
 
@@ -256,6 +269,12 @@ const ListingForm = ({
         Submit
       </button>
       <Message message={message} className="mt-2" />
+      <Modal
+        onHide={() => setModal({ show: false, modalType: "" })}
+        show={modal.show}
+        modalType={modal.modalType as ModalTypes}
+        info="Category already exists!"
+      />
     </div>
   );
 };

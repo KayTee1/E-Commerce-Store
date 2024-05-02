@@ -1,7 +1,37 @@
+/*
+USAGE:
+
+INIT:
+  type ModalTypes = "Delete" | "Edit" | "Info";
+
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+  });
+
+  const showModal = (modalType: ModalTypes) => {
+    setModal({
+      show: true,
+      modalType,
+    });
+  };
+
+<Modal
+  onHide={() => setModal({ show: false, modalType: "" })}
+  show={modal.show}
+  modalType={modal.modalType as ModalTypes}
+  item={listing}
+  setProductData={setProductData}
+/>
+
+
+*/
+
 import { DeleteLayout } from "./Modals/DeleteLayout";
 import { EditLayout } from "./Modals/EditLayout";
+import { InfoLayout } from "./Modals/InfoLayout";
 
-type ModalTypes = "Delete" | "Edit" | "";
+type ModalTypes = "Delete" | "Edit" | "Info";
 
 type Category = {
   category_id: string;
@@ -25,6 +55,7 @@ type ModalProps = {
   modalType: ModalTypes;
   item?: Listing;
   setProductData?: React.Dispatch<React.SetStateAction<Listing>>;
+  info?: string;
 };
 const Modal = ({ onHide, show, modalType, ...props }: ModalProps) => {
   let layout = {
@@ -53,9 +84,13 @@ const Modal = ({ onHide, show, modalType, ...props }: ModalProps) => {
         setProductData: props.setProductData!,
       });
       break;
-
-    default:
-      modalContent = null;
+    case "Info":
+      modalContent = InfoLayout({
+        onHide,
+        show: true,
+        info: props.info!,
+      });
+      break;
   }
 
   layout = {
