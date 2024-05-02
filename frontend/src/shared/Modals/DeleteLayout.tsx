@@ -48,7 +48,6 @@ export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
         },
       });
       setIsLoading(false);
-      console.log(response);
       setMessage({ message: "Listing Deleted Successfully", color: "green" });
     } catch (e) {
       setIsLoading(false);

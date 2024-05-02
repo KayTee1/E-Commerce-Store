@@ -8,17 +8,20 @@ type Category = {
   category_id: string;
   name: string;
 };
+type ModalTypes = "Delete" | "Edit" | "Info";
 
 type CategoriesSelectorProps = {
   categories: Category[];
   selectedCategories: Category[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<Category[]>>;
+  showModal: (modalType: ModalTypes) => void;
 };
 
 export const CategoriesSelector = ({
   categories,
   selectedCategories,
   setSelectedCategories,
+  showModal,
 }: CategoriesSelectorProps) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
@@ -87,7 +90,7 @@ export const CategoriesSelector = ({
         (category) => category.name === capitalizedCategory.name
       )
     ) {
-      alert("Category already exists");
+      showModal("Info");
       return;
     }
     setSelectedCategories([...selectedCategories, capitalizedCategory]);

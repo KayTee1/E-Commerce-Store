@@ -27,6 +27,7 @@ const Favorites = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const auth = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,12 +65,15 @@ const Favorites = () => {
   const populateFavoriteProducts = async (productID: number) => {
     const baseApiUrl = import.meta.env.VITE_API_URL;
     try {
-      const res = await fetch(baseApiUrl + "/api/products/" + productID, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await fetch(
+        baseApiUrl + "/api/products/product/" + productID,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const data = await res.json();
       return data;
     } catch (error) {

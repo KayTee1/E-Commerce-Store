@@ -6,7 +6,7 @@ Example of usage:
   INIT:
   type MessageType = {
     message: string;
-    color: "red" | "green;
+    color: "red" | "green" | "";
   };
 
   const [message, setMessage] = useState<MessageType>({
