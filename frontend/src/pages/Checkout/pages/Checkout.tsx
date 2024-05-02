@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCart } from "../../../context/CartContext";
 import DetailsForm from "../components/DetailsForm";
 import OrderSummary from "../components/OrderSummary";
@@ -24,13 +24,17 @@ type FormData = {
 
 const Checkout = () => {
   const { cartState } = useCart();
-
+  const [products, setProducts] = useState([] as Product[]);
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     address: "",
     postalCode: "",
   });
+  console.log(products)
+  useEffect(() => {
+    setProducts(cartState.items as Product[]);
+  }, [setProducts]);
 
   const handleSubmit = async () => {
     console.log(formData);
@@ -54,7 +58,10 @@ const Checkout = () => {
 
         <div className="flex flex-col border border-gray-700 rounded-lg p-5 min-w-72">
           <h3 className="text-xl font-semibold">Order Summary</h3>
-          <OrderSummary products={cartState.items as Product[]} />
+          <OrderSummary
+            products={products as Product[]}
+            setProducts={setProducts}
+          />
         </div>
       </div>
     </div>

@@ -162,6 +162,13 @@ const ListingForm = ({
       });
       return;
     }
+    if (description.length > 150) {
+      setMessage({
+        message: "Description must be less than 150 characters",
+        color: "red",
+      });
+      return;
+    }
     if (title && title[0] !== title[0].toUpperCase()) {
       setMessage({
         message: "Title must start with a capital letter",
@@ -169,6 +176,15 @@ const ListingForm = ({
       });
       return;
     }
+
+    if (title.length > 20) {
+      setMessage({
+        message: "Title must be less than 20 characters",
+        color: "red",
+      });
+      return;
+    }
+
     formData.categories = selectedCategories;
 
     if (method === "POST" && props.postListing) {

@@ -20,7 +20,7 @@ type Product = {
 const Collections = () => {
   const [productsData, setProductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isError, setIsError] = useState(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const auth = useContext(AuthContext);
   const navigate = useNavigate();

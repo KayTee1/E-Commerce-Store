@@ -45,7 +45,6 @@ const Favorites = () => {
           },
         });
         const data = await res.json();
-        console.log(data);
         const productPromises = data.map((favorite: Favorite) =>
           populateFavoriteProducts(favorite.product_id)
         );

@@ -1,4 +1,6 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
 
 type Product = {
   id: number;
@@ -13,10 +15,24 @@ type Product = {
 
 type OrderSummaryProps = {
   products: Product[];
+  setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
 };
 
-const OrderSummary = ({ products }: OrderSummaryProps) => {
+const OrderSummary = ({ products, setProducts }: OrderSummaryProps) => {
   const navigate = useNavigate();
+  const { setQuantity } = useCart();
+
+  const handleUpdateQuantity = (product_id: string, quantity: number) => {
+    const updatedProducts = products.map((product) => {
+      if (product.product_id === product_id) {
+        setQuantity(product, quantity);
+        return { ...product, quantity };
+      }
+      return product;
+    });
+    setProducts(updatedProducts);
+  };
+
   return (
     <div>
       <div className="flex flex-col">
@@ -40,7 +56,16 @@ const OrderSummary = ({ products }: OrderSummaryProps) => {
                 </h4>
                 <div className="text-sm text-gray-500">
                   <span>Qty:</span>
-                  <select value={product.quantity}>
+                  <select
+                    className="ml-2 rounded-lg p-1"
+                    value={product.quantity}
+                    onChange={(e) => {
+                      handleUpdateQuantity(
+                        product.product_id,
+                        parseInt(e.target.value)
+                      );
+                    }}
+                  >
                     {[...Array(10).keys()].map((index) => (
                       <option key={index + 1} value={index + 1}>
                         {index + 1}
@@ -50,7 +75,10 @@ const OrderSummary = ({ products }: OrderSummaryProps) => {
                 </div>
               </div>
             </div>
-            <p className="text-lg font-semibold">{product.price}€</p>
+
+            <p className="text-lg font-semibold">
+              {parseFloat(product.price) * (product.quantity || 1)}€
+            </p>
           </div>
         ))}
       </div>
