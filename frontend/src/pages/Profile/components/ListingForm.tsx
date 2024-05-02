@@ -53,13 +53,15 @@ const ListingForm = ({
   const [modal, setModal] = useState({
     show: false,
     modalType: "",
+    info: "",
   });
   const auth = useContext(AuthContext);
 
-  const showModal = (modalType: ModalTypes) => {
+  const showModal = (modalType: ModalTypes, info: string) => {
     setModal({
       show: true,
       modalType,
+      info,
     });
   };
   const fetchCategories = async () => {
@@ -71,10 +73,14 @@ const ListingForm = ({
           "Content-Type": "application/json",
         },
       });
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+      }
       const data = await response.json();
       setCategories(data);
       return data;
     } catch (error) {
+      showModal("Info", "Failed to fetch categories");
       console.error(error);
     }
   };
@@ -117,7 +123,8 @@ const ListingForm = ({
         newCategories.map((category) => postCategory(category))
       );
     } catch (error) {
-      console.error("Failed to create one or more categories:", error);
+      showModal("Info", "Failed to create one or more categories");
+      console.log("Failed to create one or more categories:", error);
     }
   };
 
@@ -201,7 +208,7 @@ const ListingForm = ({
           }
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
           setMessage({
             message: "An unexpected error has occurred",
             color: "red",
@@ -221,7 +228,7 @@ const ListingForm = ({
           }
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
           setMessage({
             message: "An unexpected error has occurred",
             color: "red",
@@ -286,10 +293,10 @@ const ListingForm = ({
       </button>
       <Message message={message} className="mt-2" />
       <Modal
-        onHide={() => setModal({ show: false, modalType: "" })}
+        onHide={() => setModal({ show: false, modalType: "", info: "" })}
         show={modal.show}
         modalType={modal.modalType as ModalTypes}
-        info="Category already exists!"
+        info={modal.info}
       />
     </div>
   );

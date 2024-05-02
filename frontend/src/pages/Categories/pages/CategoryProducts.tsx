@@ -45,8 +45,9 @@ const CategoryProducts = () => {
     } catch (error) {
       setIsError(true);
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
   const fetchCategoryName = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -58,7 +59,6 @@ const CategoryProducts = () => {
       setIsError(true);
       console.log(error);
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -120,7 +120,13 @@ const CategoryProducts = () => {
         Products with <span className="underline">{categoryName}</span> tag
       </h2>
 
-      <div>{isLoading ? <Loader isLoading={isLoading} /> : content}</div>
+      <div>
+        {isLoading ? (
+          <Loader isLoading={isLoading} className="mt-2" />
+        ) : (
+          content
+        )}
+      </div>
     </div>
   );
 };

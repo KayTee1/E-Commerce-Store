@@ -25,7 +25,6 @@ const productCategories = {
     } catch (error) {
       throw new Error(`Failed to get product categories: ${error.message}`);
     }
-  
   },
   addProductCategory: async (productId, categoryId) => {
     const query =
@@ -44,12 +43,13 @@ const productCategories = {
     try {
       const connection = await pool.getConnection();
       const [results] = await connection.query(query, [product_id]);
+
       connection.release();
       return results;
     } catch (error) {
       throw new Error(`Failed to delete product category: ${error.message}`);
     }
-  }
+  },
 };
 
 module.exports = productCategories;

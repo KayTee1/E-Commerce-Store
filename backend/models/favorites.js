@@ -31,14 +31,15 @@ const products = {
     }
   },
   deleteFavorite: async (user_id, product_id) => {
-    const deleteQuery =
+    let deleteQuery =
       "DELETE FROM `favorites` WHERE `user_id` = ? AND `product_id` = ?";
+    if (!user_id) {
+      deleteQuery = "DELETE FROM `favorites` WHERE `product_id` = ?";
+    }
     try {
       const connection = await pool.getConnection();
-      const [results] = await connection.query(deleteQuery, [
-        user_id,
-        product_id,
-      ]);
+      let tuple = user_id ? [user_id, product_id] : [product_id];
+      const [results] = await connection.query(deleteQuery, tuple);
       connection.release();
       return results;
     } catch (error) {

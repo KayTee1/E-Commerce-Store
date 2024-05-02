@@ -35,7 +35,7 @@ const postNewFavorite = async (req, res) => {
       if (existingFavorite.product_id === favorite.product_id) {
         if (existingFavorite.user_id === favorite.user_id) {
           exists = true;
-          res.status(400).json({ message: "Favorite already exists" });
+          res.status(409).json({ message: "Favorite already exists" });
         }
       }
     });
