@@ -36,7 +36,11 @@ const NavBar = () => {
     <nav className="bg-gray-900 h-16 flex items-center">
       <div className="flex items-center justify-between mx-5 w-full">
         <NavLink to="/" className="text-white text-2xl">
-          LOGO
+          <img
+            src="https://img.freepik.com/free-vector/gradient-instagram-shop-logo-design_23-2149718655.jpg?t=st=1714664563~exp=1714668163~hmac=e01c25610a130f7aecaffa28766b95250f5df8d65f93e2245d34dd0ea10fef19&w=826"
+            className="ml-3 w-12 h-auto rounded-lg"
+            alt="Logo"
+          />
         </NavLink>
 
         <div className="flex">
