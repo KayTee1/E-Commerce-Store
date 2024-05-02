@@ -33,26 +33,28 @@ const Checkout = () => {
   });
 
   const handleSubmit = async () => {
-    console.log(formData)
+    console.log(formData);
   };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <h2 className="text-3xl font-bold my-4">Checkout</h2>
+      <h2 className="text-3xl font-bold my-6">Checkout</h2>
 
-      <div className="flex flex-row gap-56">
-        <div>
-          <h3 className="text-xl font-semibold">Personal Details</h3>
+      <div className="flex flex-row gap-32">
+        <div className="flex flex-col border border-gray-700 rounded-lg p-5 min-w-72">
+          <h3 className="text-xl font-semibold mb-4">Personal Details</h3>
           <DetailsForm formData={formData} setFormData={setFormData} />
           <Button
+            className="self-center mt-4 w-full max-w-sm"
             content="Place Order"
             variant="primary"
-            onClick={() => handleSubmit()}
+            onClick={handleSubmit}
           />
         </div>
-        <div className="">
+
+        <div className="flex flex-col border border-gray-700 rounded-lg p-5 min-w-72">
           <h3 className="text-xl font-semibold">Order Summary</h3>
-          <OrderSummary products={cartState.items as Product[]}/>
+          <OrderSummary products={cartState.items as Product[]} />
         </div>
       </div>
     </div>
