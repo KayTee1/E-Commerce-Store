@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BsHeartbreak } from "react-icons/bs";
 
@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 
 import ProductIcons from "../../shared/ProductIcons";
+import Modal from "../../shared/Modal";
 
 type Product = {
   id: number;
@@ -31,16 +32,30 @@ type DropdownItemProps = {
   type: "cart" | "favorites";
   setFavoriteProducts?: React.Dispatch<React.SetStateAction<Product[]>>;
 };
+type ModalTypes = "Delete" | "Edit" | "Info";
 
 const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+    info: "",
+  });
   const auth = useContext(AuthContext);
   const { removeFromCart } = useCart();
   const navigate = useNavigate();
 
+  const showModal = (modalType: ModalTypes, info: string) => {
+    setModal({
+      show: true,
+      modalType,
+      info,
+    });
+  };
+
   const handleFavorite = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`${apiUrl}/api/favorites`, {
+      const response = await fetch(`${apiUrl}/api/favoritses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -53,10 +68,11 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
       });
 
       if (!response.ok) {
+        showModal("Info", "Failed to add to favorites");
         throw new Error("Failed to add to favorites");
       }
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   };
 
@@ -80,10 +96,11 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
         );
       }
       if (!response.ok) {
+        showModal("Info", "Failed to remove from favorites");
         throw new Error("Failed to remove from favorites");
       }
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   };
   const handleRemoveCart = () => {
@@ -118,6 +135,12 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
           type="removeCart"
         />
       )}
+      <Modal
+        onHide={() => setModal({ show: false, modalType: "", info: "" })}
+        show={modal.show}
+        modalType="Info"
+        info={modal.info}
+      />
     </div>
   );
 };

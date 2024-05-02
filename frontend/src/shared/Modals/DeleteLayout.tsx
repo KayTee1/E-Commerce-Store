@@ -47,16 +47,20 @@ export const DeleteLayout = ({ item, onHide, show }: DeleteLayoutProps) => {
           Authorization: `Bearer ${auth.token}`,
         },
       });
-      setIsLoading(false);
+
+      if (!response.ok) {
+        throw new Error("An error occurred");
+      }
       setMessage({ message: "Listing Deleted Successfully", color: "green" });
     } catch (e) {
-      setIsLoading(false);
       setIsError(true);
       setMessage({
         message: "There was an error Deleting your listing",
         color: "red",
       });
-      console.error(e);
+      console.log(e);
+    } finally {
+      setIsLoading(false);
     }
     setTimeout(function () {
       setMessage({ message: "", color: "" });

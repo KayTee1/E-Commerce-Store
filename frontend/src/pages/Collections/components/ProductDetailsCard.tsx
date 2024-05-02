@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ProductIcons from "../../../shared/ProductIcons";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 import { AuthContext } from "../../../context/AuthContext";
+import Modal from "../../../shared/Modal";
 type Category = {
   id: number;
   category_id: string;
@@ -20,7 +21,14 @@ type Product = {
   quantity?: number;
   categories: Category[];
 };
+type ModalTypes = "Delete" | "Edit" | "Info";
+
 const ProductDetailsCard = ({ product }: { product: Product }) => {
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+    info: "",
+  });
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const auth = useContext(AuthContext);
@@ -29,9 +37,18 @@ const ProductDetailsCard = ({ product }: { product: Product }) => {
     addToCart(product);
   };
 
+  const showModal = (modalType: ModalTypes, info: string) => {
+    setModal({
+      show: true,
+      modalType,
+      info,
+    });
+  };
+
   const handleAddFavorite = async () => {
-    if (!auth.isLoggedIn)
-      return console.log("Please log in to add to favorites");
+    if (!auth.isLoggedIn) {
+      showModal("Info", "You need to be logged in to add to favorites");
+    }
     try {
       const baseApiUrl = import.meta.env.VITE_API_URL;
       const res = await fetch(baseApiUrl + `/api/favorites`, {
@@ -45,9 +62,15 @@ const ProductDetailsCard = ({ product }: { product: Product }) => {
           user_id: auth.userId,
         }),
       });
-      const data = await res.json();
-      console.log(data);
+      if (res.status === 409) {
+        showModal("Info", "Product already in favorites");
+        return;
+      }
+      if (!res.ok) {
+        throw new Error("Failed to add to favorites");
+      }
     } catch (error) {
+      showModal("Info", "Failed to add to favorites");
       console.error(error);
     }
   };
@@ -82,6 +105,12 @@ const ProductDetailsCard = ({ product }: { product: Product }) => {
           </div>
         )}
       </div>
+      <Modal
+        onHide={() => setModal({ show: false, modalType: "", info: "" })}
+        show={modal.show}
+        modalType={modal.modalType as ModalTypes}
+        info={modal.info}
+      />
     </div>
   );
 };

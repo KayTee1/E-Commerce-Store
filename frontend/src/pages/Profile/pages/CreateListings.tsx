@@ -27,7 +27,6 @@ const CreateListings = () => {
     owner: "",
     categories: [],
   });
-  
 
   const postListing = async () => {
     try {
@@ -53,7 +52,6 @@ const CreateListings = () => {
 
       return { success: true, message: "Listing created" };
     } catch (error) {
-      console.error(error);
       return { success: false, message: "Failed to create listing" };
     }
   };
@@ -73,5 +71,3 @@ const CreateListings = () => {
 };
 
 export default CreateListings;
-
-

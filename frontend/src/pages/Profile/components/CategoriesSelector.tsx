@@ -14,7 +14,7 @@ type CategoriesSelectorProps = {
   categories: Category[];
   selectedCategories: Category[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<Category[]>>;
-  showModal: (modalType: ModalTypes) => void;
+  showModal: (modalType: ModalTypes, info: string) => void;
 };
 
 export const CategoriesSelector = ({
@@ -90,7 +90,7 @@ export const CategoriesSelector = ({
         (category) => category.name === capitalizedCategory.name
       )
     ) {
-      showModal("Info");
+      showModal("Info", "Category already added");
       return;
     }
     setSelectedCategories([...selectedCategories, capitalizedCategory]);

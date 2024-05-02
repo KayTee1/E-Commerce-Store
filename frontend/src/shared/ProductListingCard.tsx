@@ -1,8 +1,9 @@
 import { useCart } from "../context/CartContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import ProductIcons from "./ProductIcons";
+import Modal from "./Modal";
 
 type ProductListingProps = {
   product: {
@@ -17,10 +18,19 @@ type ProductListingProps = {
   };
 };
 
+type ModalTypes = "Delete" | "Edit" | "Info";
+
 const ProductListingCard = ({ product }: ProductListingProps) => {
   const auth = useContext(AuthContext);
-  const navigate = useNavigate();
   const { addToCart } = useCart();
+  const navigate = useNavigate();
+
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+    info: "",
+  });
+
   const { title, description, price, image } = product;
 
   const handleAddCart = () => {
@@ -28,9 +38,19 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
     addToCart(product);
   };
 
+  const showModal = (modalType: ModalTypes, info: string) => {
+    setModal({
+      show: true,
+      modalType,
+      info,
+    });
+  };
+
   const handleFavorite = async () => {
-    if (!auth.isLoggedIn)
-      return console.log("Please log in to add to favorites");
+    if (!auth.isLoggedIn) {
+      showModal("Info", "Please log in to add to favorites");
+      return;
+    }
     try {
       const baseApiUrl = import.meta.env.VITE_API_URL;
       const res = await fetch(baseApiUrl + `/api/favorites`, {
@@ -44,9 +64,12 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           user_id: auth.userId,
         }),
       });
-      await res.json();
+      if (!res.ok) {
+        throw new Error("Failed to add to favorites");
+      }
     } catch (error) {
-      console.error(error);
+      showModal("Info", "Failed to add to favorites");
+      console.log(error);
     }
   };
 
@@ -72,6 +95,12 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
         />
         <p className="w-48">{description}</p>
       </div>
+      <Modal
+        onHide={() => setModal({ show: false, modalType: "", info: "" })}
+        show={modal.show}
+        modalType={modal.modalType as ModalTypes}
+        info={modal.info}
+      />
     </div>
   );
 };

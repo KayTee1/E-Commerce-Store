@@ -39,7 +39,7 @@ const ViewListings = () => {
       setUserListings(data);
     } catch (error) {
       setIsError(true);
-      console.error(error);
+      console.log(error);
     }
     setIsLoading(false);
   };
@@ -53,7 +53,7 @@ const ViewListings = () => {
   if (isError) {
     content = (
       <div className="text-center">
-        <p>There was an error fetching the data</p>
+        <p>There was an error fetching your listings</p>
       </div>
     );
   }

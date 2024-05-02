@@ -5,6 +5,9 @@ import DropdownItem from "../components/DropdownItem";
 import Loader from "../../shared/Loader";
 import { useNavigate } from "react-router-dom";
 import Button from "../../shared/Button";
+import Modal from "../../shared/Modal";
+
+type ModalTypes = "Delete" | "Edit" | "Info";
 
 type Product = {
   id: number;
@@ -26,9 +29,23 @@ type Favorite = {
 const Favorites = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+    info: "",
+  });
+
   const auth = useContext(AuthContext);
 
   const navigate = useNavigate();
+
+  const showModal = (modalType: ModalTypes, info: string) => {
+    setModal({
+      show: true,
+      modalType,
+      info,
+    });
+  };
 
   useEffect(() => {
     setFavoriteProducts([]);
@@ -53,6 +70,8 @@ const Favorites = () => {
         setFavoriteProducts(products);
         setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
+        showModal("Info", "Error fetching favorites");
         console.error(error);
       }
     };
@@ -77,6 +96,7 @@ const Favorites = () => {
       const data = await res.json();
       return data;
     } catch (error) {
+      showModal("Info", "Error fetching favorite products");
       console.error(error);
       return null;
     }
@@ -126,6 +146,12 @@ const Favorites = () => {
       <div className="flex flex-col p-2 mt-5 max-h-72 overflow-scroll">
         {content}
       </div>
+      <Modal
+        onHide={() => setModal({ show: false, modalType: "", info: "" })}
+        show={modal.show}
+        modalType={modal.modalType as ModalTypes}
+        info={modal.info}
+      />
     </div>
   );
 };

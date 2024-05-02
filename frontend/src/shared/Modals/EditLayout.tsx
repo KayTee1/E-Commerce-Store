@@ -75,11 +75,16 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
         owner: formData.owner,
         categories: formData.categories,
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to update listing");
+      }
       return { message: "Listing Updated Successfully", success: true };
     } catch (e) {
-      setIsLoading(false);
-      console.error(e);
+      console.log(e);
       return { message: "Failed to delete listing", success: false };
+    } finally {
+      setIsLoading(false);
     }
   };
   const header = (
@@ -90,7 +95,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
 
   const body = (
     <div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center max-h-full">
         <Loader isLoading={isLoading} />
         <ListingForm
           method="PUT"
