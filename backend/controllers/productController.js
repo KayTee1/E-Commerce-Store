@@ -1,6 +1,7 @@
 const products = require("../models/products");
 const productCategories = require("../models/product_categories");
 const categoriesModel = require("../models/categories");
+const favorites = require("../models/favorites");
 
 const getProducts = async (req, res) => {
   try {
@@ -125,6 +126,7 @@ const deleteProductById = async (req, res) => {
   const id = req.params.id;
 
   await productCategories.deleteProductCategoryByProductId(id);
+  await favorites.deleteFavorite(null, id);
 
   const response = await products.deleteProductById(id);
 
