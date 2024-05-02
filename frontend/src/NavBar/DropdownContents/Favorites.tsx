@@ -68,11 +68,11 @@ const Favorites = () => {
 
         const products = await Promise.all(productPromises);
         setFavoriteProducts(products);
-        setIsLoading(false);
       } catch (error) {
-        setIsLoading(false);
         showModal("Info", "Error fetching favorites");
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 

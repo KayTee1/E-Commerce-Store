@@ -10,7 +10,6 @@ const users = {
       return results;
     } catch (error) {
       console.log(error);
-      throw new Error(error);
     }
   },
 
@@ -36,7 +35,6 @@ const users = {
       return results;
     } catch (error) {
       console.error("Error fetching listings by owner ID:", error);
-      throw error;
     }
   },
 };

@@ -68,10 +68,10 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
       });
 
       if (!response.ok) {
-        showModal("Info", "Failed to add to favorites");
         throw new Error("Failed to add to favorites");
       }
     } catch (e) {
+      showModal("Info", "Failed to add to favorites");
       console.log(e);
     }
   };
@@ -96,10 +96,10 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
         );
       }
       if (!response.ok) {
-        showModal("Info", "Failed to remove from favorites");
         throw new Error("Failed to remove from favorites");
       }
     } catch (e) {
+      showModal("Info", "Failed to remove from favorites");
       console.log(e);
     }
   };

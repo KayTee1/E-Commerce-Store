@@ -64,6 +64,10 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
           user_id: auth.userId,
         }),
       });
+      if (res.status === 409) {
+        showModal("Info", "Product already in favorites");
+        return;
+      }
       if (!res.ok) {
         throw new Error("Failed to add to favorites");
       }
