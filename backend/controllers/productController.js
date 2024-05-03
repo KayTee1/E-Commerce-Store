@@ -40,7 +40,7 @@ const getProductById = async (req, res) => {
   //product's id
   const { id } = req.params;
   const response = await products.findProductById(id);
-  console.log(response)
+  console.log(response);
   if (response.length === 0) {
     res.status(404).json({ message: "Product not found" });
     return;
@@ -89,7 +89,7 @@ const postNewProduct = async (req, res) => {
     };
 
     const productId = await products.postProduct(product);
- 
+
     try {
       await Promise.all(
         categories.map(async (category) => {
@@ -128,7 +128,6 @@ const updateProduct = async (req, res) => {
 };
 const deleteProductById = async (req, res) => {
   const id = req.params.id;
-
   await productCategories.deleteProductCategoryByProductId(id);
   await favorites.deleteFavorite(null, id);
 

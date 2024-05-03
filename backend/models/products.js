@@ -20,7 +20,7 @@ const products = {
       const [results] = await connection.query(selectQuery, [product_id]);
       connection.release();
       if (results.length === 0) {
-        return { length: 0, message: "Product not found"};
+        return { length: 0, message: "Product not found" };
       }
       return results[0];
     } catch (error) {
@@ -33,8 +33,7 @@ const products = {
       const connection = await pool.getConnection();
       const [result] = await connection.query(insertQuery, [product]);
       connection.release();
-      console.log(result)
-      
+
       return product.product_id;
     } catch (error) {
       throw new Error(error);
