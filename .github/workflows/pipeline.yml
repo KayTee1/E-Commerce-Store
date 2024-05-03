@@ -66,6 +66,7 @@ jobs:
         working-directory: ./frontend
         run: npm install
 
+      # Needed to fix lodash import error
       - name: Modify lodash import line
         run: sed -i 's/lodash\/isEqualWith/lodash\/isEqualWith.js/' frontend/node_modules/@testing-library/jest-dom/dist/matchers-ab264010.mjs
       - name: Modify lodash import line n2
