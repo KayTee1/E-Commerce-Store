@@ -1,0 +1,13 @@
+diff --git a/node_modules/@testing-library/jest-dom/dist/matchers-ab264010.mjs b/node_modules/@testing-library/jest-dom/dist/matchers-ab264010.mjs
+index dc685d3..e98c067 100644
+--- a/node_modules/@testing-library/jest-dom/dist/matchers-ab264010.mjs
++++ b/node_modules/@testing-library/jest-dom/dist/matchers-ab264010.mjs
+@@ -3,7 +3,7 @@ import { parse } from '@adobe/css-tools';
+ import { computeAccessibleDescription, computeAccessibleName } from 'dom-accessibility-api';
+ import { elementRoles, roles } from 'aria-query';
+ import chalk from 'chalk';
+-import isEqualWith from 'lodash/isEqualWith';
++import isEqualWith from 'lodash/isEqualWith.js';
+ import escape from 'css.escape';
+ 
+ class GenericTypeError extends Error {
