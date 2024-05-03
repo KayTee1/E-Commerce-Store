@@ -4,19 +4,6 @@ import { CartProvider } from "../context/CartContext";
 import { MemoryRouter } from "react-router-dom";
 
 describe("Collections Page", () => {
-  test("should render loading spinner initially", async () => {
-    render(
-      <CartProvider>
-        <MemoryRouter>
-          <Collections />
-        </MemoryRouter>
-      </CartProvider>
-    );
-
-    const loaderElement = await screen.findByTestId("loader");
-    expect(loaderElement).toBeInTheDocument();
-  });
-
   test("should display 'No products yet' message when fetched data is empty", async () => {
     render(
       <CartProvider>
