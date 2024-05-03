@@ -6,10 +6,15 @@ I developed this full-stack application as the final project for my web applicat
 
 ## Table of Contents
 
-- [Installation](#installation)
 - [Usage](#usage)
 - [Tech Stack](#tech-stack)
-- [License](#license)
+- [Documentation](#documentation)
+  - [API](#api)
+    - [Available Routes](#available-routes)
+    - [Product's Endpoints](#products-endpoints)
+    - [Users Endpoints](#users-endpoints)
+    - [Categories Endpoints](#categories-endpoints)
+    - [Favorite's Endpoints](#favorites-endpoints)
 - [Contact](#contact)
 
 ## Tech Stack
@@ -93,7 +98,7 @@ cd frontend; npm run dev;
 cd backend; npm run dev;
 ```
 
-#### Step 4 Using it
+#### Step 4 Testing it
 
 Open your prefered browser and access the app with localhost:5173
 
@@ -105,14 +110,369 @@ React Store Backend follows the REST (Representational State Transfer) style. Th
 
 #### Available Routes
 
+- Products
 - Categories
 - Favorites
-- Products
 - Users
 
-### Categories
+### Product's Endpoints
 
+##### **GET** List of Products
 
+```
+/api/products/
+```
+
+Returns an array of Products sorted by ID. Example return array:
+
+```
+
+[
+  {
+    "id": 2,
+    "product_id": "55o",
+    "title": "IPhone X",
+    "description": "Brand new Iphone",
+    "price": "1000.00",
+    "owner": "testman",
+    "image": "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_announce-iphone12pro_10132020_big.jpg.large.jpg",
+    "created": "2024-05-03T16:03:18.000Z",
+    "updated": "2024-05-03T16:03:18.000Z"
+  }
+]
+```
+
+##### **GET** Retrieve details for a specific product.
+
+```
+/api/products/product/:product_id
+```
+
+Returns an object of a product based on product_id.
+Example return object:
+
+```
+{
+  "id": 2,
+  "product_id": "55o",
+  "title": "IPhone X",
+  "description": "Brand new Iphone",
+  "price": "1000.00",
+  "owner": "testman",
+  "image": "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_announce-iphone12pro_10132020_big.jpg.large.jpg",
+  "created": "2024-05-03T16:03:18.000Z",
+  "updated": "2024-05-03T16:03:18.000Z",
+  "categories": [
+    {
+      "id": 1,
+      "category_id": "001",
+      "name": "Electronics",
+      "created_at": "2024-05-03T14:04:12.000Z",
+      "updated_at": "2024-05-03T14:04:12.000Z"
+    }
+  ]
+}
+```
+
+#### **GET** Array of products based on category_id
+
+```
+/api/products/category/:category_id
+```
+
+Returns an array of products based on category_id. Example return array:
+
+```
+[
+  {
+    "id": 2,
+    "product_id": "55o",
+    "title": "IPhone X",
+    "description": "Brand new Iphone",
+    "price": "1000.00",
+    "owner": "testman",
+    "image": "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_announce-iphone12pro_10132020_big.jpg.large.jpg",
+    "created": "2024-05-03T16:03:18.000Z",
+    "updated": "2024-05-03T16:03:18.000Z"
+  }
+]
+```
+
+##### **POST** a new Product
+
+```
+/api/products
+```
+
+Example post request body:
+
+```
+{
+  "product_id": "sgj",
+  "title": "Iphone 12",
+  "description": "The latest Iphone",
+  "price": "1000",
+  "image": "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_announce-iphone12pro_10132020_big.jpg.large.jpg",
+  "owner": "XiaoLing",
+  "categories": [
+        {
+            "category_id": "as1", "name": "Category1"
+        }
+    ]
+}
+```
+
+This will return the product_id: "sgj"
+
+##### **PUT** Updating an existing Product
+
+```
+/api/products/:product_id
+```
+
+Example request body:
+
+```
+{
+  "product_id": "sgj",
+  "title": "Smart Watch",
+  "description": "Sleek Smart Watch",
+  "price": "99",
+  "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "owner": "XiaoLing",
+  "categories": [
+        {
+            "category_id": "001", "name": "Electronics"
+        }
+    ]
+}
+```
+
+This will return a response object of:
+
+```
+{
+    "message": "Product updated",
+    "status": 200
+}
+```
+
+##### **DELETE** an existing Product
+
+```
+/api/products/:product_id
+```
+
+This will return a response object of:
+
+```
+{
+    "message": "Product deleted",
+    "status": 200
+}
+```
+
+### Users Endpoints
+
+#### **GET** Array of products posted by a specific user
+
+```
+/api/users/listings/:username
+```
+
+This will return an array of products posted by the user. Example return array:
+
+```
+[
+  {
+    "id": 6,
+    "product_id": "reD",
+    "title": "Headphones",
+    "description": "Nice headphones",
+    "price": "80.00",
+    "owner": "TestUser",
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "created": "2024-05-03T17:19:30.000Z",
+    "updated": "2024-05-03T17:19:30.000Z"
+  }
+]
+```
+
+#### **POST** User Registration
+
+```
+/api/users/signup
+```
+
+Example registration post body:
+
+```
+{
+    "username": "TestUser",
+    "email": "test@user.com",
+    "password": "password"
+}
+```
+
+This will return a response object of:
+
+```
+{
+    "userId": "9eb8a919-bac7-4cb7-b7ad-b1cd165f2310",
+    "username": "TestUser",
+    "email": "test@user.com",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ZWI4YTkxOS1iYWM3LTRjYjctYjdhZC1iMWNkMTY1ZjIzMTAiLCJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJ1c2VybmFtZSI6IlRlc3RVc2VyIiwiaWF0IjoxNzE0NzY3Mzc4LCJleHAiOjE3MTQ3NzA5Nzh9.TIRzk40leOCErbwaR-t3bsuPoZdiSh3yKSrdroDCOpc"
+}
+```
+
+#### **POST** User Login
+
+```
+/api/users/login
+```
+
+Example user login post body:
+
+```
+{
+    "email": "test@user.com",
+    "password": "password"
+}
+```
+
+This will return a response object of:
+
+```
+{
+  "userId": "9eb8a919-bac7-4cb7-b7ad-b1cd165f2310",
+  "username": "TestUser",
+  "email": "test@user.com",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI5ZWI4YTkxOS1iYWM3LTRjYjctYjdhZC1iMWNkMTY1ZjIzMTAiLCJ1c2VybmFtZSI6IlRlc3RVc2VyIiwiZW1haWwiOiJ0ZXN0QHVzZXIuY29tIiwiaWF0IjoxNzE0NzY3ODI4LCJleHAiOjE3MTQ3NzE0Mjh9.FiBQM_k7D28Yfp2wl5g8JpQgGTVufiGACGQ9pqzQljs"
+}
+```
+
+### Categories Endpoints
+
+#### **GET** Array of categories
+
+```
+/api/categories/
+```
+
+Returns an array of categories ordered by IDs. Example return array:
+
+```
+[
+  {
+    "id": 1,
+    "category_id": "001",
+    "name": "Electronics",
+    "created_at": "2024-05-03T14:04:12.000Z",
+    "updated_at": "2024-05-03T14:04:12.000Z"
+  }
+]
+```
+
+#### **GET** Retrieve a specific category based on a category_id
+
+```
+/api/categories/:category_id
+```
+
+Returns a category object based on category_id. Example response object:
+
+```
+{
+  "id": 9,
+  "category_id": "999",
+  "name": "Test Category",
+  "created_at": "2024-05-03T16:34:20.000Z",
+  "updated_at": "2024-05-03T16:34:20.000Z"
+}
+```
+
+#### **POST** a new category
+
+```
+/api/categories/
+```
+
+Posts a new Category. Example post request body:
+
+```
+{
+    "category_id": "8df",
+    "name": "Example Category"
+}
+```
+
+This will return the posted category object.
+
+### Favorite's Endpoints
+
+#### **GET** an array of favorite products based on user_id
+
+```
+/api/favorites/:user_id
+```
+
+Returns an array of favorites based on user_id. Example response array:
+
+```
+[
+    {
+        "id": 1,
+        "user_id": "aa46b059-bfc0-4eb6-8541-20dd76fdf684",
+        "product_id": "55o",
+        "created_at": "2024-05-03T16:38:32.000Z"
+    }
+]
+```
+
+#### **POST** a new entry in the Junction Table
+
+```
+/api/favorites
+```
+
+Creates a new entry in the junction table associating a user ID with a product ID. Example request body:
+
+```
+{
+    "user_id": "aa46b059-bfc0-4eb6-8541-20dd76fdf684",
+    "product_id": "Gj8"
+}
+```
+
+Returns a response object like so:
+
+```
+{
+    "user_id": "aa46b059-bfc0-4eb6-8541-20dd76fdf684",
+    "product_id": "Gj8",
+    "id": 3
+}
+```
+
+#### **DELETE** an entry in the Junction Table
+
+Deletes the specified relationship from the junction table. Example request body:
+
+```
+{
+    "user_id": "aa46b059-bfc0-4eb6-8541-20dd76fdf684",
+    "product_id": "Gj8"
+}
+```
+
+Upon successful deletion, returns a response object:
+
+```
+{
+    "message": "Favorite deleted successfully",
+    "status": 200
+}
+```
 
 ## Contact
 

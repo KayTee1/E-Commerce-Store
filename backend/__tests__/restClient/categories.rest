@@ -1,33 +1,25 @@
 
 GET {{server}}/health
 
+
 ###
-GET {{server}}/api/favorites/aa46b059-bfc0-4eb6-8541-20dd76fdf684
+GET {{server}}/api/categories
 Content-Type: application/json
 Authorization: BEARER {{authToken}}
 
-
 ###
-POST {{server}}/api/favorites
-Content-Type: application/json
-Authorization: BEARER {{authToken}}
-
-{
-    "user_id": "aa46b059-bfc0-4eb6-8541-20dd76fdf684",
-    "product_id": "Gj8"
-}
-
-
-###
-DELETE {{server}}/api/favorites
+POST {{server}}/api/categories
 Content-Type: application/json
 Authorization: BEARER {{authToken}}
 
 {
-    "user_id": "aa46b059-bfc0-4eb6-8541-20dd76fdf684",
-    "product_id": "Gj8"
+    "category_id": "999",
+    "name": "Test Category"
 }
-
+###
+GET {{server}}/api/categories/999
+Content-Type: application/json
+Authorization: BEARER {{authToken}}
 
 ###
 POST {{server}}/api/users/signup 
@@ -49,15 +41,6 @@ Content-Type: application/json
   "password": "Xiao"
 }
 
-### 
-# @name login
-POST {{server}}/api/users/login
-Content-Type: application/json
-
-{
-  "email": "su@gmail.com",
-  "password": "qwe"
-}
 ###
 @authToken = {{login.response.body.token}}
 

@@ -5,10 +5,10 @@ GET {{server}}/health
 GET {{server}}/api/products
 
 ###
-GET {{server}}/api/products/1
+GET {{server}}/api/products/product/55o
 
 ###
-GET {{server}}/api/products/2
+GET {{server}}/api/products/category/001
 
 ###
 POST {{server}}/api/products
@@ -16,11 +16,13 @@ Content-Type: application/json
 Authorization: BEARER {{authToken}}
 
 {
+  "product_id": "sgj",
   "title": "Iphone 12",
   "description": "The latest Iphone",
   "price": "1000",
   "image": "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_announce-iphone12pro_10132020_big.jpg.large.jpg",
-  "owner": "XiaoLing"
+  "owner": "XiaoLing",
+  "categories": [{"category_id": "as1", "name": "Category1"}]
 }
 
 ###
@@ -29,12 +31,22 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    
+  "product_id": "sgj",
+  "title": "Smart Watch",
+  "description": "Sleek Smart Watch",
+  "price": "99",
+  "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "owner": "XiaoLing",
+  "categories": [
+        {
+        "category_id": "001", "name": "Electronics"
+        }
+    ]
 }
 
 
 ###
-DELETE {{server}}/api/products/
+DELETE {{server}}/api/products/sgj
 Authorization: BEARER {{authToken}}
 
 
@@ -55,7 +67,7 @@ Content-Type: application/json
 
 {
   "email": "Xiao@Ling.com",
-  "password": "Xiao@Ling"
+  "password": "Xiao"
 }
 ### 
 # @name login

@@ -2,9 +2,7 @@
 GET {{server}}/health
 
 ###
-GET {{server}}/api/users/listings/622b7b30-9322-4ae8-b019-bc5db08d8d62
-
-
+GET {{server}}/api/users/listings/TestUser
 
 
 ###
@@ -12,9 +10,9 @@ POST {{server}}/api/users/signup
 Content-Type: application/json
 
 {
-  "username": "XiaoLing",
-  "email": "Xiao@Ling.com",
-  "password": "Xiao"
+  "username": "TestUser",
+  "email": "test@user.com",
+  "password": "password"
 }
 
 ### 
@@ -23,8 +21,8 @@ POST {{server}}/api/users/login
 Content-Type: application/json
 
 {
-  "email": "xiao@gmail.com",
-  "password": "qwe"
+  "email": "test@user.com",
+  "password": "password"
 }
 
 ### 
