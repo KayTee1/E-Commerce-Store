@@ -14,6 +14,8 @@ I developed this full-stack application as the final project for my web applicat
 
 ## Tech Stack
 
+Frameworks and libaries used:
+
 ### Frontend
 
 - **React**: JavaScript library for building user interfaces.
@@ -53,22 +55,65 @@ I developed this full-stack application as the final project for my web applicat
 
 - **MySQL**: Relational database management system based on SQL (Structured Query Language).
 
-## Installation
-
-Instructions on how to install and set up your project.
-
 ## Usage
 
-Instructions on how to use your project and any relevant examples.
+This app is running and deployed on TAMK virtual machine, to access it you need vpn connection. http://172.16.6.158
 
-## Contributing
+### Installing Locally
 
-Guidelines on how others can contribute to your project.
+#### Step 1 Cloning
 
-## License
+Clone the repository to your local machine using the following command:
 
-This project is licensed under the [MIT License](LICENSE).
+```
+git clone git@github.com:TiTe-5G00EV16-3003/2024-final-project-KayTee1.git
+```
+
+#### Step 2 Setting up Env Variables
+
+In the project root, run the createEnv.sh script to set up the environment variables for both frontend and backend. If necessary, make the script executable using:
+
+```
+chmod +x createEnv.sh
+```
+
+Then
+
+```
+./createEnv.sh
+```
+
+#### Step 3 Launching the App
+
+After the environment files have been successfully created, run the following commands:
+
+```
+docker-compose up -d;
+cd frontend; npm run dev;
+cd backend; npm run dev;
+```
+
+#### Step 4 Using it
+
+Open your prefered browser and access the app with localhost:5173
+
+## Documentation
+
+### API
+
+React Store Backend follows the REST (Representational State Transfer) style. This means it uses standard HTTP methods like GET, POST, PUT, and DELETE to perform actions on resources. RESTful APIs provide a straightforward and predictable way to interact with the API, making it easy to integrate into your applications.
+
+#### Available Routes
+
+- Categories
+- Favorites
+- Products
+- Users
+
+### Categories
+
+
 
 ## Contact
 
-If you have any questions or feedback, feel free to contact me at [your-email@example.com](mailto:your-email@example.com).
+If you have any questions or feedback, feel free to contact me at [truong.kha@outlook.com](truong.kha@outlook.com).
