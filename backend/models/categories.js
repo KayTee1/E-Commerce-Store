@@ -39,31 +39,6 @@ const categories = {
       throw new Error(error);
     }
   },
-  updateCategory: async (category_id, category) => {
-    const updateQuery = "UPDATE `categories` SET ? WHERE `category_id` = ?";
-    try {
-      const connection = await pool.getConnection();
-      const [result] = await connection.query(updateQuery, [
-        category,
-        category_id,
-      ]);
-      connection.release();
-      return result;
-    } catch (error) {
-      throw new Error(error);
-    }
-  },
-  deleteCategoryById: async (category_id) => {
-    const deleteQuery = "DELETE FROM `categories` WHERE `category_id` = ?";
-    try {
-      const connection = await pool.getConnection();
-      const [results] = await connection.query(deleteQuery, [category_id]);
-      connection.release();
-      return results;
-    } catch (error) {
-      throw new Error(error);
-    }
-  },
 };
 
 module.exports = categories;
