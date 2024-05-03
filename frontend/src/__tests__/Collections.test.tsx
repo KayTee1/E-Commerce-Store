@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
-import { CartProvider } from "../context/CartContext";
 import Collections from "../pages/Collections/pages/Collections";
+import { CartProvider } from "../context/CartContext";
 import { MemoryRouter } from "react-router-dom";
 
 describe("Collections Page", () => {
@@ -12,6 +12,7 @@ describe("Collections Page", () => {
         </MemoryRouter>
       </CartProvider>
     );
+
     const loaderElement = await screen.findByTestId("loader");
     expect(loaderElement).toBeInTheDocument();
   });
@@ -24,6 +25,7 @@ describe("Collections Page", () => {
         </MemoryRouter>
       </CartProvider>
     );
+
     const noProductsElement = await screen.findByText("No products yet");
     expect(noProductsElement).toBeInTheDocument();
   });
@@ -36,6 +38,7 @@ describe("Collections Page", () => {
         </MemoryRouter>
       </CartProvider>
     );
+
     const loginElement = await screen.findByText("Post the first listing!");
     expect(loginElement).toBeInTheDocument();
   });

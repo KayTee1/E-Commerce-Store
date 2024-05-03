@@ -1,0 +1,40 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Checkout Page > Renders header 1`] = `
+<Router
+  location={
+    {
+      "hash": "",
+      "key": "default",
+      "pathname": "/",
+      "search": "",
+      "state": null,
+    }
+  }
+  navigationType="POP"
+  navigator={
+    {
+      "action": "POP",
+      "createHref": [Function],
+      "createURL": [Function],
+      "encodeLocation": [Function],
+      "go": [Function],
+      "index": 0,
+      "listen": [Function],
+      "location": {
+        "hash": "",
+        "key": "default",
+        "pathname": "/",
+        "search": "",
+        "state": null,
+      },
+      "push": [Function],
+      "replace": [Function],
+    }
+  }
+>
+  <CartProvider>
+    <Home />
+  </CartProvider>
+</Router>
+`;
