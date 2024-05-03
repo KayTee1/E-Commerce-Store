@@ -67,7 +67,7 @@ jobs:
         run: npm install
 
       - name: Modify lodash import line
-        run: sed -i 's/lodash\/isEqualWith/lodash\/isEqualWith.js/' frontend/node_modules/@testing-library/jest-dom/dist/index.mjs
+        run: sed -i 's/lodash\/isEqualWith/lodash\/isEqualWith.js/' frontend/node_modules/@testing-library/jest-dom/dist/matchers-ab264010.mjs
 
       # Run frontend tests
       - name: testing-library tests
