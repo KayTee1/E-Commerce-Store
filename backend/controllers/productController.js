@@ -40,7 +40,11 @@ const getProductById = async (req, res) => {
   //product's id
   const { id } = req.params;
   const response = await products.findProductById(id);
-
+  console.log(response)
+  if (response.length === 0) {
+    res.status(404).json({ message: "Product not found" });
+    return;
+  }
   // PC = Products Categories
   const PC = await productCategories.findProductsCategories(id);
 
@@ -85,7 +89,7 @@ const postNewProduct = async (req, res) => {
     };
 
     const productId = await products.postProduct(product);
-
+ 
     try {
       await Promise.all(
         categories.map(async (category) => {
@@ -99,7 +103,7 @@ const postNewProduct = async (req, res) => {
       console.error(error);
     }
 
-    res.status(201).json(productId);
+    res.status(201).json({ product_id: productId });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

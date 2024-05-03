@@ -16,8 +16,6 @@ import ProductDetails from "./pages/Collections/pages/ProductDetails";
 import Categories from "./pages/Categories/pages/Categories";
 import CategoryProducts from "./pages/Categories/pages/CategoryProducts";
 
-let logoutTimer: number | undefined;
-
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
@@ -71,6 +69,7 @@ export default function App() {
   }, [login]);
 
   useEffect(() => {
+    let logoutTimer: NodeJS.Timeout | undefined;
     if (token && tokenExpirationDate) {
       const remainingTime =
         tokenExpirationDate.getTime() - new Date().getTime();
