@@ -1,26 +1,27 @@
+// Import necessary modules and components
 import { describe, it, expect } from "vitest";
+import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Home from "../pages/Home/pages/Home";
-import { createRenderer } from "react-test-renderer/shallow";
 
-const renderer = createRenderer();
+describe("Home Component", () => {
+  it("should render without crashing", () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>
+    );
+    const headingElement = getByText("Welcome to React Store");
+    expect(headingElement).toBeInTheDocument();
 
-const defaultComponent = (
-  <MemoryRouter initialEntries={["/"]}>
-    <Home />
-  </MemoryRouter>
-);
+    const paragraphElement = getByText(
+      "Your one-stop shop for all your needs."
+    );
+    expect(paragraphElement).toBeInTheDocument();
 
-describe("On the Home page", async () => {
-  it("should render and match the snapshot", () => {
-    renderer.render(defaultComponent);
-    const renderedOutput = renderer.getRenderOutput();
-    expect(renderedOutput).toMatchSnapshot();
+    const linkElement = getByText("Browse Products");
+    expect(linkElement).toBeInTheDocument();
+    expect(linkElement.tagName).toBe("A");
+    expect(linkElement.getAttribute("href")).toBe("/collections");
   });
-
-  it("should render the title", () => {
-    renderer.render(defaultComponent);
-    const renderedOutput = renderer.getRenderOutput();
-    expect(renderedOutput).toContain("Home");
-  })
 });
