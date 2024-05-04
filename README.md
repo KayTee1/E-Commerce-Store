@@ -126,7 +126,6 @@ React Store Backend follows the REST (Representational State Transfer) style. Th
 Returns an array of Products sorted by ID. Example return array:
 
 ```
-
 [
   {
     "id": 2,
