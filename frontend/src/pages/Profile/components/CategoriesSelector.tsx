@@ -69,6 +69,8 @@ export const CategoriesSelector = ({
     category?: Category
   ) => {
     e.preventDefault();
+    if(!inputValue) return;
+    
     let capitalizedCategory: Category = {
       category_id: "",
       name: "",
