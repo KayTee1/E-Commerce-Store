@@ -27,7 +27,7 @@ type Favorite = {
 };
 
 const Favorites = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [favoriteProducts, setFavoriteProducts] = useState<Product[]>([]);
   const [modal, setModal] = useState({
     show: false,

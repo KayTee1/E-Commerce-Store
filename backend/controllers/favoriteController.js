@@ -1,5 +1,6 @@
 const favorites = require("../models/favorites");
 
+//returns an array of favorites
 const getFavorites = async (req, res) => {
   const { id } = req.params;
 
@@ -16,6 +17,7 @@ const getFavorites = async (req, res) => {
   }
 };
 
+//creates a new favorite
 const postNewFavorite = async (req, res) => {
   const { product_id, user_id } = req.body;
   try {
@@ -26,19 +28,17 @@ const postNewFavorite = async (req, res) => {
       user_id,
       product_id,
     };
+
+    // Check if the favorite already exists
     const existingFavorites = await favorites.findFavorites(
       user_id,
       product_id
     );
-    let exists;
-    existingFavorites.forEach((existingFavorite) => {
-      if (existingFavorite.product_id === favorite.product_id) {
-        if (existingFavorite.user_id === favorite.user_id) {
-          exists = true;
-          res.status(409).json({ message: "Favorite already exists" });
-        }
-      }
-    });
+    const exists = existingFavorites.some(
+      (existingFavorite) =>
+        existingFavorite.product_id === favorite.product_id &&
+        existingFavorite.user_id === favorite.user_id
+    );
     if (!exists) {
       const response = await favorites.postFavorite(favorite);
 
@@ -54,6 +54,7 @@ const postNewFavorite = async (req, res) => {
   }
 };
 
+//deletes a favorite by id
 const deleteFavoriteById = async (req, res) => {
   const { product_id, user_id } = req.body;
   const response = await favorites.deleteFavorite(user_id, product_id);

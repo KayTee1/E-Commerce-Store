@@ -10,7 +10,7 @@ MYSQL_USERNAME=root
 MYSQL_PASSWORD=password
 MYSQL_DATABASE=react_store
 
-JWT_KEY="gabagoo"
+JWT_KEY="jwtkey"
 EOF
 }
 

@@ -1,27 +1,29 @@
+/*
+Example of usage: 
+
+INIT:
+type MessageType = {
+  message: string;
+  color: "red" | "green" | "";
+};
+
+USESTATE:
+const [message, setMessage] = useState<MessageType>({
+  message: "",
+  color: "",
+});
+
+USAGE:
+setMessage({ message: "Your cart is empty!", color: "red" });
+
+<Message message={message}/>
+
+Note: The className prop is optional.
+Use the className prop to add additional classes to the message.
+*/
+
 import { twMerge } from "tailwind-merge";
 
-/*
-
-Example of usage: 
-  INIT:
-  type MessageType = {
-    message: string;
-    color: "red" | "green" | "";
-  };
-
-  const [message, setMessage] = useState<MessageType>({
-    message: "",
-    color: "",
-  });
-
-  USAGE:
-  setMessage({ message: "Your cart is empty!", color: "red" });
-
-  <Message message={message}/>
-
-  Note: The className prop is optional.
-        Use the className prop to add additional classes to the message.
-*/
 type MessageProps = {
   message: {
     message: string;

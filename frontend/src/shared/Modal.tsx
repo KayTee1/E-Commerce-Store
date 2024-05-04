@@ -25,6 +25,31 @@ INIT:
 />
 
 
+INFO MODAL USAGE:
+
+ type ModalTypes = "Delete" | "Edit" | "Info";
+
+  const [modal, setModal] = useState({
+    show: false,
+    modalType: "",
+    info: ""
+  });
+
+  const showModal = (modalType: ModalTypes, info: string) => {
+    setModal({
+      show: true,
+      modalType,
+      info
+    });
+  };
+
+  <Modal
+    onHide={() => setModal({ show: false, modalType: "", info: "" })}
+    show={modal.show}
+    modalType={modal.modalType as ModalTypes}
+    info={modal.info}
+  />
+
 */
 
 import { DeleteLayout } from "./Modals/DeleteLayout";
