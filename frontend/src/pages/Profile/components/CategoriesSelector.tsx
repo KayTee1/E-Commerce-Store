@@ -69,8 +69,7 @@ export const CategoriesSelector = ({
     category?: Category
   ) => {
     e.preventDefault();
-    if(!inputValue) return;
-    
+
     let capitalizedCategory: Category = {
       category_id: "",
       name: "",
@@ -81,6 +80,7 @@ export const CategoriesSelector = ({
         name: category.name,
       };
     } else if (e.type === "submit") {
+      if (!inputValue) return;
       capitalizedCategory = {
         category_id: await generateID("categories"),
         name: inputValue.charAt(0).toUpperCase() + inputValue.slice(1),

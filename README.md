@@ -2,7 +2,7 @@
 
 ## Description
 
-I developed this full-stack application as the final project for my web application development course.
+I developed this full-stack application as the final project for my web application development course. The project utilizes CI/CD workflows to automate the deployment process.
 
 ## Table of Contents
 
