@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 const Home = () => {
   
   return (
-    <div className="flex flex-col items-center justify-center py-10">
+    <div className="flex flex-col text-center items-center justify-center py-10">
       <h2 className="text-3xl font-bold mb-4">Welcome to React Store</h2>
       <p className="text-lg text-gray-600 mb-8">
         Your one-stop shop for all your needs.

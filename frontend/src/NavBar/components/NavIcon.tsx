@@ -6,7 +6,7 @@ import { useCart } from "../../context/CartContext";
 type NavIconProps = {
   type: "favorites" | "cart" | "profile";
   isOpen: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 const NavIcon = ({ type, onClick }: NavIconProps) => {

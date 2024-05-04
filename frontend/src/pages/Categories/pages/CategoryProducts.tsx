@@ -91,20 +91,8 @@ const CategoryProducts = () => {
     ));
 
   if (!isError && products.length > 0) {
-    let cols;
-    switch (products.length) {
-      case 1:
-        cols = "1";
-        break;
-      case 2:
-        cols = "2";
-        break;
-      default:
-        cols = "3";
-        break;
-    }
     content = (
-      <div className={`grid grid-cols-${cols} gap-4 justify-center mt-3`}>
+      <div className={`mx-2 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-center mt-3`}>
         {products.map((product) => (
           <div key={product.id}>
             <ProductListingCard product={product} />
