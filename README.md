@@ -7,6 +7,7 @@ I developed this full-stack application as the final project for my web applicat
 ## Table of Contents
 
 - [Usage](#usage)
+  - [Using Locally](#using-locally)
 - [Tech Stack](#tech-stack)
 - [Documentation](#documentation)
   - [API](#api)
@@ -64,7 +65,7 @@ Frameworks and libaries used:
 
 This app is running and deployed on TAMK virtual machine, to access it you need vpn connection. http://172.16.6.158
 
-### Installing Locally
+### Using Locally
 
 #### Step 1 Cloning
 
