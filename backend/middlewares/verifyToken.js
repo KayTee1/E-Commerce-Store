@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+
 const verifyToken = (req, res, next) => {
   if (req.method === "OPTIONS") {
     return next();
@@ -15,4 +16,5 @@ const verifyToken = (req, res, next) => {
     return res.status(401).send("Authentication failed.");
   }
 };
+
 module.exports = verifyToken;

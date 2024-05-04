@@ -12,7 +12,6 @@ const users = {
       console.log(error);
     }
   },
-
   findExistingUser: async (email, username) => {
     try {
       const selectQuery =
@@ -25,7 +24,6 @@ const users = {
       throw new Error(error);
     }
   },
-
   findListingsById: async (id) => {
     try {
       const selectQuery = "SELECT * FROM `products` WHERE `owner` = ?";
