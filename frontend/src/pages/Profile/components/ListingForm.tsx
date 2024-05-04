@@ -330,5 +330,6 @@ const isValidImageUrl = async (url: string): Promise<boolean> => {
   }*/
 
   // had to remove the fetch request because it was causing a CORS error on the TAMK vm
+  if (url) return true;
   return true;
 };
