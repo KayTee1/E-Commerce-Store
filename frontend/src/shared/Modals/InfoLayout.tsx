@@ -5,6 +5,7 @@ type InfoLayoutProps = {
   show: boolean;
   info: string;
 };
+
 export const InfoLayout = ({ onHide, show, info }: InfoLayoutProps) => {
   if (!show) {
     return null;

@@ -32,6 +32,7 @@ type DropdownItemProps = {
   type: "cart" | "favorites";
   setFavoriteProducts?: React.Dispatch<React.SetStateAction<Product[]>>;
 };
+
 type ModalTypes = "Delete" | "Edit" | "Info";
 
 const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
@@ -40,8 +41,9 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
     modalType: "",
     info: "",
   });
-  const auth = useContext(AuthContext);
   const { removeFromCart } = useCart();
+  const auth = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const showModal = (modalType: ModalTypes, info: string) => {
@@ -55,7 +57,7 @@ const DropdownItem = ({ item, type, ...props }: DropdownItemProps) => {
   const handleFavorite = async () => {
     const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`${apiUrl}/api/favoritses`, {
+      const response = await fetch(`${apiUrl}/api/favorites`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

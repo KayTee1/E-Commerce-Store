@@ -1,3 +1,13 @@
+/*
+USAGE:
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  <Loader isLoading={isLoading} />
+
+NOTE:
+  use className prop to add custom stylings
+*/
+
 import { RotateLoader } from "react-spinners";
 import { twMerge } from "tailwind-merge";
 

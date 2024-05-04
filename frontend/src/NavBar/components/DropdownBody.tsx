@@ -5,6 +5,7 @@ import Profile from "../DropdownContents/Profile";
 type DropdownBodyProps = {
   type: "favorites" | "cart" | "profile";
 };
+
 const DropdownBody = ({ type }: DropdownBodyProps) => {
   let content;
   switch (type) {
