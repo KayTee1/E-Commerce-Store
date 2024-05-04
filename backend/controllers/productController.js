@@ -3,6 +3,7 @@ const productCategories = require("../models/product_categories");
 const categoriesModel = require("../models/categories");
 const favorites = require("../models/favorites");
 
+//returns an array of products
 const getProducts = async (req, res) => {
   try {
     const response = await products.findProducts();
@@ -18,6 +19,7 @@ const getProducts = async (req, res) => {
   }
 };
 
+//returns an array of products by category's id
 const getProductsByCategoryId = async (req, res) => {
   //category's id
   const { id } = req.params;
@@ -36,6 +38,7 @@ const getProductsByCategoryId = async (req, res) => {
   }
 };
 
+//returns a single product by product_id
 const getProductById = async (req, res) => {
   //product's id
   const { id } = req.params;
@@ -63,6 +66,7 @@ const getProductById = async (req, res) => {
   }
 };
 
+//creates a new product
 const postNewProduct = async (req, res) => {
   try {
     const { title, price, product_id, description, image, owner, categories } =
@@ -108,6 +112,8 @@ const postNewProduct = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+//updates a product by id
 const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { title, price, description, image } = req.body;
@@ -126,6 +132,8 @@ const updateProduct = async (req, res) => {
     res.status(400).json({ message: "Something went wrong!" });
   }
 };
+
+//deletes a product by id
 const deleteProductById = async (req, res) => {
   const id = req.params.id;
   await productCategories.deleteProductCategoryByProductId(id);

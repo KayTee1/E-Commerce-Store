@@ -1,5 +1,6 @@
 const categories = require("../models/categories");
 
+//returns an array of categories
 const getCategories = async (req, res) => {
   try {
     const response = await categories.findCategories();
@@ -14,6 +15,7 @@ const getCategories = async (req, res) => {
   }
 };
 
+//returns a single category by id
 const getCategoryById = async (req, res) => {
   const { id } = req.params;
   const response = await categories.findCategoryById(id);
@@ -25,6 +27,7 @@ const getCategoryById = async (req, res) => {
   }
 };
 
+//creates a new category
 const postNewCategory = async (req, res) => {
   try {
     const { category_id, name } = req.body;
