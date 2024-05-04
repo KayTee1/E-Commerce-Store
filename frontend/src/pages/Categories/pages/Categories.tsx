@@ -46,7 +46,7 @@ const Categories = () => {
 
   if (!isError && categories.length > 0) {
     content = (
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 mt-5">
+      <div className="mx-2 grid grid-cols-2 gap-4 md:grid-cols-4 mt-5">
         {categories.map((category) => (
           <button
             onClick={() => navigate(`/category/${category.category_id}`)}
