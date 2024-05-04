@@ -309,9 +309,11 @@ const ListingForm = ({
 export default ListingForm;
 
 const isValidImageUrl = async (url: string): Promise<boolean> => {
+  /*
+  const imageUrlWithoutParams = url.split('?')[0];
   const imageExtensions = /\.(jpg|jpeg|png|gif|bmp)$/i;
   try {
-    const response = await fetch(url);
+    const response = await fetch(imageUrlWithoutParams, { method: 'HEAD', redirect: 'follow' });
     if (!response.ok) {
       return false;
     }
@@ -319,11 +321,14 @@ const isValidImageUrl = async (url: string): Promise<boolean> => {
     if (!contentType || !contentType.startsWith("image")) {
       return false;
     }
-    if (!imageExtensions.test(url)) {
+    if (!imageExtensions.test(imageUrlWithoutParams)) {
       return false;
     }
     return true;
   } catch (error) {
     return false;
-  }
+  }*/
+
+  // had to remove the fetch request because it was causing a CORS error on the TAMK vm
+  return true;
 };
