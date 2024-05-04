@@ -157,7 +157,11 @@ const ListingForm = ({
       setMessage({ message: "Price must be a number", color: "red" });
       return;
     }
-    const isValidImg = isValidImageUrl(image);
+    if (parseFloat(price) <= 0.0) {
+      setMessage({ message: "Price must be greater than 0", color: "red" });
+      return;
+    }
+    const isValidImg = await isValidImageUrl(image);
     if (!isValidImg) {
       setMessage({ message: "Image URL is invalid", color: "red" });
       return;
@@ -305,7 +309,21 @@ const ListingForm = ({
 export default ListingForm;
 
 const isValidImageUrl = async (url: string): Promise<boolean> => {
-  const img = new Image();
-  img.src = url;
-  return img.complete;
+  const imageExtensions = /\.(jpg|jpeg|png|gif|bmp)$/i;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      return false;
+    }
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.startsWith("image")) {
+      return false;
+    }
+    if (!imageExtensions.test(url)) {
+      return false;
+    }
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
