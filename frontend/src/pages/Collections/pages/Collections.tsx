@@ -89,7 +89,8 @@ const Collections = () => {
   }
 
   if (!isError && productsData.length > 0) {
-   content = (
+    let length = productsData.length;
+    content = (
       <div className="flex flex-col items-center">
         <div className="text-lg text-gray-600 mb-8 text-center">
           <p>Browse our wide range of products.</p>
@@ -97,7 +98,7 @@ const Collections = () => {
         </div>
         <div
           className={`mx-2 grid ${getCols(
-            productsData.length,
+            length,
             screenSize
           )} gap-4 justify-center mt-3`}
         >
