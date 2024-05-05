@@ -5,6 +5,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import ProductListingCard from "../../../shared/ProductListingCard";
 import Loader from "../../../shared/Loader";
 import Button from "../../../shared/Button";
+import { getCols } from "../../../utils/getCols";
 
 type Category = {
   id: number;
@@ -25,6 +26,7 @@ type Product = {
 };
 
 const CategoryProducts = () => {
+  const [screenSize, setScreenSize] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
   const [categoryName, setCategoryName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,6 +69,23 @@ const CategoryProducts = () => {
     fetchCategoryName();
   }, []);
 
+  const updateScreenSize = () => {
+    const width = window.innerWidth;
+    if (width >= 1024) {
+      setScreenSize("lg");
+    } else if (width >= 768) {
+      setScreenSize("md");
+    } else {
+      setScreenSize("sm");
+    }
+  };
+
+  useEffect(() => {
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, [screenSize]);
+
   let content;
   isError ?? (content = <p>There was an error fetching the data</p>);
 
@@ -92,7 +111,12 @@ const CategoryProducts = () => {
 
   if (!isError && products.length > 0) {
     content = (
-      <div className={`mx-2 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4 justify-center mt-3`}>
+      <div
+        className={`mx-2 grid ${getCols(
+          products.length,
+          screenSize
+        )} gap-4 justify-center mt-3`}
+      >
         {products.map((product) => (
           <div key={product.id}>
             <ProductListingCard product={product} />

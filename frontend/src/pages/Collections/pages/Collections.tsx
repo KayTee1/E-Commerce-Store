@@ -5,6 +5,7 @@ import { AuthContext } from "../../../context/AuthContext";
 import Loader from "../../../shared/Loader";
 import ProductListingCard from "../../../shared/ProductListingCard";
 import Button from "../../../shared/Button";
+import { getCols } from "../../../utils/getCols";
 
 type Product = {
   id: number;
@@ -18,6 +19,7 @@ type Product = {
 };
 
 const Collections = () => {
+  const [screenSize, setScreenSize] = useState("");
   const [productsData, setProductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
@@ -42,6 +44,23 @@ const Collections = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const updateScreenSize = () => {
+    const width = window.innerWidth;
+    if (width >= 1024) {
+      setScreenSize("lg");
+    } else if (width >= 768) {
+      setScreenSize("md");
+    } else {
+      setScreenSize("sm");
+    }
+  };
+
+  useEffect(() => {
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, [screenSize]);
 
   let content;
 
@@ -70,13 +89,18 @@ const Collections = () => {
   }
 
   if (!isError && productsData.length > 0) {
-    content = (
+   content = (
       <div className="flex flex-col items-center">
         <div className="text-lg text-gray-600 mb-8 text-center">
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
         </div>
-        <div className={`mx-2 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-4`}>
+        <div
+          className={`mx-2 grid ${getCols(
+            productsData.length,
+            screenSize
+          )} gap-4 justify-center mt-3`}
+        >
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
           ))}
