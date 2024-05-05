@@ -16,6 +16,9 @@ I developed this full-stack application as the final project for my web applicat
     - [Users Endpoints](#users-endpoints)
     - [Categories Endpoints](#categories-endpoints)
     - [Favorite's Endpoints](#favorites-endpoints)
+- [Summary](#summary)
+  - [Challenges](#challenges)
+  - [Requirements](#requirements)
 - [Contact](#contact)
 
 ## Tech Stack
@@ -75,7 +78,7 @@ Clone the repository to your local machine using the following command:
 git clone git@github.com:TiTe-5G00EV16-3003/2024-final-project-KayTee1.git
 ```
 
-#### Step 2 Setting up Env Variables
+#### Step 2 Setting up Environment Variables
 
 In the project root, run the createEnv.sh script to set up the environment variables for both frontend and backend. If necessary, make the script executable using:
 
@@ -83,7 +86,7 @@ In the project root, run the createEnv.sh script to set up the environment varia
 chmod +x createEnv.sh
 ```
 
-Then
+Next
 
 ```
 ./createEnv.sh
@@ -101,13 +104,13 @@ cd backend; npm run dev;
 
 #### Step 4 Testing it
 
-Open your prefered browser and access the app with localhost:5173
+Open your preferred browser and access the app with localhost:5173
 
 ## Documentation
 
 ### API
 
-React Store Backend follows the REST (Representational State Transfer) style. This means it uses standard HTTP methods like GET, POST, PUT, and DELETE to perform actions on resources. RESTful APIs provide a straightforward and predictable way to interact with the API, making it easy to integrate into your applications.
+The React Store Backend follows the REST (Representational State Transfer) style, utilizing standard HTTP methods such as GET, POST, PUT, and DELETE to interact with resources. RESTful APIs provide a straightforward and predictable way to interact with the API, making it easy to integrate into your applications.
 
 #### Available Routes
 
@@ -473,6 +476,36 @@ Upon successful deletion, returns a response object:
     "status": 200
 }
 ```
+
+## Summary
+
+The idea of this project was to make a full stack functioning online marketplace that would be deployed on the TAMK Virtual Machine server. I learned a lot while developing this app. To name a few skills that definitely leveled up were:
+
+- SQL (relational databases)
+- CSS
+- Separating concerns
+- CI/CD
+- Error Handling and Debugging
+- Documentation Writing
+
+### Challenges
+
+- **Dynamic Grid Layout**. I encountered difficulty in dynamically adjusting the number of columns in the grid layout to accommodate varying screen sizes and product card quantities. Overcame it by searching for solutions online and reading tailwind docs and realising that I could get the screen size with the ```window.innerWidth``` property in JavaScript.
+
+- **Time Management**. I underestimated the time required for debugging and implementing new features. As the deadline approached, I found myself overwhelmed. Unfortunately, this led to the delivery of an unpolished application, which was disappointing.
+
+### Requirements
+
+The React Store application meets the following requirements:
+
+- **User Authentication**: Users can create accounts, log in, and log out.
+
+- **CRUD-operations**: Users can create, read, edit, and delete listings for items they want to sell.
+- **Listing View and Search**: Users can view all listings, view specific listings, view their own listings, and search for items based categories.
+- **Site Navigation**: The application provides site navigation functionality.
+
+- **Extra**: Implemented a favorites functionality that allows users to mark products as favorites and view their personalized list of favorited items.
+
 
 ## Contact
 
