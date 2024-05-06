@@ -56,7 +56,7 @@ const ListingForm = ({
     modalType: "",
     info: "",
   });
-  const [preview, setPreview] = useState< null | ArrayBuffer>(null);
+  const [preview, setPreview] = useState<null | ArrayBuffer>(null);
 
   const auth = useContext(AuthContext);
 
@@ -141,10 +141,15 @@ const ListingForm = ({
 
   const validateForm = async () => {
     await handleSubmitNewCategory();
-    const { title, price, description, image } = formData;
-
-    if (!title || !price || !description || !image) {
+    const { title, price, description } = formData;
+    
+    if (!title || !price || !description) {
       setMessage({ message: "Please fill in all fields", color: "red" });
+      return;
+    }
+
+    if (!preview) {
+      setMessage({ message: "Please upload an image", color: "red" });
       return;
     }
 
@@ -164,7 +169,7 @@ const ListingForm = ({
       setMessage({ message: "Price must be greater than 0", color: "red" });
       return;
     }
-   
+
     if (description.length < 10) {
       setMessage({
         message: "Description must be at least 10 characters",
@@ -196,7 +201,7 @@ const ListingForm = ({
     }
 
     formData.categories = selectedCategories;
-
+    formData.image = String(preview);
     if (method === "POST" && props.postListing) {
       props
         .postListing()
@@ -267,7 +272,12 @@ const ListingForm = ({
           />
 
           <DropZone setPreview={setPreview} />
-          {preview && <img src={String(preview)} />}
+          {preview && (
+            <img
+              className="ml-3 w-64 h-auto rounded-lg self-center"
+              src={String(preview)}
+            />
+          )}
         </div>
       </form>
       <div className="mx-2 my-2">
