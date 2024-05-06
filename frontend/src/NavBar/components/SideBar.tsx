@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import NavItem from "./NavItem";
 import { FaHome, FaStore } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import NavItem from "./NavItem";
 
 type SideBarProps = {
   isSideBarOpen: boolean;

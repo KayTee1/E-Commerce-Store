@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
 import imageCompression from "browser-image-compression";
+import { useDropzone } from "react-dropzone";
 
 type DropZoneProps = {
   setPreview: React.Dispatch<React.SetStateAction<null | ArrayBuffer>>;
