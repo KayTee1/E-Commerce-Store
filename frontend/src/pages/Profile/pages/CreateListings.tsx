@@ -9,6 +9,7 @@ type Category = {
   name: string;
 };
 type FormData = {
+  product_id: string;
   title: string;
   price: string;
   description: string;
@@ -20,6 +21,7 @@ const CreateListings = () => {
   const auth = useContext(AuthContext);
 
   const [formData, setFormData] = useState<FormData>({
+    product_id: "",
     title: "",
     price: "",
     description: "",
@@ -32,18 +34,16 @@ const CreateListings = () => {
     try {
       const baseApiUrl = import.meta.env.VITE_API_URL;
       // Add owner and product_id to formData
-      const completedFormData = {
-        ...formData,
-        owner: auth.username ?? "",
-        product_id: await generateID("products"),
-      };
+      formData.owner = auth.username!;
+      formData.product_id = await generateID("products");
+
       const response = await fetch(`${baseApiUrl}/api/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth.token}`,
         },
-        body: JSON.stringify(completedFormData),
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
