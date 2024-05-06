@@ -142,7 +142,7 @@ const ListingForm = ({
   const validateForm = async () => {
     await handleSubmitNewCategory();
     const { title, price, description } = formData;
-    
+
     if (!title || !price || !description) {
       setMessage({ message: "Please fill in all fields", color: "red" });
       return;
@@ -228,6 +228,10 @@ const ListingForm = ({
         .then(({ success, message }) => {
           if (success) {
             setMessage({ message: message, color: "green" });
+            setTimeout(function () {
+              setMessage({ message: "", color: "" });
+              window.location.reload();
+            }, 2000);
           } else {
             setMessage({
               message: message,
@@ -270,14 +274,19 @@ const ListingForm = ({
             }
             handleChange={handleChange}
           />
-
-          <DropZone setPreview={setPreview} />
+          {props.placeholders && !preview && (
+            <img
+              className="ml-3 w-64 h-auto rounded-lg self-center"
+              src={String(props.placeholders.image)}
+            />
+          )}
           {preview && (
             <img
               className="ml-3 w-64 h-auto rounded-lg self-center"
               src={String(preview)}
             />
           )}
+          <DropZone setPreview={setPreview} />
         </div>
       </form>
       <div className="mx-2 my-2">
