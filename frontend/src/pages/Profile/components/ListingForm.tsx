@@ -12,6 +12,7 @@ type Category = {
 };
 
 type FormData = {
+  product_id: string;
   title: string;
   price: string;
   description: string;

@@ -43,7 +43,7 @@ const getProductById = async (req, res) => {
   //product's id
   const { id } = req.params;
   const response = await products.findProductById(id);
- 
+
   if (response.length === 0) {
     res.status(404).json({ message: "Product not found" });
     return;
@@ -68,7 +68,6 @@ const getProductById = async (req, res) => {
 
 //creates a new product
 const postNewProduct = async (req, res) => {
-  console.log(req.body);
   try {
     const { title, price, product_id, description, image, owner, categories } =
       req.body;
@@ -92,7 +91,7 @@ const postNewProduct = async (req, res) => {
       image,
       owner,
     };
-    
+
     const productId = await products.postProduct(product);
 
     try {
@@ -117,9 +116,10 @@ const postNewProduct = async (req, res) => {
 //updates a product by id
 const updateProduct = async (req, res) => {
   const { id } = req.params;
-  const { title, price, description, image } = req.body;
-
+  const { product_id, title, price, description, image, categories } = req.body;
+  console.log("categories", categories);
   const product = {
+    product_id,
     title,
     price,
     description,
@@ -127,7 +127,22 @@ const updateProduct = async (req, res) => {
   };
   const response = await products.updateProduct(id, product);
 
-  if (response) {
+  let isError;
+  try {
+    await Promise.all(
+      categories.map(async (category) => {
+        await productCategories.addProductCategory(
+          product_id,
+          category.category_id
+        );
+      })
+    );
+  } catch (error) {
+    console.error(error);
+    isError = true;
+  }
+
+  if (response && !isError) {
     res.status(200).json({ message: "Product updated" });
   } else {
     res.status(400).json({ message: "Something went wrong!" });
