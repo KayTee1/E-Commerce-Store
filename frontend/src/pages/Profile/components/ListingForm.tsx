@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import FormItem from "../../../shared/FormItem";
 import Message from "../../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
@@ -67,29 +67,6 @@ const ListingForm = ({
       info,
     });
   };
-  const fetchCategories = async () => {
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(apiUrl + "/api/categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch categories");
-      }
-      const data = await response.json();
-      setCategories(data);
-      return data;
-    } catch (error) {
-      showModal("Info", "Failed to fetch categories");
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const postCategory = async (category: Category) => {
     try {
@@ -295,6 +272,7 @@ const ListingForm = ({
         </label>
         <CategoriesSelector
           categories={categories}
+          setCategories={setCategories}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
           showModal={showModal}
