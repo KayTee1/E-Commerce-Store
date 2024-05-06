@@ -4,6 +4,7 @@ import Message from "../../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
 import { AuthContext } from "../../../context/AuthContext";
 import Modal from "../../../shared/Modal";
+import DropZone from "./DropZone";
 
 type Category = {
   category_id: string;
@@ -55,6 +56,8 @@ const ListingForm = ({
     modalType: "",
     info: "",
   });
+  const [preview, setPreview] = useState< null | ArrayBuffer>(null);
+
   const auth = useContext(AuthContext);
 
   const showModal = (modalType: ModalTypes, info: string) => {
@@ -161,11 +164,7 @@ const ListingForm = ({
       setMessage({ message: "Price must be greater than 0", color: "red" });
       return;
     }
-    const isValidImg = await isValidImageUrl(image);
-    if (!isValidImg) {
-      setMessage({ message: "Image URL is invalid", color: "red" });
-      return;
-    }
+   
     if (description.length < 10) {
       setMessage({
         message: "Description must be at least 10 characters",
@@ -266,15 +265,9 @@ const ListingForm = ({
             }
             handleChange={handleChange}
           />
-          <FormItem
-            name="image"
-            placeholder={
-              props.placeholders
-                ? props.placeholders.image
-                : "https://example.com/image.jpg"
-            }
-            handleChange={handleChange}
-          />
+
+          <DropZone setPreview={setPreview} />
+          {preview && <img src={String(preview)} />}
         </div>
       </form>
       <div className="mx-2 my-2">
@@ -307,29 +300,3 @@ const ListingForm = ({
 };
 
 export default ListingForm;
-
-const isValidImageUrl = async (url: string): Promise<boolean> => {
-  /*
-  const imageUrlWithoutParams = url.split('?')[0];
-  const imageExtensions = /\.(jpg|jpeg|png|gif|bmp)$/i;
-  try {
-    const response = await fetch(imageUrlWithoutParams, { method: 'HEAD', redirect: 'follow' });
-    if (!response.ok) {
-      return false;
-    }
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.startsWith("image")) {
-      return false;
-    }
-    if (!imageExtensions.test(imageUrlWithoutParams)) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    return false;
-  }*/
-
-  // had to remove the fetch request because it was causing a CORS error on the TAMK vm
-  if (url) return true;
-  return true;
-};
