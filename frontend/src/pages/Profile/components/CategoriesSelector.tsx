@@ -12,6 +12,7 @@ type ModalTypes = "Delete" | "Edit" | "Info";
 
 type CategoriesSelectorProps = {
   categories: Category[];
+  setCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   selectedCategories: Category[];
   setSelectedCategories: React.Dispatch<React.SetStateAction<Category[]>>;
   showModal: (modalType: ModalTypes, info: string) => void;
@@ -19,6 +20,7 @@ type CategoriesSelectorProps = {
 
 export const CategoriesSelector = ({
   categories,
+  setCategories,
   selectedCategories,
   setSelectedCategories,
   showModal,
@@ -27,6 +29,29 @@ export const CategoriesSelector = ({
   const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
+  const fetchCategories = async () => {
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(apiUrl + "/api/categories", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch categories");
+      }
+      const data = await response.json();
+      setCategories(data);
+      return data;
+    } catch (error) {
+      showModal("Info", "Failed to fetch categories");
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchCategories();
+  }, []);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

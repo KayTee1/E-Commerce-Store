@@ -68,6 +68,7 @@ const getProductById = async (req, res) => {
 
 //creates a new product
 const postNewProduct = async (req, res) => {
+  console.log(req.body);
   try {
     const { title, price, product_id, description, image, owner, categories } =
       req.body;
@@ -91,7 +92,7 @@ const postNewProduct = async (req, res) => {
       image,
       owner,
     };
-
+    
     const productId = await products.postProduct(product);
 
     try {

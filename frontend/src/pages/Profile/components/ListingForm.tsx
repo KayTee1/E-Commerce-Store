@@ -1,9 +1,10 @@
-import { ChangeEvent, useContext, useEffect, useState } from "react";
-import FormItem from "../../../shared/FormItem";
+import { useContext, useState } from "react";
 import Message from "../../../shared/Message";
 import { CategoriesSelector } from "./CategoriesSelector";
 import { AuthContext } from "../../../context/AuthContext";
 import Modal from "../../../shared/Modal";
+import FormItems, { validateBasicForm } from "./FormItems";
+import ImageSelector from "./ImageSelector";
 
 type Category = {
   category_id: string;
@@ -55,6 +56,8 @@ const ListingForm = ({
     modalType: "",
     info: "",
   });
+  const [preview, setPreview] = useState<null | ArrayBuffer>(null);
+
   const auth = useContext(AuthContext);
 
   const showModal = (modalType: ModalTypes, info: string) => {
@@ -64,29 +67,6 @@ const ListingForm = ({
       info,
     });
   };
-  const fetchCategories = async () => {
-    try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(apiUrl + "/api/categories", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch categories");
-      }
-      const data = await response.json();
-      setCategories(data);
-      return data;
-    } catch (error) {
-      showModal("Info", "Failed to fetch categories");
-      console.error(error);
-    }
-  };
-  useEffect(() => {
-    fetchCategories();
-  }, []);
 
   const postCategory = async (category: Category) => {
     try {
@@ -128,20 +108,10 @@ const ListingForm = ({
     }
   };
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [e.target.name]: e.target.value,
-    }));
-    setMessage({ message: "", color: "" });
-  };
-
   const validateForm = async () => {
-    await handleSubmitNewCategory();
-    const { title, price, description, image } = formData;
-
-    if (!title || !price || !description || !image) {
-      setMessage({ message: "Please fill in all fields", color: "red" });
+    const result = validateBasicForm(formData);
+    if (result) {
+      setMessage({ message: result.message, color: "red" });
       return;
     }
 
@@ -152,137 +122,72 @@ const ListingForm = ({
       });
       return;
     }
-
-    if (isNaN(Number(price))) {
-      setMessage({ message: "Price must be a number", color: "red" });
-      return;
-    }
-    if (parseFloat(price) <= 0.0) {
-      setMessage({ message: "Price must be greater than 0", color: "red" });
-      return;
-    }
-    const isValidImg = await isValidImageUrl(image);
-    if (!isValidImg) {
-      setMessage({ message: "Image URL is invalid", color: "red" });
-      return;
-    }
-    if (description.length < 10) {
-      setMessage({
-        message: "Description must be at least 10 characters",
-        color: "red",
-      });
-      return;
-    }
-    if (description.length > 150) {
-      setMessage({
-        message: "Description must be less than 150 characters",
-        color: "red",
-      });
-      return;
-    }
-    if (title && title[0] !== title[0].toUpperCase()) {
-      setMessage({
-        message: "Title must start with a capital letter",
-        color: "red",
-      });
-      return;
-    }
-
-    if (title.length > 20) {
-      setMessage({
-        message: "Title must be less than 20 characters",
-        color: "red",
-      });
-      return;
-    }
-
+    await handleSubmitNewCategory();
     formData.categories = selectedCategories;
 
-    if (method === "POST" && props.postListing) {
-      props
-        .postListing()
-        .then(({ success, message }) => {
-          if (success) {
-            setMessage({ message: message, color: "green" });
-          } else {
-            setMessage({
-              message: message,
-              color: "red",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setMessage({
-            message: "An unexpected error has occurred",
-            color: "red",
-          });
-        });
-    } else if (method === "PUT" && props.editListing) {
-      props
-        .editListing()
-        .then(({ success, message }) => {
-          if (success) {
-            setMessage({ message: message, color: "green" });
-          } else {
-            setMessage({
-              message: message,
-              color: "red",
-            });
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setMessage({
-            message: "An unexpected error has occurred",
-            color: "red",
-          });
-        });
+    if (!props.placeholders?.image && !preview) {
+      setMessage({
+        message: "Please upload an image",
+        color: "red",
+      });
+      return;
+    }
+    formData.image = String(preview);
+
+    try {
+      if (method === "POST" && props.postListing) {
+        const response = await props.postListing();
+        handleResponse(response);
+      } else if (method === "PUT" && props.editListing) {
+        const response = await props.editListing();
+        handleResponse(response);
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage({
+        message: "An unexpected error has occurred",
+        color: "red",
+      });
+    }
+  };
+  const handleResponse = ({
+    success,
+    message,
+  }: {
+    success: boolean;
+    message: string;
+  }) => {
+    if (success) {
+      setMessage({ message: message, color: "green" });
+      if (method === "PUT") {
+        setTimeout(function () {
+          setMessage({ message: "", color: "" });
+          window.location.reload();
+        }, 2000);
+      }
+    } else {
+      setMessage({
+        message: message,
+        color: "red",
+      });
     }
   };
   return (
     <div className="grid bg-slate-100 p-9 rounded-lg border-solid border-4">
-      <form onSubmit={validateForm}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <FormItem
-            name="title"
-            placeholder={props.placeholders ? props.placeholders.title : "Bike"}
-            handleChange={handleChange}
-          />
-          <FormItem
-            name="price"
-            displayName="Price (€)"
-            placeholder={props.placeholders ? props.placeholders.price : "100"}
-            handleChange={handleChange}
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <FormItem
-            name="description"
-            placeholder={
-              props.placeholders
-                ? props.placeholders.description
-                : "A nice bike"
-            }
-            handleChange={handleChange}
-          />
-          <FormItem
-            name="image"
-            placeholder={
-              props.placeholders
-                ? props.placeholders.image
-                : "https://example.com/image.jpg"
-            }
-            handleChange={handleChange}
-          />
-        </div>
-      </form>
+      <FormItems previousData={props.placeholders} setFormData={setFormData} setMessage={setMessage} />
+      <ImageSelector
+        previousData={props.placeholders}
+        preview={preview}
+        setPreview={setPreview}
+      />
+
       <div className="mx-2 my-2">
         <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
           Categories
         </label>
         <CategoriesSelector
           categories={categories}
+          setCategories={setCategories}
           selectedCategories={selectedCategories}
           setSelectedCategories={setSelectedCategories}
           showModal={showModal}
@@ -307,29 +212,3 @@ const ListingForm = ({
 };
 
 export default ListingForm;
-
-const isValidImageUrl = async (url: string): Promise<boolean> => {
-  /*
-  const imageUrlWithoutParams = url.split('?')[0];
-  const imageExtensions = /\.(jpg|jpeg|png|gif|bmp)$/i;
-  try {
-    const response = await fetch(imageUrlWithoutParams, { method: 'HEAD', redirect: 'follow' });
-    if (!response.ok) {
-      return false;
-    }
-    const contentType = response.headers.get("content-type");
-    if (!contentType || !contentType.startsWith("image")) {
-      return false;
-    }
-    if (!imageExtensions.test(imageUrlWithoutParams)) {
-      return false;
-    }
-    return true;
-  } catch (error) {
-    return false;
-  }*/
-
-  // had to remove the fetch request because it was causing a CORS error on the TAMK vm
-  if (url) return true;
-  return true;
-};

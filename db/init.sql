@@ -17,7 +17,7 @@ CREATE TABLE
         `description` VARCHAR(100) NOT NULL,
         `price` DECIMAL(10, 2) NOT NULL,
         `owner` VARCHAR(36) NOT NULL,
-        `image` VARCHAR(255),
+        `image` MEDIUMTEXT NOT NULL,
         `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
         INDEX (`product_id`)
