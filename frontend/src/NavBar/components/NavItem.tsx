@@ -1,13 +1,18 @@
 import { NavLink } from "react-router-dom";
+import { twMerge } from "tailwind-merge";
 
 type NavItemProps = {
   title: string;
   to: string;
+  className?: string;
 };
 
-const NavItem = ({ title, to }: NavItemProps) => {
+const NavItem = ({ title, to, className }: NavItemProps) => {
   return (
-    <NavLink to={to} className="text-white mx-3 hover:text-gray-300">
+    <NavLink
+      to={to}
+      className={twMerge("text-white mx-3 hover:text-gray-300", className)}
+    >
       {title}
     </NavLink>
   );

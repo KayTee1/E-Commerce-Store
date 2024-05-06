@@ -4,20 +4,20 @@ import { NavLink } from "react-router-dom";
 import NavItem from "./components/NavItem";
 import NavIcon from "./components/NavIcon";
 import DropdownBody from "./components/DropdownBody";
+import SideBar from "./components/SideBar";
 
 const NavBar = () => {
   const [openDropdown, setOpenDropdown] = useState<
     null | "favorites" | "cart" | "profile"
   >(null);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
 
+  const closeSideBar = () => {
+    setIsSideBarOpen(false);
+  };
   const handleIconClick = (type: "favorites" | "cart" | "profile") => {
     setOpenDropdown(openDropdown === type ? null : type);
-  };
-
-  const handleMobileMenuClick = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   const handleCloseDropdown = () => {
@@ -70,6 +70,15 @@ const NavBar = () => {
 
   return (
     <nav className="bg-gray-900 h-16 flex items-center">
+      <SideBar isSideBarOpen={isSideBarOpen} closeSidebar={closeSideBar} />
+      <button
+        className="lg:hidden md:hidden text-white ml-10"
+        onClick={() => {
+          setIsSideBarOpen(true);
+        }}
+      >
+        ☰
+      </button>
       <div className="flex items-center justify-between mx-5 w-full">
         <NavLink to="/" className="text-white text-2xl">
           <img
@@ -78,30 +87,6 @@ const NavBar = () => {
             alt="Logo"
           />
         </NavLink>
-
-        <button
-          className="lg:hidden md:hidden text-white"
-          onClick={handleMobileMenuClick}
-        >
-          ☰
-        </button>
-
-        <div
-          className={`lg:hidden md:hidden ${
-            isMobileMenuOpen ? "block" : "hidden"
-          }`}
-        >
-          <div
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-            }}
-            className="flex flex-col mt-2"
-          >
-            <NavItem title="Home" to="/" />
-            <NavItem title="Collections" to="/collections" />
-            <NavItem title="Categories" to="/Categories" />
-          </div>
-        </div>
 
         <div className="hidden md:flex lg:flex">
           <NavItem title="Home" to="/" />
