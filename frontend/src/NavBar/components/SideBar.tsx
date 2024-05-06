@@ -64,7 +64,10 @@ const SideBar = ({ isSideBarOpen, closeSidebar }: SideBarProps) => {
             </button>
           </div>
         </div>
-        <div className="py-4 px-8 w-full h-72 justify-around flex flex-col my-52 items-center">
+        <div
+          onClick={closeSidebar}
+          className="py-4 px-8 w-full h-72 justify-around flex flex-col my-52 items-center"
+        >
           <div className="flex flex-row items-baseline">
             <FaHome
               className="cursor-pointer"
