@@ -12,10 +12,11 @@ type Category = {
 };
 
 type FormData = {
+  product_id: string;
   title: string;
   price: string;
   description: string;
-  image: string;
+  image: string | ArrayBuffer;
   owner: string;
   categories: Category[];
 };
@@ -126,13 +127,11 @@ const ListingForm = ({
     formData.categories = selectedCategories;
 
     if (!props.placeholders?.image && !preview) {
-      setMessage({
-        message: "Please upload an image",
-        color: "red",
-      });
+      setMessage({ message: "Please upload an image", color: "red" });
       return;
     }
-    formData.image = String(preview);
+
+    formData.image = preview! ?? props.placeholders?.image;
 
     try {
       if (method === "POST" && props.postListing) {
@@ -159,12 +158,6 @@ const ListingForm = ({
   }) => {
     if (success) {
       setMessage({ message: message, color: "green" });
-      if (method === "PUT") {
-        setTimeout(function () {
-          setMessage({ message: "", color: "" });
-          window.location.reload();
-        }, 2000);
-      }
     } else {
       setMessage({
         message: message,
@@ -174,7 +167,11 @@ const ListingForm = ({
   };
   return (
     <div className="grid bg-slate-100 p-9 rounded-lg border-solid border-4">
-      <FormItems previousData={props.placeholders} setFormData={setFormData} setMessage={setMessage} />
+      <FormItems
+        previousData={props.placeholders}
+        setFormData={setFormData}
+        setMessage={setMessage}
+      />
       <ImageSelector
         previousData={props.placeholders}
         preview={preview}

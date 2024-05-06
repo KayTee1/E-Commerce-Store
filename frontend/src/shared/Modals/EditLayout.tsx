@@ -28,10 +28,11 @@ type EditLayoutProps = {
 };
 
 type FormData = {
+  product_id: string;
   title: string;
   price: string;
   description: string;
-  image: string;
+  image: string | ArrayBuffer;
   owner: string;
   categories: Category[];
 };
@@ -46,6 +47,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
   const { title, product_id, price, description, image } = item;
 
   const [formData, setFormData] = useState<FormData>({
+    product_id: "",
     title: "",
     price: "",
     description: "",
@@ -56,6 +58,8 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
 
   const editListing = async () => {
     const baseApiUrl = import.meta.env.VITE_API_URL;
+
+    formData.product_id = product_id;
     try {
       setIsLoading(true);
       const response = await fetch(`${baseApiUrl}/api/products/${product_id}`, {
@@ -73,7 +77,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
         title: formData.title,
         price: formData.price,
         description: formData.description,
-        image: formData.image,
+        image: formData.image as string,
         owner: formData.owner,
         categories: formData.categories,
       });
