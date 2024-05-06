@@ -56,7 +56,7 @@ const DropZone = ({ setPreview }: DropZoneProps) => {
       <p className="text-gray-600">
         {isDragActive
           ? "Drop the files here ..."
-          : "Drag 'n' drop some files here, or click to select files"}
+          : "Drag 'n' drop an image here, or click to select an image"}
       </p>
     </div>
   );
