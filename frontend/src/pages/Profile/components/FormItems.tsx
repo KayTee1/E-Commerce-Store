@@ -13,7 +13,7 @@ type FormData = {
   title: string;
   price: string;
   description: string;
-  image: string;
+  image: string | ArrayBuffer;
   owner: string;
   categories: Category[];
 };

@@ -31,7 +31,7 @@ type FormData = {
   title: string;
   price: string;
   description: string;
-  image: string;
+  image: string | ArrayBuffer;
   owner: string;
   categories: Category[];
 };
@@ -73,7 +73,7 @@ export const EditLayout = ({ item, show, setProductData }: EditLayoutProps) => {
         title: formData.title,
         price: formData.price,
         description: formData.description,
-        image: formData.image,
+        image: formData.image as string,
         owner: formData.owner,
         categories: formData.categories,
       });
