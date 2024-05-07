@@ -51,7 +51,7 @@ const Collections = () => {
       setScreenSize("lg");
     } else if (width >= 768) {
       setScreenSize("md");
-    } else {
+    } else if (width >= 640) {
       setScreenSize("sm");
     }
   };
