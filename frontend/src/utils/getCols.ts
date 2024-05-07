@@ -1,5 +1,8 @@
 export const getCols = (length: number, screenSize: string) => {
-    if(length > 3){
+    const MAX_COLS = 3;
+    console.log("Length of productsData:", length);
+    console.log("Screen size:", screenSize);
+    if(length > MAX_COLS){
         length = 3;
     }  
 
@@ -17,7 +20,9 @@ export const getCols = (length: number, screenSize: string) => {
     default:
         gridStyle = `grid-cols-${length}`;
     }
-    console.log(gridStyle)
+  
+
+    console.log("Final Grid Style:",gridStyle)
     return gridStyle;
   };
   
