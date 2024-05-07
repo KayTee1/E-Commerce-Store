@@ -51,7 +51,7 @@ const Collections = () => {
       setScreenSize("lg");
     } else if (width >= 768) {
       setScreenSize("md");
-    } else if (width >= 640) {
+    } else if (width <= 640 && width > 0) {
       setScreenSize("sm");
     }
   };
@@ -90,13 +90,15 @@ const Collections = () => {
 
   if (!isError && productsData.length > 0) {
     console.log(
-      "gridStyle: ",
+      "ugly conditionals: ",
       screenSize === "lg"
         ? productsData.length >= 3
           ? "grid-cols-3"
           : `grid-cols-${productsData.length}`
         : getCols(productsData.length, screenSize)
     );
+
+    console.log("getCols:", getCols(productsData.length, screenSize));
     content = (
       <div className="flex flex-col items-center justify-center ">
         <div className="text-lg text-gray-600 mb-8 text-center">
@@ -104,13 +106,10 @@ const Collections = () => {
           <p>Click on product image for additional information!</p>
         </div>
         <div
-          className={`mx-2 grid ${
-            screenSize === "lg"
-              ? productsData.length >= 3
-                ? "grid-cols-3"
-                : `grid-cols-${productsData.length}`
-              : getCols(productsData.length, screenSize)
-          } gap-5 mt-3`}
+          className={`mx-2 grid ${getCols(
+            productsData.length,
+            screenSize
+          )} gap-5 mt-3`}
         >
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
