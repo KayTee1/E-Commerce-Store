@@ -98,7 +98,11 @@ const Collections = () => {
     if (screenSize !== "lg") {
       gridStyle = getCols(productsData.length, screenSize);
     }
-    console.log("gridStyle: ", gridStyle);
+    console.log("gridStyle: ", screenSize === "lg"
+    ? productsData.length >= 3
+      ? "grid-cols-3"
+      : `grid-cols-${productsData.length}`
+    : getCols(productsData.length, screenSize));
     content = (
       <div className="flex flex-col items-center justify-center ">
         <div className="text-lg text-gray-600 mb-8 text-center">
@@ -107,7 +111,11 @@ const Collections = () => {
         </div>
         <div
           className={`mx-2 grid ${
-            screenSize === "lg" ? "grid-cols-"+len : gridStyle
+            screenSize === "lg"
+              ? productsData.length >= 3
+                ? "grid-cols-3"
+                : `grid-cols-${productsData.length}`
+              : getCols(productsData.length, screenSize)
           } gap-5 mt-3`}
         >
           {productsData.map((product: Product) => (
