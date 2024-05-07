@@ -117,6 +117,10 @@ const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { product_id, title, price, description, image, categories } = req.body;
 
+  if(!product_id || !title || !price || !description || !image || !categories) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
   const product = {
     product_id,
     title,
