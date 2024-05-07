@@ -90,6 +90,7 @@ const Collections = () => {
 
   if (!isError && productsData.length > 0) {
     let gridStyle = getCols(productsData.length, screenSize);
+    console.log("gridStyle: ", gridStyle)
     content = (
       <div className="flex flex-col items-center justify-center ">
         <div className="text-lg text-gray-600 mb-8 text-center">

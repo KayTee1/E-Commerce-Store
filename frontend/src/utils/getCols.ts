@@ -18,6 +18,5 @@ export const getCols = (length: number, screenSize: string): string => {
     default:
       gridStyle = `grid-cols-${length}`;
   }
-  console.log("gridStyle: ", gridStyle);
   return gridStyle;
 };
