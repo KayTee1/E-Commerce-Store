@@ -9,7 +9,8 @@ export const getCols = (length: number, screenSize: string) => {
     let gridStyle;
     switch (screenSize) {
     case "lg":
-        gridStyle = `lg:grid-cols-${length} md:grid-cols-${length}`;
+        console.log("Switch case lg")
+        gridStyle = `grid lg:grid-cols-${length} md:grid-cols-${length}`;
         break;
     case "md":
         gridStyle = `grid-cols-${length >= 2 ? 2:1}`;
