@@ -143,6 +143,9 @@ const ListingForm = ({
       } else if (method === "PUT" && props.editListing) {
         const response = await props.editListing();
         handleResponse(response);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
     } catch (error) {
       console.log(error);
