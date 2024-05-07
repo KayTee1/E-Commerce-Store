@@ -20,7 +20,6 @@ type Product = {
 
 const Collections = () => {
   const [screenSize, setScreenSize] = useState("");
-  const [gridStyle, setGridStyle] = useState("");
   const [productsData, setProductsData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);
@@ -55,7 +54,6 @@ const Collections = () => {
     } else {
       setScreenSize("sm");
     }
-    setGridStyle(getCols(productsData.length, screenSize));
   };
 
   useEffect(() => {
@@ -91,13 +89,14 @@ const Collections = () => {
   }
 
   if (!isError && productsData.length > 0) {
+    let gridStyle = getCols(productsData.length, screenSize);
     content = (
-      <div className="grid grid-cols-1 items-center ">
+      <div className="flex flex-col items-center justify-center ">
         <div className="text-lg text-gray-600 mb-8 text-center">
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
         </div>
-        <div className={`mx-2 grid ${gridStyle} gap-5  mt-3`}>
+        <div className={`mx-2 grid ${gridStyle} gap-5 mt-3`}>
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
           ))}
