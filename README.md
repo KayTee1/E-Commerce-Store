@@ -492,7 +492,7 @@ The idea of this project was to make a full stack functioning online marketplace
 
 - **Dynamic Grid Layout**. I encountered difficulty in dynamically adjusting the number of columns in the grid layout to accommodate varying screen sizes and product card quantities. Overcame it by searching for solutions online and reading tailwind docs and realising that I could get the screen size with the ```window.innerWidth``` property in JavaScript.
 
-- **Time Management**. I underestimated the time required for debugging and implementing new features. As the deadline approached, I found myself overwhelmed. Unfortunately, this led to the delivery of an unpolished application, which was disappointing.
+- **Time Management**. I underestimated the time required for debugging and implementing new features. As the deadline approached, I found myself overwhelmed. Fortunally we got extra time for the assignment, which helped me polish and finalize this application even further.
 
 ### Requirements
 
