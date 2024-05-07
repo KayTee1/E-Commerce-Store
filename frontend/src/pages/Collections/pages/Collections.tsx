@@ -49,9 +49,9 @@ const Collections = () => {
     const width = window.innerWidth;
     if (width >= 1024) {
       setScreenSize("lg");
-    } else if (width >= 768) {
+    } else if (width >= 768 && width < 1024) {
       setScreenSize("md");
-    } else if (width <= 640 && width > 0) {
+    } else {
       setScreenSize("sm");
     }
   };
@@ -96,10 +96,13 @@ const Collections = () => {
           <p>Click on product image for additional information!</p>
         </div>
         <div
-          className={`mx-2 grid ${getCols(
-            productsData.length,
-            screenSize
-          )} gap-5 mt-3`}
+          className={`mx-2 grid ${
+            screenSize === "lg"
+              ? productsData.length >= 3
+                ? "grid-cols-3"
+                : `grid-cols-${productsData.length}`
+              : getCols(productsData.length, screenSize)
+          } gap-5 mt-3`}
         >
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />

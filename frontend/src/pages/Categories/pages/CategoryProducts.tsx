@@ -73,9 +73,9 @@ const CategoryProducts = () => {
     const width = window.innerWidth;
     if (width >= 1024) {
       setScreenSize("lg");
-    } else if (width >= 768) {
+    } else if (width >= 768 && width < 1024) {
       setScreenSize("md");
-    } else if (width <= 640 && width > 0) {
+    } else {
       setScreenSize("sm");
     }
   };
@@ -112,15 +112,16 @@ const CategoryProducts = () => {
   if (!isError && products.length > 0) {
     content = (
       <div
-        className={`mx-2 grid ${getCols(
-          products.length,
-          screenSize
-        )} gap-4 justify-center mt-3`}
+        className={`mx-2 grid ${
+          screenSize === "lg"
+            ? products.length >= 3
+              ? "grid-cols-3"
+              : `grid-cols-${products.length}`
+            : getCols(products.length, screenSize)
+        } gap-5 mt-3`}
       >
-        {products.map((product) => (
-          <div key={product.id}>
-            <ProductListingCard product={product} />
-          </div>
+        {products.map((product: Product) => (
+          <ProductListingCard key={product.id} product={product} />
         ))}
       </div>
     );
