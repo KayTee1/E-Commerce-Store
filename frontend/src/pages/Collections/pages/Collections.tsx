@@ -100,7 +100,7 @@ const Collections = () => {
           className={`mx-2 grid ${getCols(
             length,
             screenSize
-          )} gap-4 justify-center mt-3`}
+          )} gap-5 justify-center mt-3`}
         >
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />

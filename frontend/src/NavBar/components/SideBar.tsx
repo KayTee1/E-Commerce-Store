@@ -41,13 +41,13 @@ const SideBar = ({ isSideBarOpen, closeSidebar }: SideBarProps) => {
     <>
       <div
         ref={sidebarRef}
-        className={`fixed inset-0 bg-black opacity-50 z-40 ${
+        className={`fixed inset-0 bg-black  opacity-50 z-40 ${
           isSideBarOpen ? "" : "hidden"
         }`}
         onClick={handleOverlayClick}
       ></div>
       <div
-        className={`fixed  bg-gray-300  inset-y-0 left-0 w-96  shadow-lg z-50 transform transition-transform ${
+        className={`fixed  bg-gray-300 max-w-full  inset-y-0 left-0 w-96  shadow-lg z-50 transform transition-transform ${
           isSideBarOpen ? "translate-x-0" : "-translate-x-full"
         } ${isTransitioning ?? "transition-none"}`}
         onTransitionEnd={handleTransitionEnd}

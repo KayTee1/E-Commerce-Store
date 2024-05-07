@@ -7,7 +7,6 @@ const favorites = require("../models/favorites");
 const getProducts = async (req, res) => {
   try {
     const response = await products.findProducts();
-
     if (response) {
       res.status(200).json(response);
     } else {
@@ -117,7 +116,7 @@ const postNewProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   const { id } = req.params;
   const { product_id, title, price, description, image, categories } = req.body;
-  
+
   const product = {
     product_id,
     title,
@@ -126,12 +125,12 @@ const updateProduct = async (req, res) => {
     image,
   };
   const response = await products.updateProduct(id, product);
-  
+
   let isError = false;
   try {
     //deleting all categories for the product
     await productCategories.deleteProductCategoryByProductId(id);
-   
+
     //adding new (updated) categories for the product
     await Promise.all(
       categories.map(async (category) => {

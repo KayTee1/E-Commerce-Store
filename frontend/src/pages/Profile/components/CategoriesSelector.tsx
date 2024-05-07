@@ -154,7 +154,7 @@ export const CategoriesSelector = ({
           ))}
         </div>
       )}
-      <div ref={dropdownRef} className="relative">
+      <div ref={dropdownRef} className="absolute w-96 ">
         <form onSubmit={(e) => handleAddCategory(e)}>
           <input
             type="text"
