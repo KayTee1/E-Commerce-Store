@@ -90,14 +90,12 @@ const Collections = () => {
 
   if (!isError && productsData.length > 0) {
     let gridStyle;
+    let len = productsData.length;
 
-    if (screenSize === "lg") {
-      let len = productsData.length;
-      if (len > 3) {
-        len = 3;
-      }
-      gridStyle = `grid-cols-${len} `;
-    } else {
+    if (len > 3) {
+      len = 3;
+    }
+    if (screenSize !== "lg") {
       gridStyle = getCols(productsData.length, screenSize);
     }
     console.log("gridStyle: ", gridStyle);
@@ -107,7 +105,11 @@ const Collections = () => {
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
         </div>
-        <div className={`mx-2 grid ${gridStyle} gap-5 mt-3`}>
+        <div
+          className={`mx-2 grid ${
+            screenSize === "lg" ? "grid-cols-"+len : gridStyle
+          } gap-5 mt-3`}
+        >
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
           ))}
