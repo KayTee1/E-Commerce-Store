@@ -97,7 +97,7 @@ const Collections = () => {
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
         </div>
-        <div className={`mx-2 grid ${gridStyle} gap-5 mt-3`}>
+        <div className={`mx-2 grid ${/*gridStyle*/"grid-cols-3"} gap-5 mt-3`}>
           {productsData.map((product: Product) => (
             <ProductListingCard key={product.id} product={product} />
           ))}
