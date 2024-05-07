@@ -89,10 +89,14 @@ const Collections = () => {
   }
 
   if (!isError && productsData.length > 0) {
-    let gridStyle = getCols(productsData.length, screenSize);
+    let gridStyle;
 
     if (screenSize === "lg") {
-      gridStyle = `lg:grid-cols-${productsData.length} grid-cols-${productsData.length} `;
+      let len = productsData.length;
+      if (len > 3) {
+        len = 3;
+      }
+      gridStyle = `grid-cols-${len} `;
     } else {
       gridStyle = getCols(productsData.length, screenSize);
     }
