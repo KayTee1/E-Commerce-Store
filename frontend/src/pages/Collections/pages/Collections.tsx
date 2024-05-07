@@ -91,7 +91,7 @@ const Collections = () => {
   if (!isError && productsData.length > 0) {
     let length = productsData.length;
     content = (
-      <div className="flex flex-col items-center">
+      <div className="grid grid-cols-1 items-center">
         <div className="text-lg text-gray-600 mb-8 text-center">
           <p>Browse our wide range of products.</p>
           <p>Click on product image for additional information!</p>
