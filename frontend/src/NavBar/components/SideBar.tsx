@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import NavItem from "./NavItem";
 import { FaHome, FaStore } from "react-icons/fa";
 import { BiSolidCategory } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
+import NavItem from "./NavItem";
 
 type SideBarProps = {
   isSideBarOpen: boolean;
@@ -41,13 +41,13 @@ const SideBar = ({ isSideBarOpen, closeSidebar }: SideBarProps) => {
     <>
       <div
         ref={sidebarRef}
-        className={`fixed inset-0 bg-black opacity-50 z-40 ${
+        className={`fixed inset-0 bg-black  opacity-50 z-40 ${
           isSideBarOpen ? "" : "hidden"
         }`}
         onClick={handleOverlayClick}
       ></div>
       <div
-        className={`fixed  bg-gray-300  inset-y-0 left-0 w-96  shadow-lg z-50 transform transition-transform ${
+        className={`fixed  bg-gray-300 max-w-full  inset-y-0 left-0 w-96  shadow-lg z-50 transform transition-transform ${
           isSideBarOpen ? "translate-x-0" : "-translate-x-full"
         } ${isTransitioning ?? "transition-none"}`}
         onTransitionEnd={handleTransitionEnd}
@@ -64,7 +64,10 @@ const SideBar = ({ isSideBarOpen, closeSidebar }: SideBarProps) => {
             </button>
           </div>
         </div>
-        <div className="py-4 px-8 w-full h-72 justify-around flex flex-col my-52 items-center">
+        <div
+          onClick={closeSidebar}
+          className="py-4 px-8 w-full h-72 justify-around flex flex-col my-52 items-center"
+        >
           <div className="flex flex-row items-baseline">
             <FaHome
               className="cursor-pointer"

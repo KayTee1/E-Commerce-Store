@@ -80,7 +80,7 @@ const ProductListingCard = ({ product }: ProductListingProps) => {
   };
 
   return (
-    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg max-w-60">
+    <div className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg min-w-64 max-w-60">
       <img
         onClick={() => {
           navigate(`/products/${product.product_id}`);

@@ -1,10 +1,13 @@
 import { useContext, useState } from "react";
-import Message from "../../../shared/Message";
-import { CategoriesSelector } from "./CategoriesSelector";
+
 import { AuthContext } from "../../../context/AuthContext";
-import Modal from "../../../shared/Modal";
+
+import { CategoriesSelector } from "./CategoriesSelector";
 import FormItems, { validateBasicForm } from "./FormItems";
 import ImageSelector from "./ImageSelector";
+
+import Modal from "../../../shared/Modal";
+import Message from "../../../shared/Message";
 
 type Category = {
   category_id: string;
