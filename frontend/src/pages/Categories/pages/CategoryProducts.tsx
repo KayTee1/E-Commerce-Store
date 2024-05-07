@@ -75,7 +75,7 @@ const CategoryProducts = () => {
       setScreenSize("lg");
     } else if (width >= 768) {
       setScreenSize("md");
-    } else {
+    } else if (width <= 640 && width > 0) {
       setScreenSize("sm");
     }
   };

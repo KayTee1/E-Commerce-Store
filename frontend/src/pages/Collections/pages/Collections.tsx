@@ -89,16 +89,6 @@ const Collections = () => {
   }
 
   if (!isError && productsData.length > 0) {
-    console.log(
-      "ugly conditionals: ",
-      screenSize === "lg"
-        ? productsData.length >= 3
-          ? "grid-cols-3"
-          : `grid-cols-${productsData.length}`
-        : getCols(productsData.length, screenSize)
-    );
-
-    console.log("getCols:", getCols(productsData.length, screenSize));
     content = (
       <div className="flex flex-col items-center justify-center ">
         <div className="text-lg text-gray-600 mb-8 text-center">
