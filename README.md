@@ -510,3 +510,4 @@ The React Store application meets the following requirements:
 ## Contact
 
 If you have any questions or feedback, feel free to contact me at [truong.kha@outlook.com](truong.kha@outlook.com).
+
