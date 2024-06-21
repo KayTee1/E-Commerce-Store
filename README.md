@@ -4,6 +4,9 @@
 
 I developed this full-stack application as the final project for my web application development course. The project utilizes CI/CD workflows to automate the deployment process.
 
+#### Screenshot
+![screenshot](./screenshot.png)
+
 ## Table of Contents
 
 - [Usage](#usage)
